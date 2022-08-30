@@ -4,17 +4,31 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 
+
+
+
 public class Test {
 
+	public static final String SEP = File.separator;
+	public static final String ROOT = System.getProperty("user.home");
+	public static final String SAVE_DIR = ROOT + SEP + "Observations" + SEP + "save";
+	
 	@org.junit.Test
-	public void testRoot() {
+	public void test1Save() {
 		Saved newTest = new Saved();
-		File test = new File(newTest.makeDir(""));		
+		File test = new File(newTest.makeDir(SAVE_DIR));		
+		System.out.println(test.toString());
 		assertFalse(!test.exists());
-		System.out.println(Saved.ROOT);
-		System.out.println(Saved.SEP);
-		String test1 = test.toString();
-		System.out.println(test1);
+	}
+	
+	@org.junit.Test
+	public void test2Load() {
+		Loader newTest = new Loader();
+		File testLoader = new File(SAVE_DIR);
+		for (String e : newTest.loadFolder(testLoader)) {
+			System.out.println(e);
+		}
+		
 	}
 
 }
