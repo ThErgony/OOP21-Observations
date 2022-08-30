@@ -5,6 +5,7 @@ package oop21.tentelli.fonti.observations;
  */
 
 import java.io.File;
+import java.io.IOException;
 
 
 public class Saved {
@@ -14,6 +15,13 @@ public class Saved {
 		File createFolder = new File(dir.toString());
 		createFolder.mkdirs();
 		return createFolder.toString();
+	}
+	
+	/** create a file request in the path selected, return a string of the current path of the file */
+	public String makeFile(String dir, String name) throws IOException {
+		File createFile = new File(dir+name);
+		createFile.createNewFile();
+		return createFile.toString();
 	}
 	
 }
