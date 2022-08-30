@@ -14,7 +14,6 @@ public class Saved {
 	public static final String SAVE_DIR = ROOT + SEP + "Observations" + SEP + "save";
 	
 	public String makeDir(String name) {
-		
 		File dir = new File(SAVE_DIR + name);
 		dir.mkdirs();
 		return dir.toString();
