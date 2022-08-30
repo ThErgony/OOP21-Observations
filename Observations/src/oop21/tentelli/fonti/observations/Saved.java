@@ -19,6 +19,9 @@ public class Saved {
 	
 	/** create a file request in the path selected, return a string of the current path of the file */
 	public String makeFile(String dir, String name) throws IOException {
+		if (!new File(dir.toString()).exists()) {
+			makeDir(dir);
+		}
 		File createFile = new File(dir+name);
 		createFile.createNewFile();
 		return createFile.toString();

@@ -17,7 +17,6 @@ public class Loader {
 			listFileFolder.add(e);
 		}
 		return listFileFolder;
-
 	}
 	
 }
