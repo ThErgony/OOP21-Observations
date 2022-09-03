@@ -42,7 +42,7 @@ public class Test {
 	}
 	
 	@org.junit.Test
-	public void test3WriteOnFile() throws IOException {
+	public void test3WriteReadOnFile() throws IOException {
 		Saved writeTest = new Saved();
 		FileWriter fw = new FileWriter(new File(SAVE_DIR + SEP + "pippo.txt"));
 		writeTest.updateObservations(fw, "09.02.22","prova");
