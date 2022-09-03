@@ -1,10 +1,14 @@
 package oop21.tentelli.fonti.observations;
 
+import java.io.BufferedReader;
+
 /*
  * Simple loader class, return list folder and file in the selected directory
  */
 
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Loader {
@@ -17,6 +21,12 @@ public class Loader {
 			listFileFolder.add(e);
 		}
 		return listFileFolder;
+	}
+	
+	/** read file*/
+	public BufferedReader readFile(File dir) throws IOException {
+		BufferedReader br = new BufferedReader(new FileReader(dir));
+		return br;
 	}
 	
 }
