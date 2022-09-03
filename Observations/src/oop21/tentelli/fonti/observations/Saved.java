@@ -5,6 +5,7 @@ package oop21.tentelli.fonti.observations;
  */
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 
 
@@ -25,6 +26,11 @@ public class Saved {
 		File createFile = new File(dir+name);
 		createFile.createNewFile();
 		return createFile.toString();
+	}
+	
+	/** write time and type of observations to data file */
+	public void updateObservations(FileWriter fw, String time, String type) throws IOException {	
+		fw.write(time + "-" + type + "\n");
 	}
 	
 }
