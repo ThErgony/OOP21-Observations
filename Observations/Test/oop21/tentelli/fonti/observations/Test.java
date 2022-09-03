@@ -2,7 +2,9 @@ package oop21.tentelli.fonti.observations;
 
 import static org.junit.Assert.*;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 
 
@@ -37,6 +39,21 @@ public class Test {
 		File test = new File(newTest.makeFile(SAVE_DIR + SEP, "pippo.txt"));	
 		System.out.println(test.toString());
 		assertFalse(!test.exists());
+	}
+	
+	@org.junit.Test
+	public void test3WriteOnFile() throws IOException {
+		Saved writeTest = new Saved();
+		FileWriter fw = new FileWriter(new File(SAVE_DIR + SEP + "pippo.txt"));
+		writeTest.updateObservations(fw, "09.02.22","prova");
+		writeTest.updateObservations(fw, "09.05.22","prova");
+		fw.flush();
+		fw.close();
+		Loader loadTest = new Loader();
+		BufferedReader br = loadTest.readFile(new File(SAVE_DIR + SEP + "pippo.txt"));
+		System.out.println(br.readLine());
+		System.out.println(br.readLine());
+
 	}
 
 }
