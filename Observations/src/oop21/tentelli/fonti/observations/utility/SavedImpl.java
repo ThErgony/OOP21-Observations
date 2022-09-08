@@ -23,19 +23,34 @@ public class SavedImpl implements Saved {
 	
 	/** create a file request in the path selected, return a string of the current path of the file */
 	@Override
-	public String makeFile(final String dir, final String name) throws IOException {
-		if (!new File(dir.toString()).exists()) {
-			makeDir(dir);
-		}
+	public String makeFile(final String dir, final String name) {
 		final File createFile = new File(dir+name);
-		createFile.createNewFile();
+		try {
+			createFile.createNewFile();
+		} catch (IOException e) {
+			System.out.println("Impossible create file list\n");
+			e.printStackTrace();
+		}
 		return createFile.toString();
 	}
 	
 	/** write time and type of observations to data file */
 	@Override
-	public void updateObservations(final FileWriter fw, final String time, final String type) throws IOException {	
-		fw.write(time + "-" + type + "\n");
+	public void updateObservations(final FileWriter fw, final String time, final String type) {	
+		try {
+			fw.write(time + "-" + type + "\n");
+		} catch (IOException e) {
+			System.out.println("Impossibile add observations");
+			e.printStackTrace();
+		}
 	}
 	
+	public void updateList(final FileWriter fw, final String item) {
+		try {
+			fw.write(item + "\n");
+		} catch (IOException e) {
+			System.out.println("Impossible add item to list");
+			e.printStackTrace();
+		}
+	}
 }
