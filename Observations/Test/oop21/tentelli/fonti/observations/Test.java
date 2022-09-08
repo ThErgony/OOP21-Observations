@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import oop21.tentelli.fonti.observations.core.ModelCoreImpl;
 import oop21.tentelli.fonti.observations.utility.LoaderImpl;
 import oop21.tentelli.fonti.observations.utility.SavedImpl;
 
@@ -47,6 +48,21 @@ public class Test {
 	@org.junit.Test
 	public void test3WriteReadOnFile() throws IOException {
 		Saved writeTest = new SavedImpl();
+		FileWriter fw = new FileWriter(new File(SAVE_DIR + SEP + "pippo.txt"));
+		writeTest.updateObservations(fw, "09.02.22","prova");
+		writeTest.updateObservations(fw, "09.05.22","prova");
+		fw.flush();
+		fw.close();
+		Loader loadTest = new LoaderImpl();
+		BufferedReader br = loadTest.readFile(new File(SAVE_DIR + SEP + "pippo.txt"));
+		System.out.println(br.readLine());
+		System.out.println(br.readLine());
+
+	}
+	
+	@org.junit.Test
+	public void test3UseCore() throws IOException {
+		ModelCoreImpl writeTest = new ModelCoreImpl();
 		FileWriter fw = new FileWriter(new File(SAVE_DIR + SEP + "pippo.txt"));
 		writeTest.updateObservations(fw, "09.02.22","prova");
 		writeTest.updateObservations(fw, "09.05.22","prova");
