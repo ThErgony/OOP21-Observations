@@ -1,4 +1,4 @@
-package oop21.tentelli.fonti.observations;
+package oop21.tentelli.fonti.observations.utility;
 
 /*
  * Simple class for create folder from root, return a filepath string 
@@ -7,6 +7,8 @@ package oop21.tentelli.fonti.observations;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+
+import oop21.tentelli.fonti.observations.Saved;
 
 
 public class SavedImpl implements Saved {

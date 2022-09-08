@@ -1,4 +1,4 @@
-package oop21.tentelli.fonti.observations;
+package oop21.tentelli.fonti.observations.utility;
 
 /*
  * Simple class for load file and folder from root, return a list file or single file in the selected directory 
@@ -10,6 +10,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import oop21.tentelli.fonti.observations.Loader;
 
 public class LoaderImpl implements Loader {
 

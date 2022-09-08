@@ -7,6 +7,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import oop21.tentelli.fonti.observations.utility.LoaderImpl;
+import oop21.tentelli.fonti.observations.utility.SavedImpl;
+
 
 
 
