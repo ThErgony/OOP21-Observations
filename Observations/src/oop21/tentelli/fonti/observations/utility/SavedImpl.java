@@ -13,17 +13,16 @@ import oop21.tentelli.fonti.observations.Saved;
 
 public class SavedImpl implements Saved {
 	
-	/** create a folder and subfolder require for the path requested, return a string of the current path directory */
+	/** create a folder and subfolder require for the path requested */
 	@Override
-	public String makeDir(final String dir) {
+	public void makeDir(final String dir) {
 		final File createFolder = new File(dir.toString());
 		createFolder.mkdirs();
-		return createFolder.toString();
 	}
 	
-	/** create a file request in the path selected, return a string of the current path of the file */
+	/** create a file request in the path selected*/
 	@Override
-	public String makeFile(final String dir, final String name) {
+	public void makeFile(final String dir, final String name) {
 		final File createFile = new File(dir+name);
 		try {
 			createFile.createNewFile();
@@ -31,7 +30,6 @@ public class SavedImpl implements Saved {
 			System.out.println("Impossible create file list\n");
 			e.printStackTrace();
 		}
-		return createFile.toString();
 	}
 	
 	/** write time and type of observations to data file */

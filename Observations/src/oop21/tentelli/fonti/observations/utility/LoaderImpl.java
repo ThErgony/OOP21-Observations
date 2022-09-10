@@ -20,7 +20,7 @@ public class LoaderImpl implements Loader {
 	/** return string list of file and/or folder from directory path selected */
 	@Override
 	public ArrayList<String> loadFileFolder(final File dir) {
-		for (String e : dir.list()) {
+		for (final String e : dir.list()) {
 			listFileFolder.add(e);
 		}
 		return listFileFolder;
