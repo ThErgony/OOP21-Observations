@@ -18,8 +18,8 @@ public class FirstLoaderImpl implements FirstLoader {
 	private final String sep;
 	private final String moments;
 	private final String types;
-	private final Saved save;
-	private final Loader loader;
+//	private final Saved save;
+//	private final Loader loader;
 
 	public FirstLoaderImpl(final String dir, final String sep,
 			final String moments, final String types, final Saved save, final Loader loader) throws IOException {
@@ -30,15 +30,15 @@ public class FirstLoaderImpl implements FirstLoader {
 		this.sep = sep;
 		this.moments = moments;
 		this.types = types;
-		this.save = save;
-		this.loader = loader;
-		firstLoad();
+//		this.save = save;
+//		this.loader = loader;
+		firstLoad(save, loader);
 	}
 
 	/* fill list with item at first load, if the first first time, create and fill file and folder required*/
-	private void firstLoad() throws IOException {
-		if (!new File(dir).exists()) {
-			save.makeDir(dir);
+	private void firstLoad(final Saved save, final Loader loader) throws IOException {
+		if (!new File(dir + sep + "students").exists()) {
+			save.makeDir(dir + sep + "students");
 		}
 		if (!new File(dir + sep + moments).exists() && !new File(dir + sep + types).exists()) {
 			for (final MomentsList item : MomentsList.values()) {
@@ -47,18 +47,18 @@ public class FirstLoaderImpl implements FirstLoader {
 			for (final ObservationsList item : ObservationsList.values()) {
 				arrayTypeList.add(item.getText());
 			}
-			makeFirstTimeList(moments, arrayMomentsList);
-			makeFirstTimeList(types, arrayTypeList);
+			makeFirstTimeList(save, moments, arrayMomentsList);
+			makeFirstTimeList(save, types, arrayTypeList);
 		} else {
-			fillList(moments, arrayMomentsList);
-			fillList(types, arrayTypeList);
+			fillList(loader, moments, arrayMomentsList);
+			fillList(loader, types, arrayTypeList);
 		}
 	}
 
 	/* import list file to array*/
-	private void fillList(final String list, final ArrayList<String> arrayList) throws IOException {
+	private void fillList(final Loader loader, final String list, final ArrayList<String> arrayList) throws IOException {
 		arrayList.clear();
-		BufferedReader reader = this.readFile(list);
+		BufferedReader reader = this.readFile(loader, list);
 		String item = reader.readLine();
 		while (item != null) {
 			arrayList.add(item);
@@ -68,21 +68,17 @@ public class FirstLoaderImpl implements FirstLoader {
 	}
 
 	/* create file and write all the file in the array list*/
-	private void makeFirstTimeList(final String list, final ArrayList<String> arrayList) throws IOException {
+	private void makeFirstTimeList(final Saved save, final String list, final ArrayList<String> arrayList) throws IOException {
 		save.makeFile(dir + sep, list);
 		final FileWriter fw = new FileWriter(new File(dir + sep + list));
 		for (final String item : arrayList) {
-			updateList(fw, item);
+			save.updateList(fw, item);
 		}
 		fw.flush();
 		fw.close();
 	}
-
-	private void updateList(FileWriter fw, final String item) {
-		save.updateList(fw, item);
-	}
 	
-	private BufferedReader readFile(final String name) throws IOException {
+	private BufferedReader readFile(final Loader loader, final String name) throws IOException {
 		return loader.readFile(new File(dir + sep + name));
 	}
 
