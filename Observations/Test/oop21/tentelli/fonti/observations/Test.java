@@ -20,8 +20,10 @@ public class Test {
 	public static final String ROOT = System.getProperty("user.home");
 	public static final String SAVE_DIR = ROOT + SEP + "Observations" + SEP + "save";
 	
+	/* test make dir in user folder */
 	@org.junit.Test
 	public void test1Save() {
+		System.out.println("\ntest 1");
 		Saved newTest = new SavedImpl();
 		newTest.makeDir(SAVE_DIR);
 		File test = new File(SAVE_DIR);		
@@ -29,8 +31,10 @@ public class Test {
 		assertFalse(!test.exists());
 	}
 	
+	/* test print all element read in selected directory */
 	@org.junit.Test
 	public void test2Load() {
+		System.out.println("\ntest 2");
 		Loader newTest = new LoaderImpl();
 		File testLoader = new File(SAVE_DIR);
 		for (String e : newTest.loadFileFolder(testLoader)) {
@@ -38,8 +42,10 @@ public class Test {
 		}
 	}
 	
+	/* test make file with name choose in selected folder */
 	@org.junit.Test
 	public void test3CreateFile() throws IOException {
+		System.out.println("\ntest 3");
 		Saved newTest = new SavedImpl();
 		newTest.makeFile(SAVE_DIR + SEP, "pippo.txt");
 		File test = new File(SAVE_DIR + SEP, "pippo.txt");	
@@ -47,8 +53,10 @@ public class Test {
 		assertFalse(!test.exists());
 	}
 	
+	/* test from add string to file and read is content*/
 	@org.junit.Test
-	public void test3WriteReadOnFile() throws IOException {
+	public void test4WriteReadOnFile() throws IOException {
+		System.out.println("\ntest 4");
 		Saved writeTest = new SavedImpl();
 		FileWriter fw = new FileWriter(new File(SAVE_DIR + SEP + "pippo.txt"));
 		writeTest.updateObservations(fw, "09.02.22","prova");
@@ -59,11 +67,13 @@ public class Test {
 		BufferedReader br = loadTest.readFile(new File(SAVE_DIR + SEP + "pippo.txt"));
 		System.out.println(br.readLine());
 		System.out.println(br.readLine());
-
+		br.close();
 	}
 	
+	/* test for new core model class */
 	@org.junit.Test
-	public void test3UseCore() throws IOException {
+	public void test5UseCore() throws IOException {
+		System.out.println("\ntest 5");
 		ModelCoreImpl coreTest = new ModelCoreImpl();
 		FileWriter fw = new FileWriter(new File(SAVE_DIR + SEP + "pippo.txt"));
 		coreTest.updateObservations(fw, "09.02.22","prova");
