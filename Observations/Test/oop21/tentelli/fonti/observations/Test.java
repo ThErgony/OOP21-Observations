@@ -91,4 +91,16 @@ public class Test {
 		br.close();
 	}
 
+	/* test for check file/folder in selected folder */
+	@org.junit.Test
+	public void test6() throws IOException {
+		System.out.println("\ntest 6");
+		ModelCoreImpl mci = new ModelCoreImpl();
+		mci.addSelectStudent("pippo");
+		mci.addSelectStudent("pluto");
+		assertEquals(2, mci.getObservedStudents().size());
+		System.out.println(mci.getObservedStudents().size());
+		System.out.println(mci.getObservedStudents());
+	}
+	
 }
