@@ -7,6 +7,7 @@ package oop21.tentelli.fonti.observations.utility;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import oop21.tentelli.fonti.observations.Saved;
 
@@ -14,26 +15,23 @@ import oop21.tentelli.fonti.observations.Saved;
 public class SavedImpl implements Saved {
 	
 	/** create a folder and subfolder require for the path requested */
-	@Override
 	public void makeDir(final String dir) {
-		final File createFolder = new File(dir.toString());
+		final File createFolder = new File(dir);
 		createFolder.mkdirs();
 	}
 	
 	/** create a file request in the path selected*/
-	@Override
-	public void makeFile(final String dir, final String name) {
-		final File createFile = new File(dir+name);
+	public void makeFile(final String name) {
+		final File createFile = new File(name);
 		try {
 			createFile.createNewFile();
 		} catch (IOException e) {
-			System.out.println("Impossible create file list\n");
+			System.out.println("Impossible create file\n");
 			e.printStackTrace();
 		}
 	}
 	
 	/** write time and type of observations to data file */
-	@Override
 	public void updateObservations(final FileWriter fw, final String time, final String type) {	
 		try {
 			fw.write(time + "-" + type + "\n");
@@ -50,5 +48,16 @@ public class SavedImpl implements Saved {
 			System.out.println("Impossible add item to list");
 			e.printStackTrace();
 		}
+	}
+	
+	/* create file and write all the file in the array list*/
+	public void writeList(final String list, final ArrayList<String> arrayList) throws IOException {
+		this.makeFile(list);
+		final FileWriter fw = new FileWriter(new File(list));
+		for (final String item : arrayList) {
+			this.updateList(fw, item);
+		}
+		fw.flush();
+		fw.close();
 	}
 }

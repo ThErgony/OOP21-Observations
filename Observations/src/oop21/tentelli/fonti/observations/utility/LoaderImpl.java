@@ -7,6 +7,7 @@ package oop21.tentelli.fonti.observations.utility;
 import java.io.BufferedReader;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,22 +16,41 @@ import oop21.tentelli.fonti.observations.Loader;
 
 public class LoaderImpl implements Loader {
 
-	private final ArrayList<String> listFileFolder = new ArrayList<>();
-
 	/** return string list of file and/or folder from directory path selected */
-	@Override
-	public ArrayList<String> loadFileFolder(final File dir) {
-		for (final String e : dir.list()) {
+	public ArrayList<String> loadFileFolder(final String dir) {
+		ArrayList<String> listFileFolder = new ArrayList<>();
+		for (final String e : new File(dir).list()) {
 			listFileFolder.add(e);
 		}
 		return listFileFolder;
 	}
 	
-	/** read file*/
-	@Override
-	public BufferedReader readFile(final File dir) throws IOException {
-		final BufferedReader br = new BufferedReader(new FileReader(dir));
-		return br;
+	/** read file
+	 * @throws FileNotFoundException */
+	public BufferedReader readFile(final String dir) throws FileNotFoundException {
+		if (!new File(dir).exists()) {
+			File file = new File(dir);
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				System.out.println("Impossibile create file " + new File(dir).getName());
+				e.printStackTrace();
+			}
+		}
+		return new BufferedReader(new FileReader(new File(dir)));
+	}
+	
+	/* import list file to array*/
+	public ArrayList<String> fillList(final String list, final ArrayList<String> arrayList) throws IOException {
+		arrayList.clear();
+		BufferedReader reader = this.readFile(list);
+		String item = reader.readLine();
+		while (item != null) {
+			arrayList.add(item);
+			item = reader.readLine();			
+		}
+		reader.close();
+		return arrayList;
 	}
 	
 }

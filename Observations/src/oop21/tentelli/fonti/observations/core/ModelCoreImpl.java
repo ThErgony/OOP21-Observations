@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Optional;
+import java.util.List;
 
 import oop21.tentelli.fonti.observations.CheckFileFolder;
 import oop21.tentelli.fonti.observations.FirstLoader;
@@ -22,72 +22,65 @@ public class ModelCoreImpl {
 	private static final String ROOT = System.getProperty("user.home");
 	private static final String NAME_APP = "Observations";
 	private static final String SAVE_DIR = "save";
+	private static final String DIR = ROOT + SEP + NAME_APP + SEP + SAVE_DIR + SEP;
+	
 	private static final String MOMENTS_LIST = "moments.txt";
 	private static final String TYPE_OBSERVED_LIST = "observations.txt";
-	private static final String DIR = ROOT + SEP + NAME_APP + SEP + SAVE_DIR;
 	
 	private final Saved save;
 	private final Loader loader;
 	private final FirstLoader firstStart;
 	private final CheckFileFolder finder;
-	
-	private final ArrayList<String> arrayMomentsList;
-	private final ArrayList<String> arrayTypeList;
-	private final ArrayList<String> observedStudents;
-	private final ArrayList<String> observedMoments =  new  ArrayList<>();
-	private final ArrayList<String> observedDates = new ArrayList<>();
 
-	private String selectedStudent = Optional.empty().toString();
-	private String selectedMoment = Optional.empty().toString();
+	private String selected;
 	
 	public ModelCoreImpl() throws IOException {
 		super();
 		this.save = new SavedImpl();
 		this.loader = new LoaderImpl();
-		this.firstStart = new FirstLoaderImpl(DIR, SEP, MOMENTS_LIST, TYPE_OBSERVED_LIST, save, loader);
-		this.finder = new CheckFileFolderImpl(DIR + SEP + "students");
-		this.arrayMomentsList = firstStart.getArrayMomentsList();
-		this.arrayTypeList = firstStart.getArrayTypeList();
-		this.observedStudents = finder.check(loader);
-	}
-
-	public void updateList(final FileWriter fw, final String item) {
-		save.updateList(fw, item);
+		this.selected = DIR + "students" + SEP;
+		this.firstStart = new FirstLoaderImpl(DIR, MOMENTS_LIST, TYPE_OBSERVED_LIST, save, loader);
+		this.finder = new CheckFileFolderImpl(DIR, SEP, MOMENTS_LIST, TYPE_OBSERVED_LIST, this.selected, loader);
 	}
 	
 	public BufferedReader readFile(final String name) throws IOException {
-		return loader.readFile(new File(DIR + SEP + name));
+		return this.loader.readFile(name);
 	}
 	
 	public void updateObservations(final FileWriter fw, final String time, final String type) throws IOException {
-		save.updateObservations(fw, time, type);		
+		this.save.updateObservations(fw, time, type);		
 	}
 	
-	public ArrayList<String> getArrayMomentsList() {
-		return this.arrayMomentsList;
+	public ArrayList<String> getArrayMomentsList() throws IOException {
+		return new ArrayList<>(List.copyOf(loader.fillList(DIR+MOMENTS_LIST, firstStart.getArrayMomentsList())));
 	}
 
-	public ArrayList<String> getArrayTypeList() {
-		return this.arrayTypeList;
+	public ArrayList<String> getArrayTypeList() throws IOException {
+		return new ArrayList<>(List.copyOf(loader.fillList(DIR + TYPE_OBSERVED_LIST, firstStart.getArrayTypeList())));
 	}
 	
 	public ArrayList<String> getObservedStudents() {
-		return observedStudents;
+		return new ArrayList<>(List.copyOf(finder.getObservedStudents()));
 	}
 
 	public ArrayList<String> getObservedMoments() {
-		return observedMoments;
+		return new ArrayList<>(List.copyOf(finder.getObservedMoments()));
 	}
 
 	public ArrayList<String> getObservedDates() {
-		return observedDates;
+		return new ArrayList<>(List.copyOf(finder.getObservedDates()));
 	}
 	
-	public void addSelectStudent(final String student) {
-		this.selectedStudent = student;
-		if (!new File(DIR + SEP + "students" + SEP + student).exists()) {
-			save.makeDir(DIR + SEP + "students" + SEP + student);
-			this.observedStudents.add(student);
-		}
+	public void chooseStudent(final String student) throws IOException {
+		finder.chooseStudent(student, save, loader);
 	}
+	
+	public void chooseMoment(final String moment) throws IOException {
+		finder.chooseMoment(moment, this.getArrayMomentsList(), save, loader);
+	}
+
+	public void chooseDate(final String date) throws IOException {
+		finder.chooseDate(date, save, loader);
+	}
+	
 }

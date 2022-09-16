@@ -36,8 +36,7 @@ public class Test {
 	public void test2Load() {
 		System.out.println("\ntest 2");
 		Loader newTest = new LoaderImpl();
-		File testLoader = new File(SAVE_DIR);
-		for (String e : newTest.loadFileFolder(testLoader)) {
+		for (String e : newTest.loadFileFolder(SAVE_DIR)) {
 			System.out.println(e);
 		}
 	}
@@ -47,7 +46,7 @@ public class Test {
 	public void test3CreateFile() throws IOException {
 		System.out.println("\ntest 3");
 		Saved newTest = new SavedImpl();
-		newTest.makeFile(SAVE_DIR + SEP, "pippo.txt");
+		newTest.makeFile(SAVE_DIR + SEP + "pippo.txt");
 		File test = new File(SAVE_DIR + SEP, "pippo.txt");	
 		System.out.println(test.toString());
 		assertFalse(!test.exists());
@@ -64,7 +63,7 @@ public class Test {
 		fw.flush();
 		fw.close();
 		Loader loadTest = new LoaderImpl();
-		BufferedReader br = loadTest.readFile(new File(SAVE_DIR + SEP + "pippo.txt"));
+		BufferedReader br = loadTest.readFile(SAVE_DIR + SEP + "pippo.txt");
 		System.out.println(br.readLine());
 		System.out.println(br.readLine());
 		br.close();
@@ -81,10 +80,10 @@ public class Test {
 		fw.flush();
 		fw.close();
 		Loader loadTest = new LoaderImpl();
-		BufferedReader br = loadTest.readFile(new File(SAVE_DIR + SEP + "pippo.txt"));
+		BufferedReader br = loadTest.readFile(SAVE_DIR + SEP + "pippo.txt");
 		System.out.println(br.readLine());
 		System.out.println(br.readLine());
-		br = coreTest.readFile("observations.txt");
+		br = coreTest.readFile(SAVE_DIR + SEP + "observations.txt");
 		System.out.println(br.readLine());
 		System.out.println(br.readLine());
 		System.out.println(br.readLine());
@@ -96,8 +95,14 @@ public class Test {
 	public void test6() throws IOException {
 		System.out.println("\ntest 6");
 		ModelCoreImpl mci = new ModelCoreImpl();
-		mci.addSelectStudent("pippo");
-		mci.addSelectStudent("pluto");
+		mci.chooseStudent("pippo");
+		mci.chooseStudent("pluto");
+		mci.chooseStudent("pippo");
+		mci.chooseMoment("prova");
+		mci.chooseMoment("prova");
+		mci.chooseMoment("pippo");
+		mci.chooseMoment("pluto");
+		System.out.println(mci.getObservedStudents().size() + " " + mci.getObservedStudents());
 		assertEquals(2, mci.getObservedStudents().size());
 		System.out.println(mci.getObservedStudents().size());
 		System.out.println(mci.getObservedStudents());
