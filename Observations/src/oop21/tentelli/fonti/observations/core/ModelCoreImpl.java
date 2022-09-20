@@ -47,8 +47,8 @@ public class ModelCoreImpl {
 		return this.loader.readFile(name);
 	}
 	
-	public void updateObservations(final FileWriter fw, final String time, final String type) throws IOException {
-		this.save.updateObservations(fw, time, type);		
+	public void updateObservations(final String time, final String type) throws IOException {
+		this.finder.updateObservations(time, type, save, loader);
 	}
 	
 	public ArrayList<String> getArrayMomentsList() throws IOException {
@@ -80,7 +80,7 @@ public class ModelCoreImpl {
 	}
 
 	public void chooseDate(final String date) throws IOException {
-		finder.chooseDate(date, save, loader);
+		finder.chooseDate(date + ".txt", save, loader);
 	}
-	
+
 }
