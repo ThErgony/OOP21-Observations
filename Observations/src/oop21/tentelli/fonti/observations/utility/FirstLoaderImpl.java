@@ -22,26 +22,26 @@ public class FirstLoaderImpl implements FirstLoader {
 		this.dir = dir;
 		this.moments = moments;
 		this.types = types;
-		firstLoad(save, loader);
+		this.firstLoad(save, loader);
 	}
 
 	/* fill list with item at first load, if the first first time, create and fill file and folder required*/
 	private void firstLoad(final Saved save, final Loader loader) throws IOException {
-		if (!new File(dir + "students").exists()) {
-			save.makeDir(dir + "students");
+		if (!new File(this.dir + "students").exists()) {
+			save.makeDir(this.dir + "students");
 		}
-		if (!new File(dir + moments).exists() && !new File(dir + types).exists()) {
+		if (!new File(this.dir + this.moments).exists() && !new File(this.dir + this.types).exists()) {
 			for (final MomentsList item : MomentsList.values()) {
-				arrayMomentsList.add(item.getText());
+				this.arrayMomentsList.add(item.getText());
 			}
 			for (final ObservationsList item : ObservationsList.values()) {
-				arrayTypeList.add(item.getText());
+				this.arrayTypeList.add(item.getText());
 			}
-			save.writeList(dir+moments, arrayMomentsList);
-			save.writeList(dir+types, arrayTypeList);
+			save.writeList(this.dir + this.moments, this.arrayMomentsList);
+			save.writeList(this.dir + this.types, this.arrayTypeList);
 		} else {
-			loader.fillList(dir+moments, arrayMomentsList);
-			loader.fillList(dir+types, arrayTypeList);
+			loader.fillList(this.dir + this.moments, this.arrayMomentsList);
+			loader.fillList(this.dir + this.types, this.arrayTypeList);
 		}
 	}
 
