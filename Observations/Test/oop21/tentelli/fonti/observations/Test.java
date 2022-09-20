@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import oop21.tentelli.fonti.observations.core.ModelCoreImpl;
 import oop21.tentelli.fonti.observations.utility.LoaderImpl;
@@ -54,14 +55,11 @@ public class Test {
 	
 	/* test from add string to file and read is content*/
 	@org.junit.Test
-	public void test4WriteReadOnFile() throws IOException {
+	public void test4WriteReadOnFile() throws IOException{
 		System.out.println("\ntest 4");
 		Saved writeTest = new SavedImpl();
-		FileWriter fw = new FileWriter(new File(SAVE_DIR + SEP + "pippo.txt"));
-		writeTest.updateObservations(fw, "09.02.22","prova");
-		writeTest.updateObservations(fw, "09.05.22","prova");
-		fw.flush();
-		fw.close();
+		writeTest.writeList("09.02.22" + "\n" + "prova", new ArrayList<>());
+		writeTest.writeList("09.05.22"+ "\n" + "prova", new ArrayList<>());
 		Loader loadTest = new LoaderImpl();
 		BufferedReader br = loadTest.readFile(SAVE_DIR + SEP + "pippo.txt");
 		System.out.println(br.readLine());
@@ -104,8 +102,14 @@ public class Test {
 		mci.chooseMoment("pluto");
 		System.out.println(mci.getObservedStudents().size() + " " + mci.getObservedStudents());
 		assertEquals(2, mci.getObservedStudents().size());
-		System.out.println(mci.getObservedStudents().size());
-		System.out.println(mci.getObservedStudents());
+		assertEquals(3, mci.getObservedMoments().size());
+		System.out.println(mci.getObservedMoments().size() + " " + mci.getObservedMoments());
+		System.out.println(mci.getArrayMomentsList() + "\n" + mci.getArrayTypeList());
+		mci.chooseMoment("pippo");
+		mci.chooseDate("20.09.2022");
+		mci.chooseDate("20.09.2022");
+		mci.updateObservations("data", "prova");
+		mci.updateObservations("20.09.2022", "seconda prova");
 	}
 	
 }
