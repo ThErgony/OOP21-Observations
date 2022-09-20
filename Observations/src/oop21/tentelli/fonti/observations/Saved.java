@@ -11,9 +11,6 @@ public interface Saved {
 
 	/** create a file request in the path selected */
 	void makeFile(final String ame) throws IOException;
-
-	/** write time and type of observations to data file */
-	void updateObservations(final FileWriter fw, final String time, final String type) throws IOException;
 	
 	void updateList(final FileWriter fw, final String item);
 	

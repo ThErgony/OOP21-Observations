@@ -31,16 +31,6 @@ public class SavedImpl implements Saved {
 		}
 	}
 	
-	/** write time and type of observations to data file */
-	public void updateObservations(final FileWriter fw, final String time, final String type) {	
-		try {
-			fw.write(time + "-" + type + "\n");
-		} catch (IOException e) {
-			System.out.println("Impossibile add observations");
-			e.printStackTrace();
-		}
-	}
-	
 	public void updateList(final FileWriter fw, final String item) {
 		try {
 			fw.write(item + "\n");
