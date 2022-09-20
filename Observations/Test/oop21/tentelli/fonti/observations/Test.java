@@ -73,8 +73,8 @@ public class Test {
 		System.out.println("\ntest 5");
 		ModelCoreImpl coreTest = new ModelCoreImpl();
 		FileWriter fw = new FileWriter(new File(SAVE_DIR + SEP + "pippo.txt"));
-		coreTest.updateObservations(fw, "09.02.22","prova");
-		coreTest.updateObservations(fw, "09.05.22","prova");
+		coreTest.updateObservations("09.02.22","prova");
+		coreTest.updateObservations("09.05.22","prova");
 		fw.flush();
 		fw.close();
 		Loader loadTest = new LoaderImpl();
