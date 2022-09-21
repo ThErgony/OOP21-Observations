@@ -21,25 +21,24 @@ public class ModelCoreImpl {
 	private static final String ROOT = System.getProperty("user.home");
 	private static final String NAME_APP = "Observations";
 	private static final String SAVE_DIR = "save";
+	private static final String STUDENT_DIR = "student";
 	private static final String DIR = ROOT + SEP + NAME_APP + SEP + SAVE_DIR + SEP;
 	
 	private static final String MOMENTS_LIST = "moments.txt";
 	private static final String TYPE_OBSERVED_LIST = "observations.txt";
+	private static final String EXTENSION = ".txt";
 	
 	private final Saved save;
 	private final Loader loader;
 	private final FirstLoader firstStart;
 	private final CheckFileFolder finder;
-
-	private String selected;
 	
 	public ModelCoreImpl() throws IOException {
 		super();
 		this.save = new SavedImpl();
 		this.loader = new LoaderImpl();
-		this.selected = DIR + "students" + SEP;
 		this.firstStart = new FirstLoaderImpl(DIR, MOMENTS_LIST, TYPE_OBSERVED_LIST, save, loader);
-		this.finder = new CheckFileFolderImpl(DIR, SEP, MOMENTS_LIST, TYPE_OBSERVED_LIST, this.selected, loader);
+		this.finder = new CheckFileFolderImpl(DIR, SEP, MOMENTS_LIST, TYPE_OBSERVED_LIST, DIR + STUDENT_DIR + SEP, loader);
 	}
 	
 	public BufferedReader readFile(final String name) throws IOException {
@@ -85,7 +84,7 @@ public class ModelCoreImpl {
 	}
 
 	public void chooseDate(final String date) throws IOException {
-		finder.chooseDate(date + ".txt", save, loader);
+		finder.chooseDate(date + EXTENSION, save, loader);
 	}
 
 }
