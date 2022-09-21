@@ -1,8 +1,6 @@
 package oop21.tentelli.fonti.observations.utility;
 
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -19,7 +17,6 @@ public class CheckFileFolderImpl implements CheckFileFolder {
 	private final String dir;
 	private final String sep;
 	private final String momentList;
-	private final String typeList;
 	
 	private String selected;
 	private String student;
@@ -35,7 +32,6 @@ public class CheckFileFolderImpl implements CheckFileFolder {
 		this.dir = dir;
 		this.sep = sep;
 		this.momentList = momentList;
-		this.typeList = typeList;
 		this.selected = selected;
 		this.studentRoot = selected;
 		this.observedStudents = this.check(loader, this.selected);
@@ -113,10 +109,13 @@ public class CheckFileFolderImpl implements CheckFileFolder {
 		}
 	}
 
-	@Override
-	public void updateObservations(final String time, final String type, final Saved save, final Loader loader) throws IOException {
-		ArrayList<String> list = loader.fillList(this.selected, new ArrayList<>());
-		list.add(time + " \n " + type);
-		save.writeList(this.selected, list);
+	public void updateObservations(final String element, final Saved save, final Loader loader) throws IOException {
+		this.updateObservations(this.selected, element, save, loader);
+	}
+
+	public void updateObservations(final String path, final String element, final Saved save, final Loader loader) throws IOException {		
+		ArrayList<String> list = loader.fillList(path, new ArrayList<>());
+		list.add(element);
+		save.writeList(path, list);		
 	}
 }

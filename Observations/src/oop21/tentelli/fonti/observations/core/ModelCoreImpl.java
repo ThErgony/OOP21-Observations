@@ -2,7 +2,6 @@ package oop21.tentelli.fonti.observations.core;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,11 +47,17 @@ public class ModelCoreImpl {
 	}
 	
 	public void updateObservations(final String time, final String type) throws IOException {
-		this.finder.updateObservations(time, type, save, loader);
+		this.finder.updateObservations(time + "\n" + type, save, loader);
+	}
+	
+	public void addObservationType(final String type) throws IOException {
+		if (!this.getArrayTypeList().contains(type)) {
+			this.finder.updateObservations(DIR + TYPE_OBSERVED_LIST, type, save, loader);
+		}
 	}
 	
 	public ArrayList<String> getArrayMomentsList() throws IOException {
-		return new ArrayList<>(List.copyOf(loader.fillList(DIR+MOMENTS_LIST, firstStart.getArrayMomentsList())));
+		return new ArrayList<>(List.copyOf(loader.fillList(DIR + MOMENTS_LIST, firstStart.getArrayMomentsList())));
 	}
 
 	public ArrayList<String> getArrayTypeList() throws IOException {

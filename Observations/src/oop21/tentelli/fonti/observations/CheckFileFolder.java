@@ -19,6 +19,8 @@ public interface CheckFileFolder {
 	
 	public ArrayList<String> getObservedDates();
 
-	void updateObservations(final String time, final String type, final Saved save, final Loader loader) throws IOException;
+	void updateObservations(final String element, final Saved save, final Loader loader) throws IOException;
+
+	void updateObservations(final String string, final String type, final Saved save, final Loader loader) throws IOException;
 
 }

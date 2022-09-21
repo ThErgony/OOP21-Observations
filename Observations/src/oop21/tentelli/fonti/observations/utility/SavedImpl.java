@@ -31,7 +31,7 @@ public class SavedImpl implements Saved {
 		}
 	}
 	
-	public void updateList(final FileWriter fw, final String item) {
+	private void updateList(final FileWriter fw, final String item) throws IOException {
 		try {
 			fw.write(item + "\n");
 		} catch (IOException e) {

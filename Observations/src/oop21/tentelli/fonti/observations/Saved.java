@@ -1,6 +1,6 @@
 package oop21.tentelli.fonti.observations;
 
-import java.io.FileWriter;
+//import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -11,9 +11,7 @@ public interface Saved {
 
 	/** create a file request in the path selected */
 	void makeFile(final String ame) throws IOException;
-	
-	void updateList(final FileWriter fw, final String item);
-	
+		
 	void writeList(final String list, final ArrayList<String> arrayList) throws IOException;
 
 }
