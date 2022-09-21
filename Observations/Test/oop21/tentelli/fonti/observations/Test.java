@@ -36,8 +36,11 @@ public class Test {
 	public void test2Load() {
 		System.out.println("\ntest 2");
 		Loader newTest = new LoaderImpl();
+		for (String e : newTest.loadFileFolder(new File(SAVE_DIR).getParent())) {
+			System.out.println("parent - " + e);
+		}
 		for (String e : newTest.loadFileFolder(SAVE_DIR)) {
-			System.out.println(e);
+			System.out.println("save dir - " + e);
 		}
 	}
 	
