@@ -6,11 +6,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import oop21.tentelli.fonti.observations.CheckFileFolder;
+import oop21.tentelli.fonti.observations.Updater;
 import oop21.tentelli.fonti.observations.FirstLoader;
 import oop21.tentelli.fonti.observations.Loader;
 import oop21.tentelli.fonti.observations.Saved;
-import oop21.tentelli.fonti.observations.utility.CheckFileFolderImpl;
+import oop21.tentelli.fonti.observations.utility.UpdaterImpl;
 import oop21.tentelli.fonti.observations.utility.FirstLoaderImpl;
 import oop21.tentelli.fonti.observations.utility.LoaderImpl;
 import oop21.tentelli.fonti.observations.utility.SavedImpl;
@@ -31,14 +31,14 @@ public class ModelCoreImpl {
 	private final Saved save;
 	private final Loader loader;
 	private final FirstLoader firstStart;
-	private final CheckFileFolder finder;
+	private final Updater updater;
 	
 	public ModelCoreImpl() throws IOException {
 		super();
 		this.save = new SavedImpl();
 		this.loader = new LoaderImpl();
 		this.firstStart = new FirstLoaderImpl(DIR, MOMENTS_LIST, TYPE_OBSERVED_LIST, save, loader);
-		this.finder = new CheckFileFolderImpl(DIR, SEP, MOMENTS_LIST, DIR + STUDENT_DIR + SEP, loader);
+		this.updater = new UpdaterImpl(DIR, SEP, MOMENTS_LIST, DIR + STUDENT_DIR + SEP, loader);
 	}
 	
 	public BufferedReader readFile(final String name) throws IOException {
@@ -46,12 +46,12 @@ public class ModelCoreImpl {
 	}
 	
 	public void updateObservations(final String time, final String type) throws IOException {
-		this.finder.updateObservations(time + "\n" + type, save, loader);
+		this.updater.updateObservations(time + "\n" + type, save, loader);
 	}
 	
 	public void addObservationType(final String type) throws IOException {
 		if (!this.getArrayTypeList().contains(type)) {
-			this.finder.updateObservations(DIR + TYPE_OBSERVED_LIST, type, save, loader);
+			this.updater.updateObservations(DIR + TYPE_OBSERVED_LIST, type, save, loader);
 		}
 	}
 	
@@ -64,27 +64,27 @@ public class ModelCoreImpl {
 	}
 	
 	public ArrayList<String> getObservedStudents() {
-		return new ArrayList<>(List.copyOf(finder.getObservedStudents()));
+		return new ArrayList<>(List.copyOf(updater.getObservedStudents()));
 	}
 
 	public ArrayList<String> getObservedMoments() {
-		return new ArrayList<>(List.copyOf(finder.getObservedMoments()));
+		return new ArrayList<>(List.copyOf(updater.getObservedMoments()));
 	}
 
 	public ArrayList<String> getObservedDates() {
-		return new ArrayList<>(List.copyOf(finder.getObservedDates()));
+		return new ArrayList<>(List.copyOf(updater.getObservedDates()));
 	}
 	
 	public void chooseStudent(final String student) throws IOException {
-		finder.chooseStudent(student, save, loader);
+		updater.chooseStudent(student, save, loader);
 	}
 	
 	public void chooseMoment(final String moment) throws IOException {
-		finder.chooseMoment(moment, this.getArrayMomentsList(), save, loader);
+		updater.chooseMoment(moment, this.getArrayMomentsList(), save, loader);
 	}
 
 	public void chooseDate(final String date) throws IOException {
-		finder.chooseDate(date + EXTENSION, save, loader);
+		updater.chooseDate(date + EXTENSION, save, loader);
 	}
 
 }

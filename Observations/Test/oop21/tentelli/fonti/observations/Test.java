@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.IOException;
 
 import oop21.tentelli.fonti.observations.core.ModelCoreImpl;
-import oop21.tentelli.fonti.observations.utility.CheckFileFolderImpl;
+import oop21.tentelli.fonti.observations.utility.UpdaterImpl;
 import oop21.tentelli.fonti.observations.utility.LoaderImpl;
 import oop21.tentelli.fonti.observations.utility.SavedImpl;
 
@@ -58,9 +58,9 @@ public class Test {
 		System.out.println("\ntest 4");
 		Loader loader = new LoaderImpl();
 		Saved save = new SavedImpl();
-		CheckFileFolder finder = new CheckFileFolderImpl(SAVE_DIR + SEP, SEP, "pippo.txt", SAVE_DIR + SEP, loader);
-		finder.updateObservations(SAVE_DIR + SEP + "pippo.txt", "09.02.22" + " -" + "prova", save, loader);
-		finder.updateObservations(SAVE_DIR + SEP + "pippo.txt", "09.05.22"+ " - " + "prova", save, loader);
+		Updater updater = new UpdaterImpl(SAVE_DIR + SEP, SEP, "pippo.txt", SAVE_DIR + SEP, loader);
+		updater.updateObservations(SAVE_DIR + SEP + "pippo.txt", "09.02.22" + " -" + "prova", save, loader);
+		updater.updateObservations(SAVE_DIR + SEP + "pippo.txt", "09.05.22"+ " - " + "prova", save, loader);
 		Loader loadTest = new LoaderImpl();
 		BufferedReader br = loadTest.readFile(SAVE_DIR + SEP + "pippo.txt");
 		System.out.println(br.readLine());

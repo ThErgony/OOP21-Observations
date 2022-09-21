@@ -4,11 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import oop21.tentelli.fonti.observations.CheckFileFolder;
+import oop21.tentelli.fonti.observations.Updater;
 import oop21.tentelli.fonti.observations.Loader;
 import oop21.tentelli.fonti.observations.Saved;
 
-public class CheckFileFolderImpl implements CheckFileFolder {
+public class UpdaterImpl implements Updater {
 
 	private ArrayList<String> observedStudents;
 	private ArrayList<String> observedMoments =  new  ArrayList<>();
@@ -26,7 +26,7 @@ public class CheckFileFolderImpl implements CheckFileFolder {
 	private String momentRoot;
 	private String dateRoot;
 	
-	public CheckFileFolderImpl(final String dir, final String sep, final String momentList,
+	public UpdaterImpl(final String dir, final String sep, final String momentList,
 								final String selected, final Loader loader) {
 		super();
 		this.dir = dir;

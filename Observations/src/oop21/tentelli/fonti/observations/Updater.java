@@ -3,7 +3,7 @@ package oop21.tentelli.fonti.observations;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public interface CheckFileFolder {
+public interface Updater {
 
 	ArrayList<String> check(final Loader loader, final String dir);
 	
