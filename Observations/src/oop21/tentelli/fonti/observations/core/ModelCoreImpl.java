@@ -21,7 +21,7 @@ public class ModelCoreImpl {
 	private static final String ROOT = System.getProperty("user.home");
 	private static final String NAME_APP = "Observations";
 	private static final String SAVE_DIR = "save";
-	private static final String STUDENT_DIR = "student";
+	private static final String STUDENT_DIR = "students";
 	private static final String DIR = ROOT + SEP + NAME_APP + SEP + SAVE_DIR + SEP;
 	
 	private static final String MOMENTS_LIST = "moments.txt";
