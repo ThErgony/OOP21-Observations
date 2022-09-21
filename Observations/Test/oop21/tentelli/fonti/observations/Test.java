@@ -58,7 +58,7 @@ public class Test {
 		System.out.println("\ntest 4");
 		Loader loader = new LoaderImpl();
 		Saved save = new SavedImpl();
-		CheckFileFolder finder = new CheckFileFolderImpl(SAVE_DIR + SEP, SEP, "pippo.txt", "pippo.txt", SAVE_DIR + SEP, loader);
+		CheckFileFolder finder = new CheckFileFolderImpl(SAVE_DIR + SEP, SEP, "pippo.txt", SAVE_DIR + SEP, loader);
 		finder.updateObservations(SAVE_DIR + SEP + "pippo.txt", "09.02.22" + " -" + "prova", save, loader);
 		finder.updateObservations(SAVE_DIR + SEP + "pippo.txt", "09.05.22"+ " - " + "prova", save, loader);
 		Loader loadTest = new LoaderImpl();

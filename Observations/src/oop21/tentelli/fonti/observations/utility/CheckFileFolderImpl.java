@@ -26,8 +26,8 @@ public class CheckFileFolderImpl implements CheckFileFolder {
 	private String momentRoot;
 	private String dateRoot;
 	
-	public CheckFileFolderImpl(final String dir, final String sep, final String momentList, final String typeList,
-			final String selected, final Loader loader) {
+	public CheckFileFolderImpl(final String dir, final String sep, final String momentList,
+								final String selected, final Loader loader) {
 		super();
 		this.dir = dir;
 		this.sep = sep;
@@ -53,7 +53,8 @@ public class CheckFileFolderImpl implements CheckFileFolder {
 		}
 	}
 	
-	public void chooseMoment(final String moment, final ArrayList<String> updateList, final Saved save, final Loader loader) throws IOException {
+	public void chooseMoment(final String moment, final ArrayList<String> updateList,
+								final Saved save, final Loader loader) throws IOException {
 		this.moment = this.momentRoot + moment + this.sep;
 		if (!loader.loadFileFolder(this.momentRoot).contains(moment)) {
 			save.makeDir(this.moment);
@@ -89,11 +90,11 @@ public class CheckFileFolderImpl implements CheckFileFolder {
 	}
 
 	public ArrayList<String> getObservedMoments() {
-		return observedMoments;
+		return this.observedMoments;
 	}
 
 	public ArrayList<String> getObservedDates() {
-		return observedDates;
+		return this.observedDates;
 	}
 
 	public void backFolder(final String back, final Loader loader) {
@@ -113,7 +114,8 @@ public class CheckFileFolderImpl implements CheckFileFolder {
 		this.updateObservations(this.selected, element, save, loader);
 	}
 
-	public void updateObservations(final String path, final String element, final Saved save, final Loader loader) throws IOException {		
+	public void updateObservations(final String path, final String element,
+									final Saved save, final Loader loader) throws IOException {		
 		ArrayList<String> list = loader.fillList(path, new ArrayList<>());
 		list.add(element);
 		save.writeList(path, list);		

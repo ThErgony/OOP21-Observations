@@ -38,7 +38,7 @@ public class ModelCoreImpl {
 		this.save = new SavedImpl();
 		this.loader = new LoaderImpl();
 		this.firstStart = new FirstLoaderImpl(DIR, MOMENTS_LIST, TYPE_OBSERVED_LIST, save, loader);
-		this.finder = new CheckFileFolderImpl(DIR, SEP, MOMENTS_LIST, TYPE_OBSERVED_LIST, DIR + STUDENT_DIR + SEP, loader);
+		this.finder = new CheckFileFolderImpl(DIR, SEP, MOMENTS_LIST, DIR + STUDENT_DIR + SEP, loader);
 	}
 	
 	public BufferedReader readFile(final String name) throws IOException {
