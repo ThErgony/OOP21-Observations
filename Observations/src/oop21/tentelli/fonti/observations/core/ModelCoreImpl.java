@@ -1,7 +1,8 @@
 package oop21.tentelli.fonti.observations.core;
 
 /**
- * Model core app, create all class need and pass reference for create, write and load. Create a first load: if is first time start software
+ * Model core app, create all class need and pass reference for create, write and load. Create a first load:
+ * if is first time start software
  * application create file moment list and type observed list format .txt, used for view to show the list of item user can get, if user need
  * more item can add; if the installation are do after, load all list for user. Updater get all file for update and create file and folder
  * user required.
@@ -18,6 +19,7 @@ import oop21.tentelli.fonti.observations.Saved;
 import oop21.tentelli.fonti.observations.utility.UpdaterImpl;
 import oop21.tentelli.fonti.observations.utility.FirstLoaderImpl;
 import oop21.tentelli.fonti.observations.utility.LoaderImpl;
+import oop21.tentelli.fonti.observations.utility.Pair;
 import oop21.tentelli.fonti.observations.utility.SavedImpl;
 
 public class ModelCoreImpl {
@@ -45,11 +47,11 @@ public class ModelCoreImpl {
 		this.save = new SavedImpl();
 		this.loader = new LoaderImpl();
 		new FirstLoaderImpl().firstLoad(DIR, STUDENT_DIR, MOMENTS_LIST, TYPE_OBSERVED_LIST, save, loader);;
-		this.updater = new UpdaterImpl(DIR, SEP, MOMENTS_LIST, DIR + STUDENT_DIR + SEP, loader);
+		this.updater = new UpdaterImpl(DIR + MOMENTS_LIST, SEP, DIR + STUDENT_DIR + SEP, loader);
 	}
 	
 	public void updateObservations(final String time, final String type) throws IOException {
-		this.updater.updateObservations(time + "\n" + type, this.save);
+		this.updater.updateObservations(type + " - " + time, this.save);
 	}
 
 	public void addObservationType(final String type) throws IOException {
@@ -75,7 +77,12 @@ public class ModelCoreImpl {
 	}
 
 	public ArrayList<String> getObservedDates() {
-		return new ArrayList<>(List.copyOf(this.updater.getObservedDates()));
+		ArrayList<String> list = new ArrayList<>();
+		for (String string : List.copyOf(this.updater.getObservedDates())) {
+			string = string.substring(0, string.length()-4);
+			list.add(string);
+		}
+		return list;
 	}
 	
 	public void chooseStudent(final String student) throws IOException {
@@ -90,4 +97,37 @@ public class ModelCoreImpl {
 		this.updater.chooseDate(date + EXTENSION, this.save);
 	}
 
+	public ArrayList<String> getDataDayChoose() throws IOException {
+		return new ArrayList<>(List.copyOf(this.updater.getObservedDay()));
+	}
+
+	public ArrayList<String> getDataMomentChoose() throws IOException {
+		ArrayList<String> list = new ArrayList<>();
+		for (String e : this.getObservedDates()) {
+			this.chooseDate(e);
+			list.addAll(this.getDataDayChoose());
+		}
+		list.sort((a,b)->a.compareTo(b));
+		return list;
+	}
+	
+	public ArrayList<String> getDataStudentChoose() throws IOException {
+		ArrayList<String> list = new ArrayList<>();
+		for (String e : this.getObservedMoments()) {
+			this.chooseMoment(e);
+			list.addAll(this.getDataMomentChoose());
+		}
+		list.sort((a,b)->a.compareTo(b));
+		return list;
+	}
+	
+	public ArrayList<Pair<String, String>> list() throws IOException{
+		ArrayList<Pair<String, String>> list = new ArrayList<>();
+		for (String string : this.getDataDayChoose()) {
+			String[] split = string.split("-");
+			list.add(new Pair<>(split[0], split[1]));
+		}
+		return list;
+	}
+	
 }

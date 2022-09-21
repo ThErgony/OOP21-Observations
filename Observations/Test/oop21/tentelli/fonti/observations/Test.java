@@ -63,11 +63,11 @@ public class Test extends TestCore{
 		System.out.println("\ntest 4");
 		Loader loader = new LoaderImpl();
 		Saved save = new SavedImpl();
-		Updater updater = new UpdaterImpl(SAVE_DIR + SEP, SEP, "pippo.txt", SAVE_DIR + SEP, loader);
+		Updater updater = new UpdaterImpl(SAVE_DIR + SEP + "pippo.txt", SEP, SAVE_DIR + SEP, loader);
 		String time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
-		updater.updateObservations(SAVE_DIR + SEP + "pippo.txt", time + " - " + "prova", save);
+		updater.updateObservations(SAVE_DIR + SEP + "pippo.txt", "prova" + " - " + time, save);
 		time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
-		updater.updateObservations(SAVE_DIR + SEP + "pippo.txt", time + " - " + "prova4", save);
+		updater.updateObservations(SAVE_DIR + SEP + "pippo.txt", "4prova4" + " - " + time, save);
 		ArrayList<String> list = loader.fillList(SAVE_DIR + SEP + "pippo.txt");
 		System.out.println(list);
 		System.out.println(new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()));

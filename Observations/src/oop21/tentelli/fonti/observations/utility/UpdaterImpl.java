@@ -9,13 +9,11 @@ import oop21.tentelli.fonti.observations.Saved;
 
 public class UpdaterImpl implements Updater {
 
-	private final String dir;
+	private final String pathMomentList;
 	private final String sep;
-	private final String momentList;
 	
 	private final Loader loader;
 	
-	private String selected;
 	private String student;
 	private String moment;
 	private String date;
@@ -23,14 +21,12 @@ public class UpdaterImpl implements Updater {
 	private String momentRoot;
 	private String dateRoot;
 	
-	public UpdaterImpl(final String dir, final String sep, final String momentList,
-								final String selected, final Loader loader) {
+	public UpdaterImpl(final String pathMomentList, final String sep,
+								final String startPath, final Loader loader) {
 		super();
-		this.dir = dir;
+		this.pathMomentList = pathMomentList;
 		this.sep = sep;
-		this.momentList = momentList;
-		this.selected = selected;
-		this.studentRoot = selected;
+		this.studentRoot = startPath;
 		this.loader = loader;
 	}
 
@@ -43,7 +39,6 @@ public class UpdaterImpl implements Updater {
 		if (!this.loader.loadFileFolder(this.studentRoot).contains(student)) {
 			save.makeDir(this.student);
 		} else {
-			this.selected = this.student;
 			this.momentRoot = this.student;
 		}
 	}
@@ -56,10 +51,9 @@ public class UpdaterImpl implements Updater {
 			if (!updateList.contains(moment)) {
 				updateList.add(moment);
 				updateList.sort((a,b)-> a.compareTo(b));
-				save.writeList(this.dir + this.momentList, updateList);
+				save.writeList(this.pathMomentList, updateList);
 			}
 		} else {
-				this.selected = this.moment;
 				this.dateRoot = this.moment;
 		}
 	}
@@ -69,8 +63,6 @@ public class UpdaterImpl implements Updater {
 		if (!this.loader.loadFileFolder(this.moment).contains(date)) {
 			save.makeFile(this.date);
 		}
-		this.selected = this.date;
-		
 	}
 
 	public ArrayList<String> getObservedStudents() {
@@ -84,19 +76,13 @@ public class UpdaterImpl implements Updater {
 	public ArrayList<String> getObservedDates() {
 		return this.check(this.dateRoot);
 	}
-
-//	public void backFolder(final String back, final Loader loader) {
-//		if (loader.loadFileFolder(this.studentRoot).contains(back)) {
-//			this.selected = this.dir + back;
-//		} else if (loader.loadFileFolder(this.momentRoot).contains(back)) {
-//			this.selected = new File(this.moment).getParent();
-//		} else if (this.selected.equals(back)) {
-//			this.selected = this.dir;
-//		}
-//	}
+	
+	public ArrayList<String> getObservedDay() throws IOException {
+		return this.loader.fillList(this.date);
+	}
 
 	public void updateObservations(final String element, final Saved save) throws IOException {
-		this.updateObservations(this.selected, element, save);
+		this.updateObservations(this.date, element, save);
 	}
 
 	public void updateObservations(final String path, final String element,	final Saved save) throws IOException {		

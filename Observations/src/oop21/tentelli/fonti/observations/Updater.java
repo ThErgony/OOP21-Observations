@@ -16,6 +16,8 @@ public interface Updater {
 	ArrayList<String> getObservedMoments();
 	
 	ArrayList<String> getObservedDates();
+	
+	ArrayList<String> getObservedDay() throws IOException;
 
 	void updateObservations(final String element, final Saved save) throws IOException;
 
