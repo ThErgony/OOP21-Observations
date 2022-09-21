@@ -4,11 +4,10 @@ import static org.junit.Assert.*;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import oop21.tentelli.fonti.observations.core.ModelCoreImpl;
+import oop21.tentelli.fonti.observations.utility.CheckFileFolderImpl;
 import oop21.tentelli.fonti.observations.utility.LoaderImpl;
 import oop21.tentelli.fonti.observations.utility.SavedImpl;
 
@@ -57,9 +56,11 @@ public class Test {
 	@org.junit.Test
 	public void test4WriteReadOnFile() throws IOException{
 		System.out.println("\ntest 4");
-		Saved writeTest = new SavedImpl();
-		writeTest.writeList("09.02.22" + "\n" + "prova", new ArrayList<>());
-		writeTest.writeList("09.05.22"+ "\n" + "prova", new ArrayList<>());
+		Loader loader = new LoaderImpl();
+		Saved save = new SavedImpl();
+		CheckFileFolder finder = new CheckFileFolderImpl(SAVE_DIR + SEP, SEP, "pippo.txt", "pippo.txt", SAVE_DIR + SEP, loader);
+		finder.updateObservations(SAVE_DIR + SEP + "pippo.txt", "09.02.22" + " -" + "prova", save, loader);
+		finder.updateObservations(SAVE_DIR + SEP + "pippo.txt", "09.05.22"+ " - " + "prova", save, loader);
 		Loader loadTest = new LoaderImpl();
 		BufferedReader br = loadTest.readFile(SAVE_DIR + SEP + "pippo.txt");
 		System.out.println(br.readLine());
@@ -72,11 +73,6 @@ public class Test {
 	public void test5UseCore() throws IOException {
 		System.out.println("\ntest 5");
 		ModelCoreImpl coreTest = new ModelCoreImpl();
-		FileWriter fw = new FileWriter(new File(SAVE_DIR + SEP + "pippo.txt"));
-		coreTest.updateObservations("09.02.22","prova");
-		coreTest.updateObservations("09.05.22","prova");
-		fw.flush();
-		fw.close();
 		Loader loadTest = new LoaderImpl();
 		BufferedReader br = loadTest.readFile(SAVE_DIR + SEP + "pippo.txt");
 		System.out.println(br.readLine());
@@ -110,6 +106,8 @@ public class Test {
 		mci.chooseDate("20.09.2022");
 		mci.updateObservations("data", "prova");
 		mci.updateObservations("20.09.2022", "seconda prova");
+		mci.addObservationType("stupiscimi");
+		System.out.println(mci.getArrayMomentsList() + "\n" + mci.getArrayTypeList());
 	}
 	
 }
