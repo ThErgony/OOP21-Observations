@@ -1,13 +1,18 @@
 package oop21.tentelli.fonti.observations.core;
 
-import java.io.BufferedReader;
+/**
+ * Model core app, create all class need and pass reference for create, write and load. Create a first load: if is first time start software
+ * application create file moment list and type observed list format .txt, used for view to show the list of item user can get, if user need
+ * more item can add; if the installation are do after, load all list for user. Updater get all file for update and create file and folder
+ * user required.
+ * */
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import oop21.tentelli.fonti.observations.Updater;
-import oop21.tentelli.fonti.observations.FirstLoader;
 import oop21.tentelli.fonti.observations.Loader;
 import oop21.tentelli.fonti.observations.Saved;
 import oop21.tentelli.fonti.observations.utility.UpdaterImpl;
@@ -30,61 +35,59 @@ public class ModelCoreImpl {
 	
 	private final Saved save;
 	private final Loader loader;
-	private final FirstLoader firstStart;
 	private final Updater updater;
 	
+	/**
+	 * create new object for save and loader, first start and updater with parameter need for class
+	 * */
 	public ModelCoreImpl() throws IOException {
 		super();
 		this.save = new SavedImpl();
 		this.loader = new LoaderImpl();
-		this.firstStart = new FirstLoaderImpl(DIR, MOMENTS_LIST, TYPE_OBSERVED_LIST, save, loader);
+		new FirstLoaderImpl().firstLoad(DIR, STUDENT_DIR, MOMENTS_LIST, TYPE_OBSERVED_LIST, save, loader);;
 		this.updater = new UpdaterImpl(DIR, SEP, MOMENTS_LIST, DIR + STUDENT_DIR + SEP, loader);
 	}
 	
-	public BufferedReader readFile(final String name) throws IOException {
-		return this.loader.readFile(name);
-	}
-	
 	public void updateObservations(final String time, final String type) throws IOException {
-		this.updater.updateObservations(time + "\n" + type, save, loader);
+		this.updater.updateObservations(time + "\n" + type, this.save);
 	}
-	
+
 	public void addObservationType(final String type) throws IOException {
 		if (!this.getArrayTypeList().contains(type)) {
-			this.updater.updateObservations(DIR + TYPE_OBSERVED_LIST, type, save, loader);
+			this.updater.updateObservations(DIR + TYPE_OBSERVED_LIST, type, this.save);
 		}
 	}
 	
 	public ArrayList<String> getArrayMomentsList() throws IOException {
-		return new ArrayList<>(List.copyOf(loader.fillList(DIR + MOMENTS_LIST, firstStart.getArrayMomentsList())));
+		return new ArrayList<>(List.copyOf(loader.fillList(DIR + MOMENTS_LIST)));
 	}
 
 	public ArrayList<String> getArrayTypeList() throws IOException {
-		return new ArrayList<>(List.copyOf(loader.fillList(DIR + TYPE_OBSERVED_LIST, firstStart.getArrayTypeList())));
+		return new ArrayList<>(List.copyOf(loader.fillList(DIR + TYPE_OBSERVED_LIST)));
 	}
 	
 	public ArrayList<String> getObservedStudents() {
-		return new ArrayList<>(List.copyOf(updater.getObservedStudents()));
+		return new ArrayList<>(List.copyOf(this.updater.getObservedStudents()));
 	}
 
 	public ArrayList<String> getObservedMoments() {
-		return new ArrayList<>(List.copyOf(updater.getObservedMoments()));
+		return new ArrayList<>(List.copyOf(this.updater.getObservedMoments()));
 	}
 
 	public ArrayList<String> getObservedDates() {
-		return new ArrayList<>(List.copyOf(updater.getObservedDates()));
+		return new ArrayList<>(List.copyOf(this.updater.getObservedDates()));
 	}
 	
 	public void chooseStudent(final String student) throws IOException {
-		updater.chooseStudent(student, save, loader);
+		this.updater.chooseStudent(student, this.save);
 	}
 	
 	public void chooseMoment(final String moment) throws IOException {
-		updater.chooseMoment(moment, this.getArrayMomentsList(), save, loader);
+		this.updater.chooseMoment(moment, this.getArrayMomentsList(), this.save);
 	}
 
 	public void chooseDate(final String date) throws IOException {
-		updater.chooseDate(date + EXTENSION, save, loader);
+		this.updater.chooseDate(date + EXTENSION, this.save);
 	}
 
 }

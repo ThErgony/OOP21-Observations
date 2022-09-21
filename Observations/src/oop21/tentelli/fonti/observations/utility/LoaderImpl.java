@@ -22,33 +22,35 @@ public class LoaderImpl implements Loader {
 		for (final String e : new File(dir).list()) {
 			listFileFolder.add(e);
 		}
+		listFileFolder.sort((a,b)->a.compareTo(b));
 		return listFileFolder;
 	}
 	
 	/** read file
 	 * @throws FileNotFoundException */
-	public BufferedReader readFile(final String dir) throws FileNotFoundException {
-		if (!new File(dir).exists()) {
-			File file = new File(dir);
+	private BufferedReader readFile(final String path) throws FileNotFoundException {
+		if (!new File(path).exists()) {
+			File file = new File(path);
 			try {
 				file.createNewFile();
 			} catch (IOException e) {
-				System.out.println("Impossibile create file " + new File(dir).getName());
+				System.out.println("Impossibile create file " + new File(path).getName());
 				e.printStackTrace();
 			}
 		}
-		return new BufferedReader(new FileReader(new File(dir)));
+		return new BufferedReader(new FileReader(new File(path)));
 	}
 	
-	/* import list file to array*/
-	public ArrayList<String> fillList(final String list, final ArrayList<String> arrayList) throws IOException {
-		arrayList.clear();
-		BufferedReader reader = this.readFile(list);
+	/** import list file to array*/
+	public ArrayList<String> fillList(final String path) throws IOException {
+		ArrayList<String> arrayList = new ArrayList<>();
+		BufferedReader reader = this.readFile(path);
 		String item = reader.readLine();
 		while (item != null) {
 			arrayList.add(item);
 			item = reader.readLine();			
 		}
+		arrayList.sort((a,b)->a.compareTo(b));
 		reader.close();
 		return arrayList;
 	}

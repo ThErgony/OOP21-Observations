@@ -1,6 +1,5 @@
 package oop21.tentelli.fonti.observations.utility;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -10,13 +9,11 @@ import oop21.tentelli.fonti.observations.Saved;
 
 public class UpdaterImpl implements Updater {
 
-	private ArrayList<String> observedStudents;
-	private ArrayList<String> observedMoments =  new  ArrayList<>();
-	private ArrayList<String> observedDates = new ArrayList<>();
-	
 	private final String dir;
 	private final String sep;
 	private final String momentList;
+	
+	private final Loader loader;
 	
 	private String selected;
 	private String student;
@@ -34,90 +31,78 @@ public class UpdaterImpl implements Updater {
 		this.momentList = momentList;
 		this.selected = selected;
 		this.studentRoot = selected;
-		this.observedStudents = this.check(loader, this.selected);
+		this.loader = loader;
 	}
 
-	public ArrayList<String> check(final Loader loader, final String dir) {
-		return loader.loadFileFolder(dir);
+	private ArrayList<String> check(final String path) {
+		return this.loader.loadFileFolder(path);
 	}
 
-	public void chooseStudent(final String student, final Saved save, final Loader loader) throws IOException {
+	public void chooseStudent(final String student, final Saved save) throws IOException {
 		this.student = this.studentRoot + student + this.sep;
-		if (!loader.loadFileFolder(this.studentRoot).contains(student)) {
+		if (!this.loader.loadFileFolder(this.studentRoot).contains(student)) {
 			save.makeDir(this.student);
-			this.observedStudents = this.refresh(loader, this.observedStudents, this.studentRoot);
 		} else {
 			this.selected = this.student;
 			this.momentRoot = this.student;
-			this.observedMoments = this.refresh(loader, this.observedMoments, this.momentRoot);
 		}
 	}
 	
 	public void chooseMoment(final String moment, final ArrayList<String> updateList,
-								final Saved save, final Loader loader) throws IOException {
+								final Saved save) throws IOException {
 		this.moment = this.momentRoot + moment + this.sep;
-		if (!loader.loadFileFolder(this.momentRoot).contains(moment)) {
+		if (!this.loader.loadFileFolder(this.momentRoot).contains(moment)) {
 			save.makeDir(this.moment);
-			this.observedMoments = this.refresh(loader, this.observedMoments, this.momentRoot);
 			if (!updateList.contains(moment)) {
 				updateList.add(moment);
+				updateList.sort((a,b)-> a.compareTo(b));
 				save.writeList(this.dir + this.momentList, updateList);
 			}
 		} else {
 				this.selected = this.moment;
 				this.dateRoot = this.moment;
-				this.observedDates = this.refresh(loader, observedDates, this.selected);
 		}
 	}
 
-	public void chooseDate(final String date, final Saved save, final Loader loader) throws IOException {
+	public void chooseDate(final String date, final Saved save) throws IOException {
 		this.date = this.dateRoot + date;
-		if (!loader.loadFileFolder(this.moment).contains(date)) {
+		if (!this.loader.loadFileFolder(this.moment).contains(date)) {
 			save.makeFile(this.date);
-			this.observedDates = this.refresh(loader, observedDates, this.selected);
 		}
 		this.selected = this.date;
 		
 	}
-	
-	private ArrayList<String> refresh(final Loader loader, ArrayList<String> updateList, final String choose) {
-		updateList.clear();
-		return updateList = this.check(loader, choose);
-	}
-	
+
 	public ArrayList<String> getObservedStudents() {
-		return this.observedStudents;
+		return this.check(this.studentRoot);
 	}
 
 	public ArrayList<String> getObservedMoments() {
-		return this.observedMoments;
+		return this.check(this.momentRoot);
 	}
 
 	public ArrayList<String> getObservedDates() {
-		return this.observedDates;
+		return this.check(this.dateRoot);
 	}
 
-	public void backFolder(final String back, final Loader loader) {
-		if (loader.loadFileFolder(this.studentRoot).contains(back)) {
-			this.selected = this.dir + back;
-			this.observedMoments = this.refresh(loader, observedMoments, momentRoot);
-		} else if (loader.loadFileFolder(this.momentRoot).contains(back)) {
-			this.selected = new File(this.moment).getParent();
-			this.observedDates = this.refresh(loader, observedDates, this.selected);
-		} else if (this.selected.equals(back)) {
-			this.selected = this.dir;
-			this.observedStudents = this.refresh(loader, observedStudents, studentRoot);
-		}
+//	public void backFolder(final String back, final Loader loader) {
+//		if (loader.loadFileFolder(this.studentRoot).contains(back)) {
+//			this.selected = this.dir + back;
+//		} else if (loader.loadFileFolder(this.momentRoot).contains(back)) {
+//			this.selected = new File(this.moment).getParent();
+//		} else if (this.selected.equals(back)) {
+//			this.selected = this.dir;
+//		}
+//	}
+
+	public void updateObservations(final String element, final Saved save) throws IOException {
+		this.updateObservations(this.selected, element, save);
 	}
 
-	public void updateObservations(final String element, final Saved save, final Loader loader) throws IOException {
-		this.updateObservations(this.selected, element, save, loader);
-	}
-
-	public void updateObservations(final String path, final String element,
-									final Saved save, final Loader loader) throws IOException {		
-		ArrayList<String> list = loader.fillList(path, new ArrayList<>());
+	public void updateObservations(final String path, final String element,	final Saved save) throws IOException {		
+		ArrayList<String> list = this.loader.fillList(path);
 		list.add(element);
+		list.sort((a,b)-> a.compareTo(b));
 		save.writeList(path, list);		
 	}
 }

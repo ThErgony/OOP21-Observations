@@ -2,11 +2,13 @@ package oop21.tentelli.fonti.observations;
 
 import static org.junit.Assert.*;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Calendar;
 
-import oop21.tentelli.fonti.observations.core.ModelCoreImpl;
 import oop21.tentelli.fonti.observations.utility.UpdaterImpl;
 import oop21.tentelli.fonti.observations.utility.LoaderImpl;
 import oop21.tentelli.fonti.observations.utility.SavedImpl;
@@ -14,7 +16,7 @@ import oop21.tentelli.fonti.observations.utility.SavedImpl;
 
 
 
-public class Test {
+public class Test extends TestCore{
 
 	public static final String SEP = File.separator;
 	public static final String ROOT = System.getProperty("user.home");
@@ -62,55 +64,14 @@ public class Test {
 		Loader loader = new LoaderImpl();
 		Saved save = new SavedImpl();
 		Updater updater = new UpdaterImpl(SAVE_DIR + SEP, SEP, "pippo.txt", SAVE_DIR + SEP, loader);
-		updater.updateObservations(SAVE_DIR + SEP + "pippo.txt", "09.02.22" + " -" + "prova", save, loader);
-		updater.updateObservations(SAVE_DIR + SEP + "pippo.txt", "09.05.22"+ " - " + "prova", save, loader);
-		Loader loadTest = new LoaderImpl();
-		BufferedReader br = loadTest.readFile(SAVE_DIR + SEP + "pippo.txt");
-		System.out.println(br.readLine());
-		System.out.println(br.readLine());
-		br.close();
-	}
-	
-	/* test for new core model class */
-	@org.junit.Test
-	public void test5UseCore() throws IOException {
-		System.out.println("\ntest 5");
-		ModelCoreImpl coreTest = new ModelCoreImpl();
-		Loader loadTest = new LoaderImpl();
-		BufferedReader br = loadTest.readFile(SAVE_DIR + SEP + "pippo.txt");
-		System.out.println(br.readLine());
-		System.out.println(br.readLine());
-		br = coreTest.readFile(SAVE_DIR + SEP + "observations.txt");
-		System.out.println(br.readLine());
-		System.out.println(br.readLine());
-		System.out.println(br.readLine());
-		br.close();
-	}
-
-	/* test for check file/folder in selected folder */
-	@org.junit.Test
-	public void test6() throws IOException {
-		System.out.println("\ntest 6");
-		ModelCoreImpl mci = new ModelCoreImpl();
-		mci.chooseStudent("pippo");
-		mci.chooseStudent("pluto");
-		mci.chooseStudent("pippo");
-		mci.chooseMoment("prova");
-		mci.chooseMoment("prova");
-		mci.chooseMoment("pippo");
-		mci.chooseMoment("pluto");
-		System.out.println(mci.getObservedStudents().size() + " " + mci.getObservedStudents());
-		assertEquals(2, mci.getObservedStudents().size());
-		assertEquals(3, mci.getObservedMoments().size());
-		System.out.println(mci.getObservedMoments().size() + " " + mci.getObservedMoments());
-		System.out.println(mci.getArrayMomentsList() + "\n" + mci.getArrayTypeList());
-		mci.chooseMoment("pippo");
-		mci.chooseDate("20.09.2022");
-		mci.chooseDate("20.09.2022");
-		mci.updateObservations("data", "prova");
-		mci.updateObservations("20.09.2022", "seconda prova");
-		mci.addObservationType("stupiscimi");
-		System.out.println(mci.getArrayMomentsList() + "\n" + mci.getArrayTypeList());
+		String time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
+		updater.updateObservations(SAVE_DIR + SEP + "pippo.txt", time + " - " + "prova", save);
+		time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
+		updater.updateObservations(SAVE_DIR + SEP + "pippo.txt", time + " - " + "prova4", save);
+		ArrayList<String> list = loader.fillList(SAVE_DIR + SEP + "pippo.txt");
+		System.out.println(list);
+		System.out.println(new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()));
+		System.out.println(LocalDate.now());
 	}
 	
 }

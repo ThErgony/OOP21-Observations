@@ -41,9 +41,9 @@ public class SavedImpl implements Saved {
 	}
 	
 	/* create file and write all the file in the array list*/
-	public void writeList(final String list, final ArrayList<String> arrayList) throws IOException {
-		this.makeFile(list);
-		final FileWriter fw = new FileWriter(new File(list));
+	public void writeList(final String path, final ArrayList<String> arrayList) throws IOException {
+		this.makeFile(path);
+		final FileWriter fw = new FileWriter(new File(path));
 		for (final String item : arrayList) {
 			this.updateList(fw, item);
 		}

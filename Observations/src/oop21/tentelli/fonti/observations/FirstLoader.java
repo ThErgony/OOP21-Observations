@@ -1,11 +1,10 @@
 package oop21.tentelli.fonti.observations;
 
-import java.util.ArrayList;
+import java.io.IOException;
 
 public interface FirstLoader {
 
-	ArrayList<String> getArrayMomentsList();
-
-	ArrayList<String> getArrayTypeList();
+	void firstLoad(final String dir, final String students, final String moments, final String types,
+			final Saved save, final Loader loader) throws IOException;
 
 }
