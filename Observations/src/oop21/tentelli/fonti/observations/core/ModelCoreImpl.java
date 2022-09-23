@@ -97,6 +97,12 @@ public class ModelCoreImpl {
 		this.updater.chooseDate(date + EXTENSION, this.save);
 	}
 
+	public ArrayList<Pair<String, String>> getDataSplitDayChoose() throws IOException {
+		ArrayList<Pair<String, String>> list  = new ArrayList<>();
+		list.addAll(this.splitDatas(this.getDataDayChoose()));
+		return list;
+	}
+	
 	public ArrayList<String> getDataDayChoose() throws IOException {
 		return new ArrayList<>(List.copyOf(this.updater.getObservedDay()));
 	}
@@ -121,12 +127,47 @@ public class ModelCoreImpl {
 		return list;
 	}
 	
-	public ArrayList<Pair<String, String>> list() throws IOException{
+	private ArrayList<Pair<String, String>> splitDatas(final ArrayList<String> arrayList) throws IOException{
 		ArrayList<Pair<String, String>> list = new ArrayList<>();
-		for (String string : this.getDataDayChoose()) {
-			String[] split = string.split("-");
+		for (String string : arrayList) {
+			String[] split = string.split(" - ");
 			list.add(new Pair<>(split[0], split[1]));
 		}
+		return list;
+	}
+	
+	public ArrayList<Pair<String, Integer>> getCounterDayChoose() throws IOException {
+		ArrayList<Pair<String, Integer>> list = counter(this.getDataDayChoose());
+		return list;
+	}
+
+	private ArrayList<Pair<String, Integer>> counter(final ArrayList<String> arrayList) throws IOException {
+		ArrayList<Pair<String, Integer>> list = new ArrayList<>();
+		for (Pair<String, String> counter : this.splitDatas(arrayList)) {
+			ArrayList<Pair<String, Integer>> tempList = new ArrayList<>();
+			tempList.addAll(list);
+			String element = counter.getX();
+			int inc = 0;
+			if (!list.isEmpty()) {	
+				for (Pair<String, Integer> item : tempList) {
+					if (item.getX().contains(element)) {
+						inc = item.getY();
+						list.remove(new Pair<>(item.getX(), item.getY()));
+					}
+				}
+			}
+			list.add(new Pair<>(element, ++inc));
+		}
+		return list;
+	}
+	
+	public ArrayList<Pair<String, Integer>> getCounterDateChoose() throws IOException {
+		ArrayList<Pair<String, Integer>> list = this.counter(this.getDataMomentChoose());
+		return list;
+	}
+
+	public ArrayList<Pair<String, Integer>> getCounterMomentChoose() throws IOException {
+		ArrayList<Pair<String, Integer>> list = this.counter(this.getDataStudentChoose());
 		return list;
 	}
 	
