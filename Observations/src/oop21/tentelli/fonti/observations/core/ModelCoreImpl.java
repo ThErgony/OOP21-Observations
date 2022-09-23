@@ -162,12 +162,30 @@ public class ModelCoreImpl {
 	}
 	
 	public ArrayList<Pair<String, Integer>> getCounterDateChoose() throws IOException {
-		ArrayList<Pair<String, Integer>> list = this.counter(this.getDataMomentChoose());
+		ArrayList<Pair<String, Integer>> list = new ArrayList<>();
+		for (String element : this.getObservedDates()) {
+			this.chooseDate(element);
+			ArrayList<Pair<String, Integer>> tempList = this.counter(this.getDataMomentChoose());
+			int sum = 0;
+			for (Pair<String, Integer> pair : tempList) {
+				sum += pair.getY();
+			}
+			list.add(new Pair<>(element, sum));
+		}
 		return list;
 	}
 
 	public ArrayList<Pair<String, Integer>> getCounterMomentChoose() throws IOException {
-		ArrayList<Pair<String, Integer>> list = this.counter(this.getDataStudentChoose());
+		ArrayList<Pair<String, Integer>> list = new ArrayList<>();
+		for (String element : this.getObservedMoments()) {
+			this.chooseMoment(element);
+			ArrayList<Pair<String, Integer>> tempList = this.counter(this.getDataStudentChoose());
+			int sum = 0;
+			for (Pair<String, Integer> pair : tempList) {
+				sum += pair.getY();
+		}
+		list.add(new Pair<>(element, sum));
+	}
 		return list;
 	}
 	
