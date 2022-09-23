@@ -62,7 +62,11 @@ public class TestCore {
 		System.out.println(mci.getArrayMomentsList() + "\n" + mci.getArrayTypeList());
 		System.out.println(mci.getDataDayChoose());
 		System.out.println("elenco finale " + mci.getDataMomentChoose());
-		System.out.println("il pair " + mci.list());
+		System.out.println("il pair " + mci.getDataSplitDayChoose());
+		System.out.println("counter day " + mci.getCounterDayChoose());
+		System.out.println("counter date " + mci.getCounterDateChoose());
+		System.out.println("counter moment " + mci.getCounterMomentChoose());
+
 	}
 
 }
