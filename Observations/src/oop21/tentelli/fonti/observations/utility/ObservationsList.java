@@ -2,15 +2,18 @@ package oop21.tentelli.fonti.observations.utility;
 
 public enum ObservationsList {
 	
-	SI_ALZA("si alza"),
+	PLAY("gioca con oggetti in suo possesso"),
 	
-	PARLA("parla"),
+	SPEAK("interviene senza aspettare il proprio turno e in modo non adeguato"),
 	
-	CORRE("corre"),
+	LOW_ATTENTION("presta poca attenzione ai dettagli"),
 	
-	LANCIA_OGGETTI("lancia oggetti"),
+	DISTRACT("si lascia distrarre da stimoli esterni o intorno a lui"),
 	
-	DISTURBA("disturba");
+	STAND_UP("si alza dal banco"),
+	
+	MAKE_ERROR("compie errori nella scelta dei dati da rielaborare");
+	
 
 	private String showText;
 	

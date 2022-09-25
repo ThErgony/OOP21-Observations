@@ -10,7 +10,7 @@ public enum MomentsList {
 	
 	HOUR_4("quarta ora"),
 	
-	RECREATION("ricreazione"),
+	LUNCH("pranzo"),
 	
 	SPORT("ginnastica"),
 	
