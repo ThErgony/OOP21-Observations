@@ -39,6 +39,10 @@ public class ModelCoreImpl {
 	private final Loader loader;
 	private final Updater updater;
 	
+	private String student;
+	private String moment;
+	private String date;
+	
 	/**
 	 * create new object for save and loader, first start and updater with parameter need for class
 	 * */
@@ -48,6 +52,97 @@ public class ModelCoreImpl {
 		this.loader = new LoaderImpl();
 		new FirstLoaderImpl().firstLoad(DIR, STUDENT_DIR, MOMENTS_LIST, TYPE_OBSERVED_LIST, save, loader);;
 		this.updater = new UpdaterImpl(DIR + MOMENTS_LIST, SEP, DIR + STUDENT_DIR + SEP, loader);
+	}
+	
+	public ArrayList<String> getArrayMomentsList() throws IOException {
+		return new ArrayList<>(List.copyOf(loader.fillList(DIR + MOMENTS_LIST)));
+	}
+
+	public ArrayList<String> getArrayTypeList() throws IOException {
+		return new ArrayList<>(List.copyOf(loader.fillList(DIR + TYPE_OBSERVED_LIST)));
+	}
+	
+	public void chooseStudent(final String student) throws IOException {
+		this.student = student;
+		this.updater.chooseStudent(student, this.save);
+	}
+	
+	public void chooseMoment(final String moment) throws IOException {
+		this.moment = moment;
+		this.updater.chooseMoment(moment, this.getArrayMomentsList(), this.save);
+	}
+
+	public void chooseDate(final String date) throws IOException {
+		this.date = date;
+		this.updater.chooseDate(date + EXTENSION, this.save);
+	}
+	
+	public ArrayList<String> getDataDayChoose() throws IOException {
+		return new ArrayList<>(List.copyOf(this.updater.getObservedDay()));
+	}
+	
+	public ArrayList<Pair<String, Integer>> getDataMomentChoose() throws IOException {
+		return this.counter(this.momentObservations());
+	}
+	
+	public ArrayList<Pair<String, Integer>> getDataStudentChoose() throws IOException {
+		return this.counter(this.studentObservations());
+	}
+	
+	public ArrayList<Pair<String, Integer>> getCounterDayChoose() throws IOException {
+		ArrayList<Pair<String, Integer>> list = this.counter(this.getDataDayChoose());
+		return list;
+	}
+	
+	public ArrayList<Pair<String, Integer>> getCounterDates() throws IOException {
+		String dat = this.date;
+		ArrayList<Pair<String, Integer>> list = new ArrayList<>();
+		for (final String element : this.getObservedDates()) {
+			this.chooseDate(element);
+			ArrayList<Pair<String, Integer>> tempList = this.counter(this.getDataDayChoose());
+			int sum = 0;
+			for (final Pair<String, Integer> pair : tempList) {
+				sum += pair.getY();
+			}
+			list.add(new Pair<>(element, sum));
+		}
+		this.refreshDate(dat);
+		return list;
+	}
+
+	public ArrayList<Pair<String, Integer>> getCounterMoments() throws IOException {
+		String mom = this.moment;
+		String dat = this.date;
+		ArrayList<Pair<String, Integer>> list = new ArrayList<>();
+		for (final String element : this.getObservedMoments()) {
+			this.chooseMoment(element);
+			ArrayList<Pair<String, Integer>> tempList = this.getCounterDates();
+			int sum = 0;
+			for (final Pair<String, Integer> pair : tempList) {
+				sum += pair.getY();
+			}
+			list.add(new Pair<>(element, sum));
+		}
+		this.refreshMoment(mom, dat);
+		return list;
+	}
+	
+	public ArrayList<Pair<String, Integer>> getCounterStudents() throws IOException {
+		String stud = this.student;
+		String mom = this.moment;
+		String dat = this.date;
+		ArrayList<Pair<String, Integer>> list = new ArrayList<>();
+		for (final String element : this.getObservedStudents()) {
+			this.chooseStudent(element);
+			ArrayList<Pair<String, Integer>> tempList = this.getCounterMoments();
+			int sum = 0;
+			for (final Pair<String, Integer> pair : tempList) {
+				sum += pair.getY();
+			}
+			list.add(new Pair<>(element, sum));
+		}
+		this.refreshStudent(stud, mom, dat);
+		return list;
 	}
 	
 	public void updateObservations(final String time, final String type) throws IOException {
@@ -60,97 +155,25 @@ public class ModelCoreImpl {
 		}
 	}
 	
-	public ArrayList<String> getArrayMomentsList() throws IOException {
-		return new ArrayList<>(List.copyOf(loader.fillList(DIR + MOMENTS_LIST)));
-	}
-
-	public ArrayList<String> getArrayTypeList() throws IOException {
-		return new ArrayList<>(List.copyOf(loader.fillList(DIR + TYPE_OBSERVED_LIST)));
-	}
-	
-	public ArrayList<String> getObservedStudents() {
-		return new ArrayList<>(List.copyOf(this.updater.getObservedStudents()));
-	}
-
-	public ArrayList<String> getObservedMoments() {
-		return new ArrayList<>(List.copyOf(this.updater.getObservedMoments()));
-	}
-
-	public ArrayList<String> getObservedDates() {
-		ArrayList<String> list = new ArrayList<>();
-		for (String string : List.copyOf(this.updater.getObservedDates())) {
-			string = string.substring(0, string.length()-4);
-			list.add(string);
-		}
-		return list;
-	}
-	
-	public void chooseStudent(final String student) throws IOException {
-		this.updater.chooseStudent(student, this.save);
-	}
-	
-	public void chooseMoment(final String moment) throws IOException {
-		this.updater.chooseMoment(moment, this.getArrayMomentsList(), this.save);
-	}
-
-	public void chooseDate(final String date) throws IOException {
-		this.updater.chooseDate(date + EXTENSION, this.save);
-	}
-
-	public ArrayList<Pair<String, String>> getDataSplitDayChoose() throws IOException {
-		ArrayList<Pair<String, String>> list  = new ArrayList<>();
-		list.addAll(this.splitDatas(this.getDataDayChoose()));
-		return list;
-	}
-	
-	public ArrayList<String> getDataDayChoose() throws IOException {
-		return new ArrayList<>(List.copyOf(this.updater.getObservedDay()));
-	}
-
-	public ArrayList<String> getDataMomentChoose() throws IOException {
-		ArrayList<String> list = new ArrayList<>();
-		for (String e : this.getObservedDates()) {
-			this.chooseDate(e);
-			list.addAll(this.getDataDayChoose());
-		}
-		list.sort((a,b)->a.compareTo(b));
-		return list;
-	}
-	
-	public ArrayList<String> getDataStudentChoose() throws IOException {
-		ArrayList<String> list = new ArrayList<>();
-		for (String e : this.getObservedMoments()) {
-			this.chooseMoment(e);
-			list.addAll(this.getDataMomentChoose());
-		}
-		list.sort((a,b)->a.compareTo(b));
-		return list;
-	}
-	
 	private ArrayList<Pair<String, String>> splitDatas(final ArrayList<String> arrayList) throws IOException{
 		ArrayList<Pair<String, String>> list = new ArrayList<>();
-		for (String string : arrayList) {
+		for (final String string : arrayList) {
 			String[] split = string.split(" - ");
 			list.add(new Pair<>(split[0], split[1]));
 		}
 		return list;
 	}
-	
-	public ArrayList<Pair<String, Integer>> getCounterDayChoose() throws IOException {
-		ArrayList<Pair<String, Integer>> list = counter(this.getDataDayChoose());
-		return list;
-	}
 
 	private ArrayList<Pair<String, Integer>> counter(final ArrayList<String> arrayList) throws IOException {
 		ArrayList<Pair<String, Integer>> list = new ArrayList<>();
-		for (Pair<String, String> counter : this.splitDatas(arrayList)) {
+		for (final Pair<String, String> counter : this.splitDatas(arrayList)) {
 			ArrayList<Pair<String, Integer>> tempList = new ArrayList<>();
 			tempList.addAll(list);
 			String element = counter.getX();
 			int inc = 0;
 			if (!list.isEmpty()) {	
-				for (Pair<String, Integer> item : tempList) {
-					if (item.getX().contains(element)) {
+				for (final Pair<String, Integer> item : tempList) {
+					if (item.getX().equals(element)) {
 						inc = item.getY();
 						list.remove(new Pair<>(item.getX(), item.getY()));
 					}
@@ -160,33 +183,66 @@ public class ModelCoreImpl {
 		}
 		return list;
 	}
-	
-	public ArrayList<Pair<String, Integer>> getCounterDateChoose() throws IOException {
-		ArrayList<Pair<String, Integer>> list = new ArrayList<>();
-		for (String element : this.getObservedDates()) {
-			this.chooseDate(element);
-			ArrayList<Pair<String, Integer>> tempList = this.counter(this.getDataMomentChoose());
-			int sum = 0;
-			for (Pair<String, Integer> pair : tempList) {
-				sum += pair.getY();
-			}
-			list.add(new Pair<>(element, sum));
+
+	private ArrayList<String> momentObservations() throws IOException {
+		String mom = this.moment;
+		String dat = this.date;
+		ArrayList<String> list = new ArrayList<>();
+		for (final String e : this.getObservedDates()) {
+			this.chooseDate(e);
+			list.addAll(this.getDataDayChoose());
 		}
+		list.sort((a,b)->a.compareTo(b));
+		this.refreshMoment(mom, dat);
 		return list;
+	}
+	
+	private ArrayList<String> studentObservations() throws IOException {
+		String stud = this.student;
+		String mom = this.moment;
+		String dat = this.date;
+		ArrayList<String> list = new ArrayList<>();
+		for (final String e : this.getObservedMoments()) {
+			this.chooseMoment(e);
+			list.addAll(this.momentObservations());
+		}
+		list.sort((a,b)->a.compareTo(b));
+		this.refreshStudent(stud, mom, dat);
+		return list;
+	}
+	
+	private ArrayList<String> getObservedStudents() {
+		return new ArrayList<>(List.copyOf(this.updater.getObservedStudents()));
 	}
 
-	public ArrayList<Pair<String, Integer>> getCounterMomentChoose() throws IOException {
-		ArrayList<Pair<String, Integer>> list = new ArrayList<>();
-		for (String element : this.getObservedMoments()) {
-			this.chooseMoment(element);
-			ArrayList<Pair<String, Integer>> tempList = this.counter(this.getDataStudentChoose());
-			int sum = 0;
-			for (Pair<String, Integer> pair : tempList) {
-				sum += pair.getY();
-		}
-		list.add(new Pair<>(element, sum));
+	private ArrayList<String> getObservedMoments() {
+		return new ArrayList<>(List.copyOf(this.updater.getObservedMoments()));
 	}
+
+	private ArrayList<String> getObservedDates() {
+		ArrayList<String> list = new ArrayList<>();
+		for (String string : List.copyOf(this.updater.getObservedDates())) {
+			string = string.substring(0, string.length()-4);
+			list.add(string);
+		}
 		return list;
+	}
+	
+	private void refreshStudent(final String stud, final String mom, final String dat) throws IOException {
+		this.student = stud;
+		this.chooseStudent(this.student);
+		refreshMoment(mom, dat);
+	}
+
+	private void refreshMoment(final String mom, final String dat) throws IOException {
+		this.moment = mom;
+		this.chooseMoment(this.moment);
+		refreshDate(dat);
+	}
+
+	private void refreshDate(final String dat) throws IOException {
+		this.date = dat;
+		this.chooseDate(this.date);
 	}
 	
 }

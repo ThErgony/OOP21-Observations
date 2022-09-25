@@ -70,14 +70,23 @@ public class UpdaterImpl implements Updater {
 	}
 
 	public ArrayList<String> getObservedMoments() {
+		if (this.momentRoot.isBlank()) {
+			return new ArrayList<>();
+		}
 		return this.check(this.momentRoot);
 	}
 
 	public ArrayList<String> getObservedDates() {
+		if (this.dateRoot.isBlank()) {
+			return new ArrayList<>();
+		}
 		return this.check(this.dateRoot);
 	}
 	
 	public ArrayList<String> getObservedDay() throws IOException {
+		if (this.date.isBlank()) {
+			return new ArrayList<>();
+		}
 		return this.loader.fillList(this.date);
 	}
 
