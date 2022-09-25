@@ -66,28 +66,26 @@ public class UpdaterImpl implements Updater {
 	}
 
 	public ArrayList<String> getObservedStudents() {
-		return this.check(this.studentRoot);
+		return this.observed(this.studentRoot, this.check(this.studentRoot));
 	}
 
 	public ArrayList<String> getObservedMoments() {
-		if (this.momentRoot.isBlank()) {
+		return this.observed(this.momentRoot, this.check(this.momentRoot));
+	}
+
+	private ArrayList<String> observed(final String observed, ArrayList<String> returnOK) {
+		if (observed.isBlank()) {
 			return new ArrayList<>();
 		}
-		return this.check(this.momentRoot);
+		return returnOK;
 	}
 
 	public ArrayList<String> getObservedDates() {
-		if (this.dateRoot.isBlank()) {
-			return new ArrayList<>();
-		}
-		return this.check(this.dateRoot);
+		return this.observed(this.dateRoot, this.check(this.dateRoot));
 	}
 	
 	public ArrayList<String> getObservedDay() throws IOException {
-		if (this.date.isBlank()) {
-			return new ArrayList<>();
-		}
-		return this.loader.fillList(this.date);
+		return this.observed(this.date, this.loader.fillList(this.date));
 	}
 
 	public void updateObservations(final String element, final Saved save) throws IOException {

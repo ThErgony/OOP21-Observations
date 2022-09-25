@@ -43,6 +43,10 @@ public class ModelCoreImpl {
 	private String moment;
 	private String date;
 	
+	private String tempStudent = "";
+	private String tempMoment = "";
+	private String tempDate = "";
+	
 	/**
 	 * create new object for save and loader, first start and updater with parameter need for class
 	 * */
@@ -95,7 +99,6 @@ public class ModelCoreImpl {
 	}
 	
 	public ArrayList<Pair<String, Integer>> getCounterDates() throws IOException {
-		String dat = this.date;
 		ArrayList<Pair<String, Integer>> list = new ArrayList<>();
 		for (final String element : this.getObservedDates()) {
 			this.chooseDate(element);
@@ -106,13 +109,17 @@ public class ModelCoreImpl {
 			}
 			list.add(new Pair<>(element, sum));
 		}
-		this.refreshDate(dat);
 		return list;
 	}
 
+	private void resetDate() {
+		this.tempDate = "";
+	}
+
 	public ArrayList<Pair<String, Integer>> getCounterMoments() throws IOException {
-		String mom = this.moment;
-		String dat = this.date;
+		if (this.tempStudent.isBlank()) {
+			this.tempMoment = this.moment;
+		}
 		ArrayList<Pair<String, Integer>> list = new ArrayList<>();
 		for (final String element : this.getObservedMoments()) {
 			this.chooseMoment(element);
@@ -123,14 +130,21 @@ public class ModelCoreImpl {
 			}
 			list.add(new Pair<>(element, sum));
 		}
-		this.refreshMoment(mom, dat);
+		if (this.tempStudent.isBlank()) {
+			this.refreshMoment(this.tempMoment, this.tempDate);
+			this.resetMoment();
+		}
 		return list;
+	}
+
+	private void resetMoment() {
+		this.tempMoment = "";
 	}
 	
 	public ArrayList<Pair<String, Integer>> getCounterStudents() throws IOException {
-		String stud = this.student;
-		String mom = this.moment;
-		String dat = this.date;
+		tempStudent = this.student;
+		tempMoment = this.moment;
+		tempDate = this.date;
 		ArrayList<Pair<String, Integer>> list = new ArrayList<>();
 		for (final String element : this.getObservedStudents()) {
 			this.chooseStudent(element);
@@ -141,8 +155,14 @@ public class ModelCoreImpl {
 			}
 			list.add(new Pair<>(element, sum));
 		}
-		this.refreshStudent(stud, mom, dat);
+		this.refreshStudent(this.tempStudent, this.tempMoment, this.tempDate);
+		this.resetStudent();
 		return list;
+	}
+
+	private void resetStudent() {
+		this.tempStudent = "";
+		this.resetMoment();
 	}
 	
 	public void updateObservations(final String time, final String type) throws IOException {
@@ -185,29 +205,33 @@ public class ModelCoreImpl {
 	}
 
 	private ArrayList<String> momentObservations() throws IOException {
-		String mom = this.moment;
-		String dat = this.date;
+		if (this.tempMoment.isBlank()) {
+			this.tempDate = this.date;
+		}
 		ArrayList<String> list = new ArrayList<>();
 		for (final String e : this.getObservedDates()) {
 			this.chooseDate(e);
 			list.addAll(this.getDataDayChoose());
 		}
 		list.sort((a,b)->a.compareTo(b));
-		this.refreshMoment(mom, dat);
+		if (this.tempMoment.isBlank()) {
+			this.refreshDate(this.tempDate);
+			resetDate();
+		}
 		return list;
 	}
 	
 	private ArrayList<String> studentObservations() throws IOException {
-		String stud = this.student;
-		String mom = this.moment;
-		String dat = this.date;
+		this.tempMoment = this.moment;
+		this.tempDate = this.date;
 		ArrayList<String> list = new ArrayList<>();
 		for (final String e : this.getObservedMoments()) {
 			this.chooseMoment(e);
 			list.addAll(this.momentObservations());
 		}
 		list.sort((a,b)->a.compareTo(b));
-		this.refreshStudent(stud, mom, dat);
+		this.refreshMoment(this.tempMoment, this.tempDate);
+		resetMoment();
 		return list;
 	}
 	
@@ -237,7 +261,6 @@ public class ModelCoreImpl {
 	private void refreshMoment(final String mom, final String dat) throws IOException {
 		this.moment = mom;
 		this.chooseMoment(this.moment);
-		refreshDate(dat);
 	}
 
 	private void refreshDate(final String dat) throws IOException {

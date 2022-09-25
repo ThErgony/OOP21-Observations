@@ -53,10 +53,11 @@ public class TestCore {
 		time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
 		mci.updateObservations(time, "provami");
 		time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
-		mci.updateObservations(time, "asseconda provati");
+ 		mci.updateObservations(time, "asseconda provati");
 		System.out.println("moments list " + mci.getArrayMomentsList() + "\n" + "types list " + mci.getArrayTypeList());
-		System.out.println("elenco student " + mci.getDataStudentChoose());
-		System.out.println("data day splitted " + mci.getDataDayChoose());
+		System.out.println("data student choose" + mci.getDataStudentChoose());
+		System.out.println("data moment choose" + mci.getDataMomentChoose());
+		System.out.println("data day choose " + mci.getDataDayChoose());
 		System.out.println("counter observed day " + mci.getCounterDayChoose());
 		System.out.println("counter observed date " + mci.getCounterDates() + " " + mci.getCounterDates().size());
 		System.out.println("counter observed moment " + mci.getCounterMoments()+ " " + mci.getCounterMoments().size());
@@ -64,6 +65,9 @@ public class TestCore {
 		assertEquals(2, mci.getCounterStudents().size());
 		assertEquals(3, mci.getCounterMoments().size());
 		assertEquals(2, mci.getCounterDates().size());
+		mci.chooseMoment("comprami");
+		assertEquals(0, mci.getCounterDates().size());
+
 	}
 	
 }
