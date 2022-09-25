@@ -19,10 +19,12 @@ public class LoaderImpl implements Loader {
 	/** return string list of file and/or folder from directory path selected */
 	public ArrayList<String> loadFileFolder(final String dir) {
 		ArrayList<String> listFileFolder = new ArrayList<>();
-		for (final String e : new File(dir).list()) {
-			listFileFolder.add(e);
+		if (new File(dir).exists()) {
+			for (final String e : new File(dir).list()) {
+				listFileFolder.add(e);
+			}
+			listFileFolder.sort((a,b)->a.compareTo(b));
 		}
-		listFileFolder.sort((a,b)->a.compareTo(b));
 		return listFileFolder;
 	}
 	
