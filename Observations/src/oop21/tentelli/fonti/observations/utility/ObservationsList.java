@@ -1,5 +1,9 @@
 package oop21.tentelli.fonti.observations.utility;
 
+/**
+ * Simple enum for first start observations type list 
+ */
+
 public enum ObservationsList {
 	
 	PLAY("gioca con oggetti in suo possesso"),

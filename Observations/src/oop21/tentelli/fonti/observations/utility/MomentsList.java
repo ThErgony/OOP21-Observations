@@ -1,5 +1,9 @@
 package oop21.tentelli.fonti.observations.utility;
 
+/**
+ * Simple enum for first start moment list
+ */
+
 public enum MomentsList {
 
 	HOUR_1("prima ora"),
