@@ -30,7 +30,7 @@ public class TestCore {
 	@org.junit.Test
 	public void test6() throws IOException {
 		System.out.println("\ntest 6");
-		ModelCoreImpl mci = new ModelCoreImpl();
+		ModelCore mci = new ModelCoreImpl();
 		System.out.println("moments list " + mci.getArrayMomentsList() + "\n" + "types list " + mci.getArrayTypeList());
 		mci.chooseStudent("pippo");
 		mci.chooseStudent("pluto");
@@ -67,7 +67,6 @@ public class TestCore {
 		assertEquals(2, mci.getCounterDates().size());
 		mci.chooseMoment("comprami");
 		assertEquals(0, mci.getCounterDates().size());
-
 	}
 	
 }
