@@ -59,14 +59,13 @@ public class ModelCoreImpl implements ModelCore {
 		this.save = new SavedImpl();
 		this.loader = new LoaderImpl();
 		this.counter = new CounterImpl();
-		new FirstLoaderImpl().firstLoad(DIR, STUDENT_DIR, MOMENTS_LIST, TYPE_OBSERVED_LIST, save, loader);;
+		new FirstLoaderImpl().firstLoad(DIR, STUDENT_DIR, MOMENTS_LIST, TYPE_OBSERVED_LIST, save);;
 		this.updater = new UpdaterImpl(DIR + MOMENTS_LIST, SEP, DIR + STUDENT_DIR + SEP, loader);
 	}
 	
 	/**
 	 * return copy of the list of all moments user can choose
 	 */
-	@Override
 	public ArrayList<String> getArrayMomentsList() throws IOException {
 		return new ArrayList<>(List.copyOf(this.loader.fillList(DIR + MOMENTS_LIST)));
 	}
@@ -74,7 +73,6 @@ public class ModelCoreImpl implements ModelCore {
 	/**
 	 * return copy of the list of all types of observations user can choose
 	 */
-	@Override
 	public ArrayList<String> getArrayTypeList() throws IOException {
 		return new ArrayList<>(List.copyOf(this.loader.fillList(DIR + TYPE_OBSERVED_LIST)));
 	}
@@ -85,7 +83,6 @@ public class ModelCoreImpl implements ModelCore {
 	 * @param student
 	 * 		string for name student choose/selected 
 	 */
-	@Override
 	public void chooseStudent(final String student) throws IOException {
 		this.student = student;
 		this.updater.chooseStudent(student, this.save);
@@ -97,7 +94,6 @@ public class ModelCoreImpl implements ModelCore {
 	 * @param moment
 	 * 		moment choose/selected for selected student 
 	 */
-	@Override
 	public void chooseMoment(final String moment) throws IOException {
 		this.moment = moment;
 		this.updater.chooseMoment(moment, this.getArrayMomentsList(), this.save);
@@ -109,7 +105,6 @@ public class ModelCoreImpl implements ModelCore {
 	 * @param data
 	 * 		data choose/selected for selected student and moment 
 	 */
-	@Override
 	public void chooseDate(final String date) throws IOException {
 		this.updater.chooseDate(date + EXTENSION, this.save);
 	}
@@ -120,7 +115,6 @@ public class ModelCoreImpl implements ModelCore {
 	 * 					time is a string for the HH:mm:ss of click
 	 * 					type is a string for name of type observation
 	 */
-	@Override
 	public void updateObservations(final String time, final String type) throws IOException {
 		this.updater.updateObservations(type + " - " + time, this.save);
 	}
@@ -130,7 +124,6 @@ public class ModelCoreImpl implements ModelCore {
 	 * @param type
 	 * 					type is a string for name of type observation
 	 */
-	@Override
 	public void addObservationType(final String type) throws IOException {
 		if (!this.getArrayTypeList().contains(type)) {
 			this.updater.updateObservations(DIR + TYPE_OBSERVED_LIST, type, this.save);
@@ -140,7 +133,6 @@ public class ModelCoreImpl implements ModelCore {
 	/**
 	 * return a copy of list of all observation for selected student, moment and data choose
 	 */
-	@Override
 	public ArrayList<String> getDataDayChoose() throws IOException {
 		return new ArrayList<>(List.copyOf(this.updater.getObservedDay()));
 	}
@@ -151,7 +143,6 @@ public class ModelCoreImpl implements ModelCore {
 	 * second item is number of time the type observed.
 	 * It can be used for generate graph
 	 */
-	@Override
 	public ArrayList<Pair<String, Integer>> getDataMomentChoose() throws IOException {
 		return this.counter.counter(this.momentObservations());
 	}
@@ -162,7 +153,6 @@ public class ModelCoreImpl implements ModelCore {
 	 * second item is number of time the type observed 
 	 * It can be used for generate graph
 	 */
-	@Override
 	public ArrayList<Pair<String, Integer>> getDataStudentChoose() throws IOException {
 		return this.counter.counter(this.studentObservations());
 	}
@@ -173,7 +163,6 @@ public class ModelCoreImpl implements ModelCore {
 	 * second item is number of time the type observed.
 	 * It can be used for generate graph and refresh counter types for the day selected.
 	 */
-	@Override
 	public ArrayList<Pair<String, Integer>> getCounterDayChoose() throws IOException {
 		return this.counter.counter(this.getDataDayChoose());
 	}
@@ -184,7 +173,6 @@ public class ModelCoreImpl implements ModelCore {
 	 * second item is number of all observations in this date.
 	 * It can be used for refresh counter view for date button.
 	 */
-	@Override
 	public ArrayList<Pair<String, Integer>> getCounterDates() throws IOException {
 		ArrayList<Pair<String, Integer>> list = new ArrayList<>();
 		for (final String element : this.getObservedDates()) {
@@ -205,7 +193,6 @@ public class ModelCoreImpl implements ModelCore {
 	 * second item is number of all observations in this moment.
 	 * It can be used for refresh counter view for moment button.
 	 */
-	@Override
 	public ArrayList<Pair<String, Integer>> getCounterMoments() throws IOException {
 		if (this.tempStudent.isBlank()) {
 			this.tempMoment = this.moment;
@@ -233,7 +220,6 @@ public class ModelCoreImpl implements ModelCore {
 	 * second item is number of all observations in this student.
 	 * It can be used for refresh counter view for student button.
 	 */
-	@Override
 	public ArrayList<Pair<String, Integer>> getCounterStudents() throws IOException {
 		tempStudent = this.student;
 		tempMoment = this.moment;
