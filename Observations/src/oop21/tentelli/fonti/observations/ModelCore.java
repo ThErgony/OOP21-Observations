@@ -1,5 +1,13 @@
 package oop21.tentelli.fonti.observations;
 
+/**
+ * Model core app, create all class need and pass reference for create, write and load. Create a first load:
+ * if is first time start software
+ * application create file moment list and type observed list format .txt, used for view to show the list of item user can get, if user need
+ * more item can add; if the installation are do after, load all list for user. Updater get all file for update and create file and folder
+ * user required.
+ */
+
 import java.io.IOException;
 import java.util.ArrayList;
 
