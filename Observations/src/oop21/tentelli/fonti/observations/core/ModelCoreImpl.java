@@ -6,7 +6,7 @@ package oop21.tentelli.fonti.observations.core;
  * application create file moment list and type observed list format .txt, used for view to show the list of item user can get, if user need
  * more item can add; if the installation are do after, load all list for user. Updater get all file for update and create file and folder
  * user required.
- * */
+ */
 
 import java.io.File;
 import java.io.IOException;
@@ -14,15 +14,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import oop21.tentelli.fonti.observations.Updater;
+import oop21.tentelli.fonti.observations.Counter;
 import oop21.tentelli.fonti.observations.Loader;
+import oop21.tentelli.fonti.observations.ModelCore;
 import oop21.tentelli.fonti.observations.Saved;
 import oop21.tentelli.fonti.observations.utility.UpdaterImpl;
+import oop21.tentelli.fonti.observations.utility.CounterImpl;
 import oop21.tentelli.fonti.observations.utility.FirstLoaderImpl;
 import oop21.tentelli.fonti.observations.utility.LoaderImpl;
 import oop21.tentelli.fonti.observations.utility.Pair;
 import oop21.tentelli.fonti.observations.utility.SavedImpl;
 
-public class ModelCoreImpl {
+public class ModelCoreImpl implements ModelCore {
 
 	private static final String SEP = File.separator;
 	private static final String ROOT = System.getProperty("user.home");
@@ -38,71 +41,155 @@ public class ModelCoreImpl {
 	private final Saved save;
 	private final Loader loader;
 	private final Updater updater;
+	private final Counter counter;
 	
 	private String student;
 	private String moment;
-	private String date;
 	
 	private String tempStudent = "";
 	private String tempMoment = "";
-	private String tempDate = "";
 	
 	/**
-	 * create new object for save and loader, first start and updater with parameter need for class
-	 * */
+	 * create new object for counter, save and loader, first start and updater with parameter need for class
+	 * @param for FirstLoaderImpl: root save, 2 string for name list of moment and type, save and loader for create and load;
+	 * 		  for UpdaterImpl: path moments list, separator, path for students dir e loader
+	 */
 	public ModelCoreImpl() throws IOException {
 		super();
 		this.save = new SavedImpl();
 		this.loader = new LoaderImpl();
+		this.counter = new CounterImpl();
 		new FirstLoaderImpl().firstLoad(DIR, STUDENT_DIR, MOMENTS_LIST, TYPE_OBSERVED_LIST, save, loader);;
 		this.updater = new UpdaterImpl(DIR + MOMENTS_LIST, SEP, DIR + STUDENT_DIR + SEP, loader);
 	}
 	
+	/**
+	 * return copy of the list of all moments user can choose
+	 */
+	@Override
 	public ArrayList<String> getArrayMomentsList() throws IOException {
-		return new ArrayList<>(List.copyOf(loader.fillList(DIR + MOMENTS_LIST)));
+		return new ArrayList<>(List.copyOf(this.loader.fillList(DIR + MOMENTS_LIST)));
 	}
 
+	/**
+	 * return copy of the list of all types of observations user can choose
+	 */
+	@Override
 	public ArrayList<String> getArrayTypeList() throws IOException {
-		return new ArrayList<>(List.copyOf(loader.fillList(DIR + TYPE_OBSERVED_LIST)));
+		return new ArrayList<>(List.copyOf(this.loader.fillList(DIR + TYPE_OBSERVED_LIST)));
 	}
 	
+	/**
+	 * method for choose student or create if missed
+	 * 
+	 * @param student
+	 * 		string for name student choose/selected 
+	 */
+	@Override
 	public void chooseStudent(final String student) throws IOException {
 		this.student = student;
 		this.updater.chooseStudent(student, this.save);
 	}
 	
+	/**
+	 * method for choose moment for selected student or create if missed
+	 * 
+	 * @param moment
+	 * 		moment choose/selected for selected student 
+	 */
+	@Override
 	public void chooseMoment(final String moment) throws IOException {
 		this.moment = moment;
 		this.updater.chooseMoment(moment, this.getArrayMomentsList(), this.save);
 	}
 
+	/**
+	 * method for choose data for selected student and moment or create if missed
+	 * 
+	 * @param data
+	 * 		data choose/selected for selected student and moment 
+	 */
+	@Override
 	public void chooseDate(final String date) throws IOException {
-		this.date = date;
 		this.updater.chooseDate(date + EXTENSION, this.save);
 	}
 	
+	/**
+	 * method for add new click (observation) at student, moment anda date choose
+	 * @param time, type
+	 * 					time is a string for the HH:mm:ss of click
+	 * 					type is a string for name of type observation
+	 */
+	@Override
+	public void updateObservations(final String time, final String type) throws IOException {
+		this.updater.updateObservations(type + " - " + time, this.save);
+	}
+
+	/**
+	 * method for add new type of observation in the first list created
+	 * @param type
+	 * 					type is a string for name of type observation
+	 */
+	@Override
+	public void addObservationType(final String type) throws IOException {
+		if (!this.getArrayTypeList().contains(type)) {
+			this.updater.updateObservations(DIR + TYPE_OBSERVED_LIST, type, this.save);
+		}
+	}
+	
+	/**
+	 * return a copy of list of all observation for selected student, moment and data choose
+	 */
+	@Override
 	public ArrayList<String> getDataDayChoose() throws IOException {
 		return new ArrayList<>(List.copyOf(this.updater.getObservedDay()));
 	}
 	
+	/**
+	 * return a copy of list for selected student and moment.
+	 * List contain pair: first item is a string with type of observation,
+	 * second item is number of time the type observed.
+	 * It can be used for generate graph
+	 */
+	@Override
 	public ArrayList<Pair<String, Integer>> getDataMomentChoose() throws IOException {
-		return this.counter(this.momentObservations());
+		return this.counter.counter(this.momentObservations());
 	}
 	
+	/**
+	 * return a copy of list for selected student.
+	 * List contain pair: first item is a string with type of observation,
+	 * second item is number of time the type observed 
+	 * It can be used for generate graph
+	 */
+	@Override
 	public ArrayList<Pair<String, Integer>> getDataStudentChoose() throws IOException {
-		return this.counter(this.studentObservations());
+		return this.counter.counter(this.studentObservations());
 	}
 	
+	/**
+	 * return a copy of list for selected student, moment and date.
+	 * List contain pair: first item is a string with type of observation,
+	 * second item is number of time the type observed.
+	 * It can be used for generate graph and refresh counter types for the day selected.
+	 */
+	@Override
 	public ArrayList<Pair<String, Integer>> getCounterDayChoose() throws IOException {
-		ArrayList<Pair<String, Integer>> list = this.counter(this.getDataDayChoose());
-		return list;
+		return this.counter.counter(this.getDataDayChoose());
 	}
 	
+	/**
+	 * return a copy of list for selected student and moment.
+	 * List contain pair: first item is a string with date,
+	 * second item is number of all observations in this date.
+	 * It can be used for refresh counter view for date button.
+	 */
+	@Override
 	public ArrayList<Pair<String, Integer>> getCounterDates() throws IOException {
 		ArrayList<Pair<String, Integer>> list = new ArrayList<>();
 		for (final String element : this.getObservedDates()) {
 			this.chooseDate(element);
-			ArrayList<Pair<String, Integer>> tempList = this.counter(this.getDataDayChoose());
+			ArrayList<Pair<String, Integer>> tempList = this.counter.counter(this.getDataDayChoose());
 			int sum = 0;
 			for (final Pair<String, Integer> pair : tempList) {
 				sum += pair.getY();
@@ -112,10 +199,13 @@ public class ModelCoreImpl {
 		return list;
 	}
 
-	private void resetDate() {
-		this.tempDate = "";
-	}
-
+	/**
+	 * return a copy of list for selected student.
+	 * List contain pair: first item is a string with moment,
+	 * second item is number of all observations in this moment.
+	 * It can be used for refresh counter view for moment button.
+	 */
+	@Override
 	public ArrayList<Pair<String, Integer>> getCounterMoments() throws IOException {
 		if (this.tempStudent.isBlank()) {
 			this.tempMoment = this.moment;
@@ -131,20 +221,22 @@ public class ModelCoreImpl {
 			list.add(new Pair<>(element, sum));
 		}
 		if (this.tempStudent.isBlank()) {
-			this.refreshMoment(this.tempMoment, this.tempDate);
+			this.refreshMoment(this.tempMoment);
 			this.resetMoment();
 		}
 		return list;
 	}
-
-	private void resetMoment() {
-		this.tempMoment = "";
-	}
 	
+	/**
+	 * return a copy of list for all students.
+	 * List contain pair: first item is a string with student,
+	 * second item is number of all observations in this student.
+	 * It can be used for refresh counter view for student button.
+	 */
+	@Override
 	public ArrayList<Pair<String, Integer>> getCounterStudents() throws IOException {
 		tempStudent = this.student;
 		tempMoment = this.moment;
-		tempDate = this.date;
 		ArrayList<Pair<String, Integer>> list = new ArrayList<>();
 		for (final String element : this.getObservedStudents()) {
 			this.chooseStudent(element);
@@ -155,94 +247,57 @@ public class ModelCoreImpl {
 			}
 			list.add(new Pair<>(element, sum));
 		}
-		this.refreshStudent(this.tempStudent, this.tempMoment, this.tempDate);
+		this.refreshStudent(this.tempStudent, this.tempMoment);
 		this.resetStudent();
 		return list;
 	}
 
-	private void resetStudent() {
-		this.tempStudent = "";
-		this.resetMoment();
-	}
-	
-	public void updateObservations(final String time, final String type) throws IOException {
-		this.updater.updateObservations(type + " - " + time, this.save);
-	}
-
-	public void addObservationType(final String type) throws IOException {
-		if (!this.getArrayTypeList().contains(type)) {
-			this.updater.updateObservations(DIR + TYPE_OBSERVED_LIST, type, this.save);
-		}
-	}
-	
-	private ArrayList<Pair<String, String>> splitDatas(final ArrayList<String> arrayList) throws IOException{
-		ArrayList<Pair<String, String>> list = new ArrayList<>();
-		for (final String string : arrayList) {
-			String[] split = string.split(" - ");
-			list.add(new Pair<>(split[0], split[1]));
-		}
-		return list;
-	}
-
-	private ArrayList<Pair<String, Integer>> counter(final ArrayList<String> arrayList) throws IOException {
-		ArrayList<Pair<String, Integer>> list = new ArrayList<>();
-		for (final Pair<String, String> counter : this.splitDatas(arrayList)) {
-			ArrayList<Pair<String, Integer>> tempList = new ArrayList<>();
-			tempList.addAll(list);
-			String element = counter.getX();
-			int inc = 0;
-			if (!list.isEmpty()) {	
-				for (final Pair<String, Integer> item : tempList) {
-					if (item.getX().equals(element)) {
-						inc = item.getY();
-						list.remove(new Pair<>(item.getX(), item.getY()));
-					}
-				}
-			}
-			list.add(new Pair<>(element, ++inc));
-		}
-		return list;
-	}
-
+	/**
+	 * Return list of all observation for all date observed for the student and moment choose. 
+	 */
 	private ArrayList<String> momentObservations() throws IOException {
-		if (this.tempMoment.isBlank()) {
-			this.tempDate = this.date;
-		}
 		ArrayList<String> list = new ArrayList<>();
 		for (final String e : this.getObservedDates()) {
 			this.chooseDate(e);
 			list.addAll(this.getDataDayChoose());
 		}
 		list.sort((a,b)->a.compareTo(b));
-		if (this.tempMoment.isBlank()) {
-			this.refreshDate(this.tempDate);
-			resetDate();
-		}
 		return list;
 	}
 	
+	/**
+	 * Return list of all observation for all dates and all moments observed for the student choose. 
+	 */
 	private ArrayList<String> studentObservations() throws IOException {
 		this.tempMoment = this.moment;
-		this.tempDate = this.date;
 		ArrayList<String> list = new ArrayList<>();
 		for (final String e : this.getObservedMoments()) {
 			this.chooseMoment(e);
 			list.addAll(this.momentObservations());
 		}
 		list.sort((a,b)->a.compareTo(b));
-		this.refreshMoment(this.tempMoment, this.tempDate);
+		this.refreshMoment(this.tempMoment);
 		resetMoment();
 		return list;
 	}
 	
+	/**
+	 * Return list of all student observed. 
+	 */
 	private ArrayList<String> getObservedStudents() {
 		return new ArrayList<>(List.copyOf(this.updater.getObservedStudents()));
 	}
 
+	/**
+	 * Return list of all moments observed. 
+	 */
 	private ArrayList<String> getObservedMoments() {
 		return new ArrayList<>(List.copyOf(this.updater.getObservedMoments()));
 	}
 
+	/**
+	 * Return list of all dates observed. 
+	 */
 	private ArrayList<String> getObservedDates() {
 		ArrayList<String> list = new ArrayList<>();
 		for (String string : List.copyOf(this.updater.getObservedDates())) {
@@ -252,20 +307,40 @@ public class ModelCoreImpl {
 		return list;
 	}
 	
-	private void refreshStudent(final String stud, final String mom, final String dat) throws IOException {
+	/**
+	 * simple refresher for choose student and refresh moment.
+	 * @param stud, mom
+	 * 					stud: student choose
+	 * 					mom: moment choose 
+	 */
+	private void refreshStudent(final String stud, final String mom) throws IOException {
 		this.student = stud;
 		this.chooseStudent(this.student);
-		refreshMoment(mom, dat);
+		this.refreshMoment(mom);
 	}
-
-	private void refreshMoment(final String mom, final String dat) throws IOException {
+	/**
+	 * simple refresher for choose moment.
+	 * @param mom
+	 * 				mom: moment choose 
+	 */
+	private void refreshMoment(final String mom) throws IOException {
 		this.moment = mom;
 		this.chooseMoment(this.moment);
 	}
-
-	private void refreshDate(final String dat) throws IOException {
-		this.date = dat;
-		this.chooseDate(this.date);
+	
+	/**
+	 * simple reset for student for access control
+	 */
+	private void resetStudent() {
+		this.tempStudent = "";
+		this.resetMoment();
+	}
+	
+	/**
+	 * simple reset for moment for access control
+	 */
+	private void resetMoment() {
+		this.tempMoment = "";
 	}
 	
 }
