@@ -1,5 +1,9 @@
 package oop21.tentelli.fonti.observations.utility;
 
+/**
+ * Utility class for counter number of time same observation
+ */
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -32,7 +36,6 @@ public class CounterImpl implements Counter {
 	 * @param arrayList
 	 * 					arrayList is the list of all observations 
 	 */
-	@Override
 	public ArrayList<Pair<String, Integer>> counter(final ArrayList<String> arrayList) throws IOException {
 		ArrayList<Pair<String, Integer>> list = new ArrayList<>();
 		for (final Pair<String, String> counter : this.splitDatas(arrayList)) {
