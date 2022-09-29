@@ -1,11 +1,14 @@
 package oop21.tentelli.fonti.observations.utility;
 
+/**
+ * Only one use class, when start first time, create file and folder basic. when launch after first start do nothing
+ */
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import oop21.tentelli.fonti.observations.FirstLoader;
-import oop21.tentelli.fonti.observations.Loader;
 import oop21.tentelli.fonti.observations.Saved;
 
 public class FirstLoaderImpl implements FirstLoader {
@@ -17,9 +20,11 @@ public class FirstLoaderImpl implements FirstLoader {
 		super();
 	}
 
-	/* fill list with item at first load, if the first first time, create and fill file and folder required*/
+	/** 
+	 * create folder and file required, fill the file list the first time launched
+	 */
 	public void firstLoad(final String dir, final String students, final String moments, final String types,
-							final Saved save, final Loader loader) throws IOException {
+							final Saved save) throws IOException {
 		if (!new File(dir + students).exists()) {
 			save.makeDir(dir + students);
 		}
@@ -32,9 +37,6 @@ public class FirstLoaderImpl implements FirstLoader {
 			}
 			save.writeList(dir + moments, this.arrayMomentsList);
 			save.writeList(dir + types, this.arrayTypeList);
-		} else {
-			loader.fillList(dir + moments);
-			loader.fillList(dir + types);
 		}
 	}
 	
