@@ -43,8 +43,8 @@ public class ModelCoreImpl implements ModelCore {
 	private final Updater updater;
 	private final Counter counter;
 	
-	private String student;
-	private String moment;
+	private String student = "";
+	private String moment = "";
 	
 	private String tempStudent = "";
 	private String tempMoment = "";
@@ -187,12 +187,6 @@ public class ModelCoreImpl implements ModelCore {
 		return list;
 	}
 
-	/**
-	 * return a copy of list for selected student.
-	 * List contain pair: first item is a string with moment,
-	 * second item is number of all observations in this moment.
-	 * It can be used for refresh counter view for moment button.
-	 */
 	public ArrayList<Pair<String, Integer>> getCounterMoments() throws IOException {
 		if (this.tempStudent.isBlank()) {
 			this.tempMoment = this.moment;
@@ -221,8 +215,10 @@ public class ModelCoreImpl implements ModelCore {
 	 * It can be used for refresh counter view for student button.
 	 */
 	public ArrayList<Pair<String, Integer>> getCounterStudents() throws IOException {
-		tempStudent = this.student;
-		tempMoment = this.moment;
+		if (this.tempStudent.isBlank() && !this.student.isBlank()) {
+			tempStudent = this.student;
+			tempMoment = this.moment;
+		}
 		ArrayList<Pair<String, Integer>> list = new ArrayList<>();
 		for (final String element : this.getObservedStudents()) {
 			this.chooseStudent(element);

@@ -78,7 +78,7 @@ public class UpdaterImpl implements Updater {
 	public void chooseMoment(final String moment, final ArrayList<String> updateList,
 								final Saved save) throws IOException {
 		this.moment = this.momentRoot + moment + this.sep;
-		if (!this.loader.loadFileFolder(this.momentRoot).contains(moment)) {
+		if (!this.loader.loadFileFolder(this.momentRoot).contains(moment) && !moment.isBlank()) {
 			save.makeDir(this.moment);
 			if (!updateList.contains(moment)) {
 				updateList.add(moment);
