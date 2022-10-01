@@ -7,7 +7,10 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+import java.util.Map;
 
+import oop21.tentelli.fonti.observations.core.ModelAdapter;
 import oop21.tentelli.fonti.observations.core.ModelCoreImpl;
 import oop21.tentelli.fonti.observations.utility.LoaderImpl;
 
@@ -63,10 +66,27 @@ public class TestCore {
 		System.out.println("counter observed moment " + mci.getCounterMoments()+ " " + mci.getCounterMoments().size());
 		System.out.println("counter observed student " + mci.getCounterStudents() + " " + mci.getCounterStudents().size());
 		assertEquals(2, mci.getCounterStudents().size());
+		System.out.println("counter observed moment " + mci.getCounterMoments()+ " " + mci.getCounterMoments().size());
+		System.out.println("counter observed date " + mci.getCounterDates() + " " + mci.getCounterDates().size());
 		assertEquals(3, mci.getCounterMoments().size());
 		assertEquals(2, mci.getCounterDates().size());
 		mci.chooseMoment("comprami");
 		assertEquals(0, mci.getCounterDates().size());
+	}
+	
+	@org.junit.Test
+	public void test7UseAdapter() throws IOException {
+		System.out.println("\ntest 7");
+		ModelAdapter ma = new ModelAdapter();
+		assertEquals(2, ma.getStudentsList().size());
+		System.out.println(ma.getStudentsList());
+		Map<String, List<String>> map = ma.getMomentsList("pippo");
+		assertEquals(3, map.get("pippo").size());
+		map = ma.getMomentsList("pluto");
+		assertEquals(0, map.get("pluto").size());
+		map = ma.getMomentsList("pippo");
+		System.out.println(ma.getDatesAndObservations("prova"));
+
 	}
 	
 }
