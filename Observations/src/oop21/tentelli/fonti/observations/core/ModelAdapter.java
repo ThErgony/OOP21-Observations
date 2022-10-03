@@ -33,7 +33,7 @@ public class ModelAdapter {
 	 * @throws IOException 
 	 */
 	public Map<String, List<String>> getMomentsList(final String student) throws IOException {
-		Map<String, List<String>> map = new HashMap<>();
+		final Map<String, List<String>> map = new HashMap<>();
 		this.mc.chooseStudent(student);
 		map.put(student, this.listMaker(this.mc.getCounterMoments()));
 		return map;
@@ -46,12 +46,12 @@ public class ModelAdapter {
 	 * @throws IOException 
 	 */
 	public Map<String, Map<String, Integer>> getDatesAndObservations(final String moment) throws IOException {
-		Map<String, Map<String, Integer>> map = new HashMap<>();
+		final Map<String, Map<String, Integer>> map = new HashMap<>();
 		this.mc.chooseMoment(moment);
-		List<String> list = List.copyOf(this.listMaker(this.mc.getCounterDates()));
+		final List<String> list = List.copyOf(this.listMaker(this.mc.getCounterDates()));
 		for (final String element : list) {
 			this.mc.chooseDate(element);
-			Map<String, Integer> mapValue = new HashMap<>();
+			final Map<String, Integer> mapValue = new HashMap<>();
 			for (final Pair<String, Integer> pair : this.mc.getCounterDayChoose()) {
 				mapValue.put(pair.getX(), pair.getY());
 			}
@@ -66,7 +66,7 @@ public class ModelAdapter {
 	 * 			need the array of pair to convert
 	 */
 	private List<String> listMaker(final List<Pair<String, Integer>> list){
-		List<String> fList = new ArrayList<>();
+		final List<String> fList = new ArrayList<>();
 		for (final Pair<String, Integer> pair : list) {
 			fList.add(pair.getX());
 		}

@@ -7,18 +7,15 @@ package oop21.tentelli.fonti.observations.utility;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import oop21.tentelli.fonti.observations.FirstLoader;
 import oop21.tentelli.fonti.observations.Saved;
 
 public class FirstLoaderImpl implements FirstLoader {
 	
-	private final ArrayList<String> arrayMomentsList = new ArrayList<>();
-	private final ArrayList<String> arrayTypeList = new ArrayList<>();
-
-	public FirstLoaderImpl() {
-		super();
-	}
+	private final List<String> arrayMomentsList = new ArrayList<>();
+	private final List<String> arrayTypeList = new ArrayList<>();
 
 	/** 
 	 * create folder and file required, fill the file list the first time launched

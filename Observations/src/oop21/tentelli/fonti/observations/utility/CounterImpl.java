@@ -11,10 +11,6 @@ import java.util.List;
 import oop21.tentelli.fonti.observations.Counter;
 
 public class CounterImpl implements Counter {
-
-	public CounterImpl() {
-		super();
-	}
 	
 	/**
 	 * Remove separator " - " for all string in the list passed.
@@ -32,7 +28,7 @@ public class CounterImpl implements Counter {
 	}
 
 	/**
-	 * Count all equals occurency of the list passed contained all data.
+	 * Count all equals occurrence of the list passed contained all data.
 	 * Return array with first item is a string with the type of observations, second is the number of occurrency.
 	 * @param list
 	 * 					arrayList is the list of all observations 
