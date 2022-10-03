@@ -4,5 +4,10 @@
 *.pdf
 !myImportantFile.pdf
 /.metadata/
-/.project/
-/.settings/
+/.settings
+/.classpath
+/.project
+*.txt
+/config/
+*.xml
+*.jpg
