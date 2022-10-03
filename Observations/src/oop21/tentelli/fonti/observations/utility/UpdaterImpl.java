@@ -8,6 +8,7 @@ package oop21.tentelli.fonti.observations.utility;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import oop21.tentelli.fonti.observations.Updater;
 import oop21.tentelli.fonti.observations.Loader;
@@ -48,7 +49,7 @@ public class UpdaterImpl implements Updater {
 	 * @param path
 	 * 			path selected for load all file
 	 */
-	private ArrayList<String> check(final String path) {
+	private List<String> check(final String path) {
 		return this.loader.loadFileFolder(path);
 	}
 
@@ -75,7 +76,7 @@ public class UpdaterImpl implements Updater {
 	 * 			updateList: if moment create is missed in the list add and sort all list
 	 * 			save: reference to class for create new folder
 	 */
-	public void chooseMoment(final String moment, final ArrayList<String> updateList,
+	public void chooseMoment(final String moment, final List<String> updateList,
 								final Saved save) throws IOException {
 		this.moment = this.momentRoot + moment + this.sep;
 		if (!this.loader.loadFileFolder(this.momentRoot).contains(moment) && !moment.isBlank()) {
@@ -106,7 +107,7 @@ public class UpdaterImpl implements Updater {
 	/**
 	 * return a list of all student observed or empty list, private method observed is a control for item present
 	 */
-	public ArrayList<String> getObservedStudents() {
+	public List<String> getObservedStudents() {
 		return this.observed(this.studentRoot, this.check(this.studentRoot));
 	}
 
@@ -114,7 +115,7 @@ public class UpdaterImpl implements Updater {
 	 * return a list of all moment observed for last student selected or empty list,
 	 * private method observed is a control for item present
 	 */
-	public ArrayList<String> getObservedMoments() {
+	public List<String> getObservedMoments() {
 		return this.observed(this.momentRoot, this.check(this.momentRoot));
 	}
 
@@ -122,7 +123,7 @@ public class UpdaterImpl implements Updater {
 	 * return a list of all dates observed for last moment and student selected or empty list,
 	 * private method observed is a control for item present
 	 */
-	public ArrayList<String> getObservedDates() {
+	public List<String> getObservedDates() {
 		return this.observed(this.dateRoot, this.check(this.dateRoot));
 	}
 	
@@ -130,7 +131,7 @@ public class UpdaterImpl implements Updater {
 	 * return a list of all observations observed for last date, moment and student selected or empty list,
 	 * private method observed is a control for item present
 	 */
-	public ArrayList<String> getObservedDay() throws IOException {
+	public List<String> getObservedDay() throws IOException {
 		return this.observed(this.date, this.loader.fillList(this.date));
 	}
 
@@ -152,7 +153,7 @@ public class UpdaterImpl implements Updater {
 	 * 			save: reference to class for create new file
 	 */
 	public void updateObservations(final String path, final String element,	final Saved save) throws IOException {		
-		ArrayList<String> list = this.loader.fillList(path);
+		final List<String> list = this.loader.fillList(path);
 		list.add(element);
 		list.sort((a,b)-> a.compareTo(b));
 		save.writeList(path, list);		
@@ -161,7 +162,7 @@ public class UpdaterImpl implements Updater {
 	/**
 	 * private method for control for item present, return empty list or list
 	 */
-	private ArrayList<String> observed(final String observed, ArrayList<String> returnOK) {
+	private List<String> observed(final String observed, List<String> returnOK) {
 		if (observed.isBlank()) {
 			return new ArrayList<>();
 		}

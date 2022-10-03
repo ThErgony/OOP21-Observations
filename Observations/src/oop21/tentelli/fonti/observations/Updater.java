@@ -8,6 +8,7 @@ package oop21.tentelli.fonti.observations;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public interface Updater {
 	
@@ -27,7 +28,7 @@ public interface Updater {
 	 * 			updateList: if moment create is missed in the list add and sort all list
 	 * 			save: reference to class for create new folder
 	 */
-	void chooseMoment(final String moment, final ArrayList<String> updateList, final Saved save) throws IOException;
+	void chooseMoment(final String moment, final List<String> updateList, final Saved save) throws IOException;
 	
 	/**
 	 * choose or create the date pass for last moment and student selected
@@ -40,25 +41,25 @@ public interface Updater {
 	/**
 	 * return a list of all student observed or empty list, private method observed is a control for item present
 	 */
-	ArrayList<String> getObservedStudents();
+	List<String> getObservedStudents();
 	
 	/**
 	 * return a list of all moment observed for last student selected or empty list,
 	 * private method observed is a control for item present
 	 */
-	ArrayList<String> getObservedMoments();
+	List<String> getObservedMoments();
 	
 	/**
 	 * return a list of all dates observed for last moment and student selected or empty list,
 	 * private method observed is a control for item present
 	 */
-	ArrayList<String> getObservedDates();
+	List<String> getObservedDates();
 	
 	/**
 	 * return a list of all observations observed for last date, moment and student selected or empty list,
 	 * private method observed is a control for item present
 	 */
-	ArrayList<String> getObservedDay() throws IOException;
+	List<String> getObservedDay() throws IOException;
 
 	/**
 	 * add element pass for last date, moment and student selected

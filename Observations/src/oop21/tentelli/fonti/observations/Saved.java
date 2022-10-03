@@ -6,6 +6,7 @@ package oop21.tentelli.fonti.observations;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public interface Saved {
 
@@ -13,13 +14,13 @@ public interface Saved {
 	 * @param dir
 	 * 			absolute path for create folder
 	 */
-	void makeDir(final String dir);
+	void makeDir(String dir);
 
 	/** create a file request in the path selected
 	 * @param name
 	 * 			absolute path for create file
 	 */
-	void makeFile(final String name) throws IOException;
+	void makeFile(String name) throws IOException;
 	
 	
 	/** create file and write all the file in the array list
@@ -27,6 +28,6 @@ public interface Saved {
  	 * 			path absolute path for create file if missed
  	 * 			arrayList list of all file to copy
  	 */
-	void writeList(final String path, final ArrayList<String> arrayList) throws IOException;
+	void writeList(String path, List<String> updateList) throws IOException;
 
 }

@@ -11,7 +11,6 @@ public interface FirstLoader {
 	/** 
 	 * create folder and file required, fill the file list the first time launched
 	 */
-	void firstLoad(final String dir, final String students, final String moments, final String types,
-			final Saved save) throws IOException;
+	void firstLoad(String dir, String students, String moments, String types, Saved save) throws IOException;
 
 }

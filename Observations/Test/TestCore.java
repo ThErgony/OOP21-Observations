@@ -27,7 +27,7 @@ public class TestCore {
 	public void test5UseCore() throws IOException {
 		System.out.println("\ntest 5");
 		Loader loadTest = new LoaderImpl();
-		ArrayList<String> list = loadTest.fillList(SAVE_DIR + SEP + "pippo.txt");
+		List<String> list = loadTest.fillList(SAVE_DIR + SEP + "pippo.txt");
 		System.out.println(list);
 	}
 

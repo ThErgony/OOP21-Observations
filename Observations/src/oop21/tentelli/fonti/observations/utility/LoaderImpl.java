@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import oop21.tentelli.fonti.observations.Loader;
 
@@ -20,8 +21,8 @@ public class LoaderImpl implements Loader {
 	 * @param path
 	 * 			directory path for reading file
 	 */
-	public ArrayList<String> loadFileFolder(final String dir) {
-		ArrayList<String> listFileFolder = new ArrayList<>();
+	public List<String> loadFileFolder(final String dir) {
+		final List<String> listFileFolder = new ArrayList<>();
 		if (new File(dir).exists()) {
 			for (final String e : new File(dir).list()) {
 				listFileFolder.add(e);
@@ -38,7 +39,7 @@ public class LoaderImpl implements Loader {
 	 */
 	private BufferedReader readFile(final String path) throws FileNotFoundException {
 		if (!new File(path).exists()) {
-			File file = new File(path);
+			final File file = new File(path);
 			try {
 				file.createNewFile();
 			} catch (IOException e) {
@@ -53,9 +54,9 @@ public class LoaderImpl implements Loader {
 	 * @param path
 	 * 			directory path for reading file
 	 */
-	public ArrayList<String> fillList(final String path) throws IOException {
-		ArrayList<String> arrayList = new ArrayList<>();
-		BufferedReader reader = this.readFile(path);
+	public List<String> fillList(final String path) throws IOException {
+		final List<String> arrayList = new ArrayList<>();
+		final BufferedReader reader = this.readFile(path);
 		String item = reader.readLine();
 		while (item != null) {
 			arrayList.add(item);

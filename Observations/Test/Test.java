@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import oop21.tentelli.fonti.observations.utility.UpdaterImpl;
 import oop21.tentelli.fonti.observations.Loader;
@@ -71,7 +72,7 @@ public class Test extends TestCore{
 		updater.updateObservations(SAVE_DIR + SEP + "pippo.txt", "prova" + " - " + time, save);
 		time = LocalDate.now().toString();
 		updater.updateObservations(SAVE_DIR + SEP + "pippo.txt", "4prova4" + " - " + time, save);
-		ArrayList<String> list = loader.fillList(SAVE_DIR + SEP + "pippo.txt");
+		List<String> list = loader.fillList(SAVE_DIR + SEP + "pippo.txt");
 		System.out.println(list);
 	}
 	

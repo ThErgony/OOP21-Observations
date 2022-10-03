@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import oop21.tentelli.fonti.observations.Saved;
 
@@ -52,10 +53,10 @@ public class SavedImpl implements Saved {
 	 * 			path absolute path for create file if missed
 	 * 			arrayList list of all file to copy
 	 */
-	public void writeList(final String path, final ArrayList<String> arrayList) throws IOException {
+	public void writeList(final String path, final List<String> list) throws IOException {
 		this.makeFile(path);
 		final FileWriter fw = new FileWriter(new File(path));
-		for (final String item : arrayList) {
+		for (final String item : list) {
 			this.updateList(fw, item);
 		}
 		fw.flush();

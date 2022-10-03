@@ -5,7 +5,7 @@ package oop21.tentelli.fonti.observations;
  */
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 public interface Loader {
 
@@ -13,12 +13,12 @@ public interface Loader {
 	 * @param path
 	 * 			directory path for reading file
 	 */
-	ArrayList<String> loadFileFolder(final String dir);
+	List<String> loadFileFolder(String path);
 	
 	/** import list file and return array String
 	 * @param path
 	 * 			directory path for reading file
 	 */
-	ArrayList<String> fillList(final String path) throws IOException;
+	List<String> fillList(String path) throws IOException;
 
 }
