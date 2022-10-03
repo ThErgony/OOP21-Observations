@@ -1,4 +1,4 @@
-package oop21.tentelli.fonti.observations;
+package org.observations.model;
 
 /**
  * Updater class for all string passed, create and manage all file in all class.

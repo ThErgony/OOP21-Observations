@@ -1,4 +1,4 @@
-package oop21.tentelli.fonti.observations;
+package org.observations.model;
 
 /**
  * Model core app, create all class need and pass reference for create, write and load. Create a first load:
@@ -11,7 +11,7 @@ package oop21.tentelli.fonti.observations;
 import java.io.IOException;
 import java.util.List;
 
-import oop21.tentelli.fonti.observations.utility.Pair;
+import org.observations.model.utility.Pair;
 
 public interface ModelCore {
 

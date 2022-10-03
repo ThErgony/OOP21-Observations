@@ -1,4 +1,4 @@
-package oop21.tentelli.fonti.observations.utility;
+package org.observations.model.utility;
 
 /**
  * Simple enum for first start moment list

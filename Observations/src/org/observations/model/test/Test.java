@@ -1,21 +1,21 @@
-package Test;
+package org.observations.model.test;
 
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import oop21.tentelli.fonti.observations.utility.UpdaterImpl;
-import oop21.tentelli.fonti.observations.Loader;
-import oop21.tentelli.fonti.observations.Saved;
-import oop21.tentelli.fonti.observations.Updater;
-import oop21.tentelli.fonti.observations.utility.LoaderImpl;
-import oop21.tentelli.fonti.observations.utility.SavedImpl;
+import org.observations.model.Loader;
+import org.observations.model.Saved;
+import org.observations.model.Updater;
+import org.observations.model.utility.LoaderImpl;
+import org.observations.model.utility.SavedImpl;
+import org.observations.model.utility.UpdaterImpl;
 
 
 
@@ -30,22 +30,22 @@ public class Test extends TestCore{
 	@org.junit.Test
 	public void test1Save() {
 		System.out.println("\ntest 1");
-		Saved newTest = new SavedImpl();
+		final Saved newTest = new SavedImpl();
 		newTest.makeDir(SAVE_DIR);
-		File test = new File(SAVE_DIR);		
+		final File test = new File(SAVE_DIR);		
 		System.out.println(test.toString());
-		assertFalse(!test.exists());
+		assertTrue(test.exists());
 	}
 	
 	/* test print all element read in selected directory */
 	@org.junit.Test
 	public void test2Load() {
 		System.out.println("\ntest 2");
-		Loader newTest = new LoaderImpl();
-		for (String e : newTest.loadFileFolder(new File(SAVE_DIR).getParent())) {
+		final Loader newTest = new LoaderImpl();
+		for (final String e : newTest.loadFileFolder(new File(SAVE_DIR).getParent())) {
 			System.out.println("parent - " + e);
 		}
-		for (String e : newTest.loadFileFolder(SAVE_DIR)) {
+		for (final String e : newTest.loadFileFolder(SAVE_DIR)) {
 			System.out.println("save dir - " + e);
 		}
 	}
@@ -54,25 +54,25 @@ public class Test extends TestCore{
 	@org.junit.Test
 	public void test3CreateFile() throws IOException {
 		System.out.println("\ntest 3");
-		Saved newTest = new SavedImpl();
+		final Saved newTest = new SavedImpl();
 		newTest.makeFile(SAVE_DIR + SEP + "pippo.txt");
-		File test = new File(SAVE_DIR + SEP, "pippo.txt");	
+		final File test = new File(SAVE_DIR + SEP, "pippo.txt");	
 		System.out.println(test.toString());
-		assertFalse(!test.exists());
+		assertTrue(test.exists());
 	}
 	
 	/* test from add string to file and read is content*/
 	@org.junit.Test
 	public void test4WriteReadOnFile() throws IOException{
 		System.out.println("\ntest 4");
-		Loader loader = new LoaderImpl();
-		Saved save = new SavedImpl();
-		Updater updater = new UpdaterImpl(SAVE_DIR + SEP + "pippo.txt", SEP, SAVE_DIR + SEP, loader);
+		final Loader loader = new LoaderImpl();
+		final Saved save = new SavedImpl();
+		final Updater updater = new UpdaterImpl(SAVE_DIR + SEP + "pippo.txt", SEP, SAVE_DIR + SEP, loader);
 		String time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
 		updater.updateObservations(SAVE_DIR + SEP + "pippo.txt", "prova" + " - " + time, save);
 		time = LocalDate.now().toString();
 		updater.updateObservations(SAVE_DIR + SEP + "pippo.txt", "4prova4" + " - " + time, save);
-		List<String> list = loader.fillList(SAVE_DIR + SEP + "pippo.txt");
+		final List<String> list = loader.fillList(SAVE_DIR + SEP + "pippo.txt");
 		System.out.println(list);
 	}
 	

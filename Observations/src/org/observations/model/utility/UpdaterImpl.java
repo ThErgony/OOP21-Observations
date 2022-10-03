@@ -1,4 +1,4 @@
-package oop21.tentelli.fonti.observations.utility;
+package org.observations.model.utility;
 
 /**
  * Updater class for all string passed, create and manage all file in all class.
@@ -10,9 +10,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import oop21.tentelli.fonti.observations.Updater;
-import oop21.tentelli.fonti.observations.Loader;
-import oop21.tentelli.fonti.observations.Saved;
+import org.observations.model.Loader;
+import org.observations.model.Saved;
+import org.observations.model.Updater;
 
 public class UpdaterImpl implements Updater {
 

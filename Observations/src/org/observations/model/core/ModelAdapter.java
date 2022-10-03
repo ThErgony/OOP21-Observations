@@ -1,4 +1,4 @@
-package oop21.tentelli.fonti.observations.core;
+package org.observations.model.core;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import oop21.tentelli.fonti.observations.ModelCore;
-import oop21.tentelli.fonti.observations.utility.Pair;
+import org.observations.model.ModelCore;
+import org.observations.model.utility.Pair;
 
 public class ModelAdapter {
 
