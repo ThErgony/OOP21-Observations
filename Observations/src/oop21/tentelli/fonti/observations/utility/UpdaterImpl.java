@@ -21,7 +21,6 @@ public class UpdaterImpl implements Updater {
 	
 	private final Loader loader;
 	
-	private String student;
 	private String moment;
 	private String date;
 	private final String studentRoot;
@@ -60,11 +59,11 @@ public class UpdaterImpl implements Updater {
 	 * 			save: reference to class for create new folder
 	 */
 	public void chooseStudent(final String student, final Saved save) throws IOException {
-		this.student = this.studentRoot + student + this.sep;
+		final String studentChoose = this.studentRoot + student + this.sep;
 		if (!this.loader.loadFileFolder(this.studentRoot).contains(student)) {
-			save.makeDir(this.student);
+			save.makeDir(studentChoose);
 		} else {
-			this.momentRoot = this.student;
+			this.momentRoot = studentChoose;
 		}
 	}
 	
@@ -162,7 +161,7 @@ public class UpdaterImpl implements Updater {
 	/**
 	 * private method for control for item present, return empty list or list
 	 */
-	private List<String> observed(final String observed, List<String> returnOK) {
+	private List<String> observed(final String observed, final List<String> returnOK) {
 		if (observed.isBlank()) {
 			return new ArrayList<>();
 		}

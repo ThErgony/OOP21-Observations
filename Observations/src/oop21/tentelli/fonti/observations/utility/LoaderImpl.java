@@ -54,6 +54,7 @@ public class LoaderImpl implements Loader {
 	 * @param path
 	 * 			directory path for reading file
 	 */
+        @SuppressWarnings("PMD.CloseResource")
 	public List<String> fillList(final String path) throws IOException {
 		final List<String> arrayList = new ArrayList<>();
 		final BufferedReader reader = this.readFile(path);

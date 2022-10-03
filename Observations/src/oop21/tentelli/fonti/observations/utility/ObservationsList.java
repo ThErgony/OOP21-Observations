@@ -21,7 +21,7 @@ public enum ObservationsList {
 
 	private String showText;
 	
-	private ObservationsList(final String showText) {
+	ObservationsList(final String showText) {
 		this.showText = showText;
 	}
 

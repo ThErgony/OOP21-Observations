@@ -26,7 +26,7 @@ public enum MomentsList {
 	
 	private String showText;
 	
-	private MomentsList(final String showText) {
+	MomentsList(final String showText) {
 		this.showText = showText;
 	}
 
