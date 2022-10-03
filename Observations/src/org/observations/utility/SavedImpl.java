@@ -1,4 +1,4 @@
-package oop21.tentelli.fonti.observations.utility;
+package org.observations.utility;
 
 /**
  * Simple class for create folder from root, return a filepath string 
@@ -9,7 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import oop21.tentelli.fonti.observations.Saved;
+import org.observations.Saved;
 
 
 public class SavedImpl implements Saved {

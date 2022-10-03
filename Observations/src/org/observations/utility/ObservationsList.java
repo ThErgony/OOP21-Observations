@@ -1,4 +1,4 @@
-package oop21.tentelli.fonti.observations.utility;
+package org.observations.utility;
 
 /**
  * Simple enum for first start observations type list 

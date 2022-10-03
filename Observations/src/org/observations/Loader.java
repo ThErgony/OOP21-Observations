@@ -1,4 +1,4 @@
-package oop21.tentelli.fonti.observations;
+package org.observations;
 
 /**
  * Simple class for load file and folder from root, return a list file or single file in the selected directory 

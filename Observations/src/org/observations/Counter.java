@@ -1,9 +1,9 @@
-package oop21.tentelli.fonti.observations;
+package org.observations;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-import oop21.tentelli.fonti.observations.utility.Pair;
+import org.observations.utility.Pair;
 
 public interface Counter {
 

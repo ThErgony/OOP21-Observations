@@ -1,4 +1,4 @@
-package oop21.tentelli.fonti.observations.utility;
+package org.observations.utility;
 
 /**
  * Utility class for counter number of time same observation
@@ -7,7 +7,7 @@ package oop21.tentelli.fonti.observations.utility;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import oop21.tentelli.fonti.observations.Counter;
+import org.observations.Counter;
 
 public class CounterImpl implements Counter {
 

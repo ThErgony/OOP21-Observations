@@ -1,4 +1,4 @@
-package oop21.tentelli.fonti.observations.core;
+package org.observations.core;
 
 /**
  * Model core app, create all class need and pass reference for create, write and load. Create a first load:
@@ -13,17 +13,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import oop21.tentelli.fonti.observations.Updater;
-import oop21.tentelli.fonti.observations.Counter;
-import oop21.tentelli.fonti.observations.Loader;
-import oop21.tentelli.fonti.observations.ModelCore;
-import oop21.tentelli.fonti.observations.Saved;
-import oop21.tentelli.fonti.observations.utility.UpdaterImpl;
-import oop21.tentelli.fonti.observations.utility.CounterImpl;
-import oop21.tentelli.fonti.observations.utility.FirstLoaderImpl;
-import oop21.tentelli.fonti.observations.utility.LoaderImpl;
-import oop21.tentelli.fonti.observations.utility.Pair;
-import oop21.tentelli.fonti.observations.utility.SavedImpl;
+import org.observations.Counter;
+import org.observations.Loader;
+import org.observations.ModelCore;
+import org.observations.Saved;
+import org.observations.Updater;
+import org.observations.utility.CounterImpl;
+import org.observations.utility.FirstLoaderImpl;
+import org.observations.utility.LoaderImpl;
+import org.observations.utility.Pair;
+import org.observations.utility.SavedImpl;
+import org.observations.utility.UpdaterImpl;
 
 public class ModelCoreImpl implements ModelCore {
 

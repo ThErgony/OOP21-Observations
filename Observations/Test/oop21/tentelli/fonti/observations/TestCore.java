@@ -10,9 +10,11 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
-import oop21.tentelli.fonti.observations.core.ModelAdapter;
-import oop21.tentelli.fonti.observations.core.ModelCoreImpl;
-import oop21.tentelli.fonti.observations.utility.LoaderImpl;
+import org.observations.Loader;
+import org.observations.ModelCore;
+import org.observations.core.ModelAdapter;
+import org.observations.core.ModelCoreImpl;
+import org.observations.utility.LoaderImpl;
 
 public class TestCore {
 

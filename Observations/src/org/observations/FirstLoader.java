@@ -1,4 +1,4 @@
-package oop21.tentelli.fonti.observations;
+package org.observations;
 
 /**
  * Only one use class, when start first time, create file and folder basic. when launch after first start do nothing

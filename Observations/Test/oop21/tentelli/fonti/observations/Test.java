@@ -9,16 +9,19 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import oop21.tentelli.fonti.observations.utility.UpdaterImpl;
-import oop21.tentelli.fonti.observations.utility.LoaderImpl;
-import oop21.tentelli.fonti.observations.utility.SavedImpl;
+import org.observations.Loader;
+import org.observations.Saved;
+import org.observations.Updater;
+import org.observations.utility.LoaderImpl;
+import org.observations.utility.SavedImpl;
+import org.observations.utility.UpdaterImpl;
 
-
-
-
+/**
+ * test class.
+ */
 public class Test extends TestCore{
-
-	public static final String SEP = File.separator;
+    
+  public static final String SEP = File.separator;
 	public static final String ROOT = System.getProperty("user.home");
 	public static final String SAVE_DIR = ROOT + SEP + "Observations" + SEP + "save";
 	

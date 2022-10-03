@@ -1,8 +1,4 @@
-package oop21.tentelli.fonti.observations.core;
-
-/**
- * This class adapt the data send from the view to model, adapt return from model to need from the view
- */
+package org.observations.core;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,8 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import oop21.tentelli.fonti.observations.ModelCore;
-import oop21.tentelli.fonti.observations.utility.Pair;
+import org.observations.ModelCore;
+import org.observations.utility.Pair;
 
 public class ModelAdapter {
 
