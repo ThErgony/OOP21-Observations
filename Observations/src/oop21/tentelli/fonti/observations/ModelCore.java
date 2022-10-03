@@ -9,7 +9,6 @@ package oop21.tentelli.fonti.observations;
  */
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import oop21.tentelli.fonti.observations.utility.Pair;
@@ -19,12 +18,12 @@ public interface ModelCore {
 	/**
 	 * return copy of the list of all moments user can choose
 	 */
-	ArrayList<String> getArrayMomentsList() throws IOException;
+	List<String> getMomentsList() throws IOException;
 
 	/**
 	 * return copy of the list of all types of observations user can choose
 	 */
-	ArrayList<String> getArrayTypeList() throws IOException;
+	List<String> getTypeList() throws IOException;
 
 	/**
 	 * method for choose student or create if missed
@@ -32,7 +31,7 @@ public interface ModelCore {
 	 * @param student
 	 * 		string for name student choose/selected 
 	 */
-	void chooseStudent(final String student) throws IOException;
+	void chooseStudent(String student) throws IOException;
 
 	/**
 	 * method for choose moment for selected student or create if missed
@@ -40,7 +39,7 @@ public interface ModelCore {
 	 * @param moment
 	 * 		moment choose/selected for selected student 
 	 */
-	void chooseMoment(final String moment) throws IOException;
+	void chooseMoment(String moment) throws IOException;
 
 	/**
 	 * method for choose data for selected student and moment or create if missed
@@ -48,22 +47,22 @@ public interface ModelCore {
 	 * @param data
 	 * 		data choose/selected for selected student and moment 
 	 */
-	void chooseDate(final String date) throws IOException;
+	void chooseDate(String date) throws IOException;
 
 	/**
-	 * method for add new click (observation) at student, moment anda date choose
+	 * method for add new click (observation) at student, moment and a date choose
 	 * @param time, type
-	 * 					time is a string for the HH:mm:ss of click
-	 * 					type is a string for name of type observation
+	 *             time is a string for the HH:mm:ss of click
+	 *             type is a string for name of type observation
 	 */
-	void updateObservations(final String time, final String type) throws IOException;
+	void updateObservations(String time, String type) throws IOException;
 
 	/**
 	 * method for add new type of observation in the first list created
 	 * @param type
-	 * 					type is a string for name of type observation
+	 *             type is a string for name of type observation
 	 */
-	void addObservationType(final String type) throws IOException;
+	void addObservationType(String type) throws IOException;
 
 	/**
 	 * return a copy of list of all observation for selected student, moment and data choose

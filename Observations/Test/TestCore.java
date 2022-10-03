@@ -36,7 +36,7 @@ public class TestCore {
 	public void test6() throws IOException {
 		System.out.println("\ntest 6");
 		ModelCore mci = new ModelCoreImpl();
-		System.out.println("moments list " + mci.getArrayMomentsList() + "\n" + "types list " + mci.getArrayTypeList());
+		System.out.println("moments list " + mci.getMomentsList() + "\n" + "types list " + mci.getTypeList());
 		mci.chooseStudent("pippo");
 		mci.chooseStudent("pluto");
 		mci.chooseStudent("pippo");
@@ -59,7 +59,7 @@ public class TestCore {
 		mci.updateObservations(time, "provami");
 		time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
  		mci.updateObservations(time, "asseconda provati");
-		System.out.println("moments list " + mci.getArrayMomentsList() + "\n" + "types list " + mci.getArrayTypeList());
+		System.out.println("moments list " + mci.getMomentsList() + "\n" + "types list " + mci.getTypeList());
 		System.out.println("data student choose" + mci.getDataStudentChoose());
 		System.out.println("data moment choose" + mci.getDataMomentChoose());
 		System.out.println("data day choose " + mci.getDataDayChoose());

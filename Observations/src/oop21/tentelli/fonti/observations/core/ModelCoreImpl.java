@@ -66,14 +66,14 @@ public class ModelCoreImpl implements ModelCore {
 	/**
 	 * return copy of the list of all moments user can choose
 	 */
-	public ArrayList<String> getArrayMomentsList() throws IOException {
+	public List<String> getMomentsList() throws IOException {
 		return new ArrayList<>(List.copyOf(this.loader.fillList(DIR + MOMENTS_LIST)));
 	}
 
 	/**
 	 * return copy of the list of all types of observations user can choose
 	 */
-	public ArrayList<String> getArrayTypeList() throws IOException {
+	public List<String> getTypeList() throws IOException {
 		return new ArrayList<>(List.copyOf(this.loader.fillList(DIR + TYPE_OBSERVED_LIST)));
 	}
 	
@@ -96,7 +96,7 @@ public class ModelCoreImpl implements ModelCore {
 	 */
 	public void chooseMoment(final String moment) throws IOException {
 		this.moment = moment;
-		this.updater.chooseMoment(moment, this.getArrayMomentsList(), this.save);
+		this.updater.chooseMoment(moment, this.getMomentsList(), this.save);
 	}
 
 	/**
@@ -125,7 +125,7 @@ public class ModelCoreImpl implements ModelCore {
 	 * 					type is a string for name of type observation
 	 */
 	public void addObservationType(final String type) throws IOException {
-		if (!this.getArrayTypeList().contains(type)) {
+		if (!this.getTypeList().contains(type)) {
 			this.updater.updateObservations(DIR + TYPE_OBSERVED_LIST, type, this.save);
 		}
 	}
@@ -237,8 +237,8 @@ public class ModelCoreImpl implements ModelCore {
 	/**
 	 * Return list of all observation for all date observed for the student and moment choose. 
 	 */
-	private ArrayList<String> momentObservations() throws IOException {
-		ArrayList<String> list = new ArrayList<>();
+	private List<String> momentObservations() throws IOException {
+		final List<String> list = new ArrayList<>();
 		for (final String e : this.getObservedDates()) {
 			this.chooseDate(e);
 			list.addAll(this.getDataDayChoose());
@@ -250,9 +250,9 @@ public class ModelCoreImpl implements ModelCore {
 	/**
 	 * Return list of all observation for all dates and all moments observed for the student choose. 
 	 */
-	private ArrayList<String> studentObservations() throws IOException {
+	private List<String> studentObservations() throws IOException {
 		this.tempMoment = this.moment;
-		ArrayList<String> list = new ArrayList<>();
+		final List<String> list = new ArrayList<>();
 		for (final String e : this.getObservedMoments()) {
 			this.chooseMoment(e);
 			list.addAll(this.momentObservations());
@@ -266,22 +266,22 @@ public class ModelCoreImpl implements ModelCore {
 	/**
 	 * Return list of all student observed. 
 	 */
-	private ArrayList<String> getObservedStudents() {
+	private List<String> getObservedStudents() {
 		return new ArrayList<>(List.copyOf(this.updater.getObservedStudents()));
 	}
 
 	/**
 	 * Return list of all moments observed. 
 	 */
-	private ArrayList<String> getObservedMoments() {
+	private List<String> getObservedMoments() {
 		return new ArrayList<>(List.copyOf(this.updater.getObservedMoments()));
 	}
 
 	/**
 	 * Return list of all dates observed. 
 	 */
-	private ArrayList<String> getObservedDates() {
-		ArrayList<String> list = new ArrayList<>();
+	private List<String> getObservedDates() {
+		final List<String> list = new ArrayList<>();
 		for (String string : List.copyOf(this.updater.getObservedDates())) {
 			string = string.substring(0, string.length()-4);
 			list.add(string);

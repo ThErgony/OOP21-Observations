@@ -7,7 +7,6 @@ package oop21.tentelli.fonti.observations;
  */
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public interface Updater {
@@ -18,7 +17,7 @@ public interface Updater {
 	 * 			student pass: if present is selected else is create with save
 	 * 			save: reference to class for create new folder
 	 */
-	void chooseStudent(final String student, final Saved save) throws IOException;
+	void chooseStudent(String student, Saved save) throws IOException;
 	
 	/**
 	 * choose or create the moment pass for last student selected, if moment already present select this root.
@@ -28,7 +27,7 @@ public interface Updater {
 	 * 			updateList: if moment create is missed in the list add and sort all list
 	 * 			save: reference to class for create new folder
 	 */
-	void chooseMoment(final String moment, final List<String> updateList, final Saved save) throws IOException;
+	void chooseMoment(String moment, List<String> updateList, Saved save) throws IOException;
 	
 	/**
 	 * choose or create the date pass for last moment and student selected
@@ -36,7 +35,7 @@ public interface Updater {
 	 * 			date pass: if present is selected else is create with save
 	 * 			save: reference to class for create new file
 	 */
-	void chooseDate(final String student, final Saved save) throws IOException;
+	void chooseDate(String student, Saved save) throws IOException;
 	
 	/**
 	 * return a list of all student observed or empty list, private method observed is a control for item present
@@ -67,7 +66,7 @@ public interface Updater {
 	 * 			element pass: if present is selected else is create with save
 	 * 			save: reference to class for create new file
 	 */
-	void updateObservations(final String element, final Saved save) throws IOException;
+	void updateObservations(String element, Saved save) throws IOException;
 
 	/**
 	 * add element pass at path passed, use class save for update file
@@ -76,6 +75,6 @@ public interface Updater {
 	 * 			element: element to add at file
 	 * 			save: reference to class for create new file
 	 */
-	void updateObservations(final String string, final String type, final Saved save) throws IOException;
+	void updateObservations(String string, String type, Saved save) throws IOException;
 
 }
