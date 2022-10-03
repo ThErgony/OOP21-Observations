@@ -1,4 +1,4 @@
-package oop21.tentelli.fonti.observations;
+package Test;
 
 import static org.junit.Assert.*;
 
@@ -9,19 +9,19 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import org.observations.Loader;
-import org.observations.Saved;
-import org.observations.Updater;
-import org.observations.utility.LoaderImpl;
-import org.observations.utility.SavedImpl;
-import org.observations.utility.UpdaterImpl;
+import oop21.tentelli.fonti.observations.utility.UpdaterImpl;
+import oop21.tentelli.fonti.observations.Loader;
+import oop21.tentelli.fonti.observations.Saved;
+import oop21.tentelli.fonti.observations.Updater;
+import oop21.tentelli.fonti.observations.utility.LoaderImpl;
+import oop21.tentelli.fonti.observations.utility.SavedImpl;
 
-/**
- * test class.
- */
+
+
+
 public class Test extends TestCore{
-    
-  public static final String SEP = File.separator;
+
+	public static final String SEP = File.separator;
 	public static final String ROOT = System.getProperty("user.home");
 	public static final String SAVE_DIR = ROOT + SEP + "Observations" + SEP + "save";
 	

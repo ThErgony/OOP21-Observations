@@ -1,4 +1,4 @@
-package org.observations.core;
+package oop21.tentelli.fonti.observations.core;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.observations.ModelCore;
-import org.observations.utility.Pair;
+import oop21.tentelli.fonti.observations.ModelCore;
+import oop21.tentelli.fonti.observations.utility.Pair;
 
 public class ModelAdapter {
 
@@ -62,15 +62,15 @@ public class ModelAdapter {
 	
 	/**
 	 * make list of all string from ArrayList of Pair, use only getx for the string attribute
-	 * @param array
+	 * @param list
 	 * 			need the array of pair to convert
 	 */
-	private List<String> listMaker(final ArrayList<Pair<String, Integer>> array){
-		List<String> list = new ArrayList<>();
-		for (final Pair<String, Integer> pair : array) {
-			list.add(pair.getX());
+	private List<String> listMaker(final List<Pair<String, Integer>> list){
+		List<String> fList = new ArrayList<>();
+		for (final Pair<String, Integer> pair : list) {
+			fList.add(pair.getX());
 		}
-		return list;
+		return fList;
 	}
 	
 }

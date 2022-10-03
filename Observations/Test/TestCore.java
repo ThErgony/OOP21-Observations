@@ -1,4 +1,4 @@
-package oop21.tentelli.fonti.observations;
+package Test;
 
 import static org.junit.Assert.*;
 
@@ -10,11 +10,11 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
-import org.observations.Loader;
-import org.observations.ModelCore;
-import org.observations.core.ModelAdapter;
-import org.observations.core.ModelCoreImpl;
-import org.observations.utility.LoaderImpl;
+import oop21.tentelli.fonti.observations.Loader;
+import oop21.tentelli.fonti.observations.ModelCore;
+import oop21.tentelli.fonti.observations.core.ModelAdapter;
+import oop21.tentelli.fonti.observations.core.ModelCoreImpl;
+import oop21.tentelli.fonti.observations.utility.LoaderImpl;
 
 public class TestCore {
 

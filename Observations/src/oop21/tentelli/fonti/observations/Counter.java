@@ -1,9 +1,9 @@
-package org.observations;
+package oop21.tentelli.fonti.observations;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
-import org.observations.utility.Pair;
+import oop21.tentelli.fonti.observations.utility.Pair;
 
 public interface Counter {
 
@@ -13,6 +13,6 @@ public interface Counter {
 	 * @param arrayList
 	 * 					arrayList is the list of all observations 
 	 */
-	ArrayList<Pair<String, Integer>> counter(final ArrayList<String> arrayList) throws IOException;
+	List<Pair<String, Integer>> counter(List<String> list) throws IOException;
 
 }

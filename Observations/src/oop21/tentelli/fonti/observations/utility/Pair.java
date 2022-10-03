@@ -1,4 +1,4 @@
-package org.observations.utility;
+package oop21.tentelli.fonti.observations.utility;
 
 /*
  * A standard generic Pair<X,Y>, with getters, hashCode, equals, and toString well implemented. 

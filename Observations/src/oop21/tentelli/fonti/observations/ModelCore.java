@@ -1,4 +1,4 @@
-package org.observations;
+package oop21.tentelli.fonti.observations;
 
 /**
  * Model core app, create all class need and pass reference for create, write and load. Create a first load:
@@ -10,8 +10,9 @@ package org.observations;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
-import org.observations.utility.Pair;
+import oop21.tentelli.fonti.observations.utility.Pair;
 
 public interface ModelCore {
 
@@ -67,7 +68,7 @@ public interface ModelCore {
 	/**
 	 * return a copy of list of all observation for selected student, moment and data choose
 	 */
-	ArrayList<String> getDataDayChoose() throws IOException;
+	List<String> getDataDayChoose() throws IOException;
 
 	/**
 	 * return a copy of list for selected student and moment.
@@ -75,7 +76,7 @@ public interface ModelCore {
 	 * second item is number of time the type observed.
 	 * It can be used for generate graph
 	 */
-	ArrayList<Pair<String, Integer>> getDataMomentChoose() throws IOException;
+	List<Pair<String, Integer>> getDataMomentChoose() throws IOException;
 
 	/**
 	 * return a copy of list for selected student.
@@ -83,7 +84,7 @@ public interface ModelCore {
 	 * second item is number of time the type observed 
 	 * It can be used for generate graph
 	 */
-	ArrayList<Pair<String, Integer>> getDataStudentChoose() throws IOException;
+	List<Pair<String, Integer>> getDataStudentChoose() throws IOException;
 
 	/**
 	 * return a copy of list for selected student, moment and date.
@@ -91,7 +92,7 @@ public interface ModelCore {
 	 * second item is number of time the type observed.
 	 * It can be used for generate graph and refresh counter types for the day selected.
 	 */
-	ArrayList<Pair<String, Integer>> getCounterDayChoose() throws IOException;
+	List<Pair<String, Integer>> getCounterDayChoose() throws IOException;
 
 	/**
 	 * return a copy of list for selected student and moment.
@@ -99,7 +100,7 @@ public interface ModelCore {
 	 * second item is number of all observations in this date.
 	 * It can be used for refresh counter view for date button.
 	 */
-	ArrayList<Pair<String, Integer>> getCounterDates() throws IOException;
+	List<Pair<String, Integer>> getCounterDates() throws IOException;
 
 	/**
 	 * return a copy of list for selected student.
@@ -107,7 +108,7 @@ public interface ModelCore {
 	 * second item is number of all observations in this moment.
 	 * It can be used for refresh counter view for moment button.
 	 */
-	ArrayList<Pair<String, Integer>> getCounterMoments() throws IOException;
+	List<Pair<String, Integer>> getCounterMoments() throws IOException;
 
 	/**
 	 * return a copy of list for all students.
@@ -115,6 +116,6 @@ public interface ModelCore {
 	 * second item is number of all observations in this student.
 	 * It can be used for refresh counter view for student button.
 	 */
-	ArrayList<Pair<String, Integer>> getCounterStudents() throws IOException;
+	List<Pair<String, Integer>> getCounterStudents() throws IOException;
 
 }

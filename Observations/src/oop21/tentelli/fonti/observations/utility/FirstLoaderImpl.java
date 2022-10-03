@@ -1,4 +1,4 @@
-package org.observations.utility;
+package oop21.tentelli.fonti.observations.utility;
 
 /**
  * Only one use class, when start first time, create file and folder basic. when launch after first start do nothing
@@ -8,8 +8,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import org.observations.FirstLoader;
-import org.observations.Saved;
+import oop21.tentelli.fonti.observations.FirstLoader;
+import oop21.tentelli.fonti.observations.Saved;
 
 public class FirstLoaderImpl implements FirstLoader {
 	

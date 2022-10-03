@@ -1,4 +1,4 @@
-package org.observations.core;
+package oop21.tentelli.fonti.observations.core;
 
 /**
  * Model core app, create all class need and pass reference for create, write and load. Create a first load:
@@ -13,17 +13,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.observations.Counter;
-import org.observations.Loader;
-import org.observations.ModelCore;
-import org.observations.Saved;
-import org.observations.Updater;
-import org.observations.utility.CounterImpl;
-import org.observations.utility.FirstLoaderImpl;
-import org.observations.utility.LoaderImpl;
-import org.observations.utility.Pair;
-import org.observations.utility.SavedImpl;
-import org.observations.utility.UpdaterImpl;
+import oop21.tentelli.fonti.observations.Updater;
+import oop21.tentelli.fonti.observations.Counter;
+import oop21.tentelli.fonti.observations.Loader;
+import oop21.tentelli.fonti.observations.ModelCore;
+import oop21.tentelli.fonti.observations.Saved;
+import oop21.tentelli.fonti.observations.utility.UpdaterImpl;
+import oop21.tentelli.fonti.observations.utility.CounterImpl;
+import oop21.tentelli.fonti.observations.utility.FirstLoaderImpl;
+import oop21.tentelli.fonti.observations.utility.LoaderImpl;
+import oop21.tentelli.fonti.observations.utility.Pair;
+import oop21.tentelli.fonti.observations.utility.SavedImpl;
 
 public class ModelCoreImpl implements ModelCore {
 
@@ -133,7 +133,7 @@ public class ModelCoreImpl implements ModelCore {
 	/**
 	 * return a copy of list of all observation for selected student, moment and data choose
 	 */
-	public ArrayList<String> getDataDayChoose() throws IOException {
+	public List<String> getDataDayChoose() throws IOException {
 		return new ArrayList<>(List.copyOf(this.updater.getObservedDay()));
 	}
 	
@@ -143,7 +143,7 @@ public class ModelCoreImpl implements ModelCore {
 	 * second item is number of time the type observed.
 	 * It can be used for generate graph
 	 */
-	public ArrayList<Pair<String, Integer>> getDataMomentChoose() throws IOException {
+	public List<Pair<String, Integer>> getDataMomentChoose() throws IOException {
 		return this.counter.counter(this.momentObservations());
 	}
 	
@@ -153,7 +153,7 @@ public class ModelCoreImpl implements ModelCore {
 	 * second item is number of time the type observed 
 	 * It can be used for generate graph
 	 */
-	public ArrayList<Pair<String, Integer>> getDataStudentChoose() throws IOException {
+	public List<Pair<String, Integer>> getDataStudentChoose() throws IOException {
 		return this.counter.counter(this.studentObservations());
 	}
 	
@@ -163,7 +163,7 @@ public class ModelCoreImpl implements ModelCore {
 	 * second item is number of time the type observed.
 	 * It can be used for generate graph and refresh counter types for the day selected.
 	 */
-	public ArrayList<Pair<String, Integer>> getCounterDayChoose() throws IOException {
+	public List<Pair<String, Integer>> getCounterDayChoose() throws IOException {
 		return this.counter.counter(this.getDataDayChoose());
 	}
 	
@@ -173,11 +173,11 @@ public class ModelCoreImpl implements ModelCore {
 	 * second item is number of all observations in this date.
 	 * It can be used for refresh counter view for date button.
 	 */
-	public ArrayList<Pair<String, Integer>> getCounterDates() throws IOException {
-		ArrayList<Pair<String, Integer>> list = new ArrayList<>();
+	public List<Pair<String, Integer>> getCounterDates() throws IOException {
+		final List<Pair<String, Integer>> list = new ArrayList<>();
 		for (final String element : this.getObservedDates()) {
 			this.chooseDate(element);
-			ArrayList<Pair<String, Integer>> tempList = this.counter.counter(this.getDataDayChoose());
+			final List<Pair<String, Integer>> tempList = this.counter.counter(this.getDataDayChoose());
 			int sum = 0;
 			for (final Pair<String, Integer> pair : tempList) {
 				sum += pair.getY();
@@ -187,14 +187,14 @@ public class ModelCoreImpl implements ModelCore {
 		return list;
 	}
 
-	public ArrayList<Pair<String, Integer>> getCounterMoments() throws IOException {
+	public List<Pair<String, Integer>> getCounterMoments() throws IOException {
 		if (this.tempStudent.isBlank()) {
 			this.tempMoment = this.moment;
 		}
-		ArrayList<Pair<String, Integer>> list = new ArrayList<>();
+		final List<Pair<String, Integer>> list = new ArrayList<>();
 		for (final String element : this.getObservedMoments()) {
 			this.chooseMoment(element);
-			ArrayList<Pair<String, Integer>> tempList = this.getCounterDates();
+			final List<Pair<String, Integer>> tempList = this.getCounterDates();
 			int sum = 0;
 			for (final Pair<String, Integer> pair : tempList) {
 				sum += pair.getY();
@@ -214,15 +214,15 @@ public class ModelCoreImpl implements ModelCore {
 	 * second item is number of all observations in this student.
 	 * It can be used for refresh counter view for student button.
 	 */
-	public ArrayList<Pair<String, Integer>> getCounterStudents() throws IOException {
+	public List<Pair<String, Integer>> getCounterStudents() throws IOException {
 		if (this.tempStudent.isBlank() && !this.student.isBlank()) {
 			tempStudent = this.student;
 			tempMoment = this.moment;
 		}
-		ArrayList<Pair<String, Integer>> list = new ArrayList<>();
+		final List<Pair<String, Integer>> list = new ArrayList<>();
 		for (final String element : this.getObservedStudents()) {
 			this.chooseStudent(element);
-			ArrayList<Pair<String, Integer>> tempList = this.getCounterMoments();
+			final List<Pair<String, Integer>> tempList = this.getCounterMoments();
 			int sum = 0;
 			for (final Pair<String, Integer> pair : tempList) {
 				sum += pair.getY();
