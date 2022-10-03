@@ -27,7 +27,7 @@ import oop21.tentelli.fonti.observations.utility.SavedImpl;
 
 public class ModelCoreImpl implements ModelCore {
 
-	private static final String SEP = File.separator;
+        private static final String SEP = File.separator;
 	private static final String ROOT = System.getProperty("user.home");
 	private static final String NAME_APP = "Observations";
 	private static final String SAVE_DIR = "save";
@@ -55,26 +55,26 @@ public class ModelCoreImpl implements ModelCore {
 	 * 		  for UpdaterImpl: path moments list, separator, path for students dir e loader
 	 */
 	public ModelCoreImpl() throws IOException {
-		super();
-		this.save = new SavedImpl();
-		this.loader = new LoaderImpl();
-		this.counter = new CounterImpl();
-		new FirstLoaderImpl().firstLoad(DIR, STUDENT_DIR, MOMENTS_LIST, TYPE_OBSERVED_LIST, save);;
-		this.updater = new UpdaterImpl(DIR + MOMENTS_LIST, SEP, DIR + STUDENT_DIR + SEP, loader);
+	    super();
+	    this.save = new SavedImpl();
+	    this.loader = new LoaderImpl();
+	    this.counter = new CounterImpl();
+	    new FirstLoaderImpl().firstLoad(DIR, STUDENT_DIR, MOMENTS_LIST, TYPE_OBSERVED_LIST, save);
+	    this.updater = new UpdaterImpl(DIR + MOMENTS_LIST, SEP, DIR + STUDENT_DIR + SEP, loader);
 	}
 	
 	/**
 	 * return copy of the list of all moments user can choose
 	 */
 	public List<String> getMomentsList() throws IOException {
-		return new ArrayList<>(List.copyOf(this.loader.fillList(DIR + MOMENTS_LIST)));
+	    return new ArrayList<>(List.copyOf(this.loader.fillList(DIR + MOMENTS_LIST)));
 	}
 
 	/**
 	 * return copy of the list of all types of observations user can choose
 	 */
 	public List<String> getTypeList() throws IOException {
-		return new ArrayList<>(List.copyOf(this.loader.fillList(DIR + TYPE_OBSERVED_LIST)));
+	    return new ArrayList<>(List.copyOf(this.loader.fillList(DIR + TYPE_OBSERVED_LIST)));
 	}
 	
 	/**
@@ -84,8 +84,8 @@ public class ModelCoreImpl implements ModelCore {
 	 * 		string for name student choose/selected 
 	 */
 	public void chooseStudent(final String student) throws IOException {
-		this.student = student;
-		this.updater.chooseStudent(student, this.save);
+	    this.student = student;
+	    this.updater.chooseStudent(student, this.save);
 	}
 	
 	/**
@@ -95,8 +95,8 @@ public class ModelCoreImpl implements ModelCore {
 	 * 		moment choose/selected for selected student 
 	 */
 	public void chooseMoment(final String moment) throws IOException {
-		this.moment = moment;
-		this.updater.chooseMoment(moment, this.getMomentsList(), this.save);
+	    this.moment = moment;
+	    this.updater.chooseMoment(moment, this.getMomentsList(), this.save);
 	}
 
 	/**
@@ -106,7 +106,7 @@ public class ModelCoreImpl implements ModelCore {
 	 * 		data choose/selected for selected student and moment 
 	 */
 	public void chooseDate(final String date) throws IOException {
-		this.updater.chooseDate(date + EXTENSION, this.save);
+	    this.updater.chooseDate(date + EXTENSION, this.save);
 	}
 	
 	/**
@@ -116,7 +116,7 @@ public class ModelCoreImpl implements ModelCore {
 	 * 					type is a string for name of type observation
 	 */
 	public void updateObservations(final String time, final String type) throws IOException {
-		this.updater.updateObservations(type + " - " + time, this.save);
+	    this.updater.updateObservations(type + " - " + time, this.save);
 	}
 
 	/**
@@ -125,16 +125,16 @@ public class ModelCoreImpl implements ModelCore {
 	 * 					type is a string for name of type observation
 	 */
 	public void addObservationType(final String type) throws IOException {
-		if (!this.getTypeList().contains(type)) {
-			this.updater.updateObservations(DIR + TYPE_OBSERVED_LIST, type, this.save);
-		}
+	    if (!this.getTypeList().contains(type)) {
+		this.updater.updateObservations(DIR + TYPE_OBSERVED_LIST, type, this.save);
+	    }
 	}
 	
 	/**
 	 * return a copy of list of all observation for selected student, moment and data choose
 	 */
 	public List<String> getDataDayChoose() throws IOException {
-		return new ArrayList<>(List.copyOf(this.updater.getObservedDay()));
+	    return new ArrayList<>(List.copyOf(this.updater.getObservedDay()));
 	}
 	
 	/**
@@ -144,7 +144,7 @@ public class ModelCoreImpl implements ModelCore {
 	 * It can be used for generate graph
 	 */
 	public List<Pair<String, Integer>> getDataMomentChoose() throws IOException {
-		return this.counter.counter(this.momentObservations());
+	    return this.counter.counter(this.momentObservations());
 	}
 	
 	/**
@@ -154,7 +154,7 @@ public class ModelCoreImpl implements ModelCore {
 	 * It can be used for generate graph
 	 */
 	public List<Pair<String, Integer>> getDataStudentChoose() throws IOException {
-		return this.counter.counter(this.studentObservations());
+	    return this.counter.counter(this.studentObservations());
 	}
 	
 	/**
@@ -164,7 +164,7 @@ public class ModelCoreImpl implements ModelCore {
 	 * It can be used for generate graph and refresh counter types for the day selected.
 	 */
 	public List<Pair<String, Integer>> getCounterDayChoose() throws IOException {
-		return this.counter.counter(this.getDataDayChoose());
+	    return this.counter.counter(this.getDataDayChoose());
 	}
 	
 	/**
@@ -174,38 +174,44 @@ public class ModelCoreImpl implements ModelCore {
 	 * It can be used for refresh counter view for date button.
 	 */
 	public List<Pair<String, Integer>> getCounterDates() throws IOException {
-		final List<Pair<String, Integer>> list = new ArrayList<>();
-		for (final String element : this.getObservedDates()) {
-			this.chooseDate(element);
-			final List<Pair<String, Integer>> tempList = this.counter.counter(this.getDataDayChoose());
-			int sum = 0;
-			for (final Pair<String, Integer> pair : tempList) {
-				sum += pair.getY();
-			}
-			list.add(new Pair<>(element, sum));
+	    final List<Pair<String, Integer>> list = new ArrayList<>();
+	    for (final String element : this.getObservedDates()) {
+	        this.chooseDate(element);
+	        final List<Pair<String, Integer>> tempList = this.counter.counter(this.getDataDayChoose());
+		int sum = 0;
+		for (final Pair<String, Integer> pair : tempList) {
+		    sum += pair.getY();
 		}
-		return list;
+		list.add(new Pair<>(element, sum));
+	    }
+	    return list;
 	}
 
+	/**
+         * return a copy of list for selected student.
+         * List contain pair: first item is a string with moment,
+         * second item is number of all observations in this date.
+         * It can be used for refresh counter view for moment button.
+         */
 	public List<Pair<String, Integer>> getCounterMoments() throws IOException {
-		if (this.tempStudent.isBlank()) {
-			this.tempMoment = this.moment;
+	    if (this.tempStudent.isBlank()) {
+		this.tempMoment = this.moment;
+	    }
+	    final List<Pair<String, Integer>> list = new ArrayList<>();
+	    for (final String element : this.getObservedMoments()) {
+	        this.chooseMoment(element);
+		final List<Pair<String, Integer>> tempList = this.getCounterDates();
+		int sum = 0;
+		for (final Pair<String, Integer> pair : tempList) {
+		    sum += pair.getY();
 		}
-		final List<Pair<String, Integer>> list = new ArrayList<>();
-		for (final String element : this.getObservedMoments()) {
-			this.chooseMoment(element);
-			final List<Pair<String, Integer>> tempList = this.getCounterDates();
-			int sum = 0;
-			for (final Pair<String, Integer> pair : tempList) {
-				sum += pair.getY();
-			}
-			list.add(new Pair<>(element, sum));
-		}
-		if (this.tempStudent.isBlank()) {
-			this.refreshMoment(this.tempMoment);
-			this.resetMoment();
-		}
-		return list;
+		list.add(new Pair<>(element, sum));
+	    }
+	    if (this.tempStudent.isBlank()) {
+	        this.refreshMoment(this.tempMoment);
+		this.resetMoment();
+	    }
+	    return list;
 	}
 	
 	/**
@@ -215,114 +221,116 @@ public class ModelCoreImpl implements ModelCore {
 	 * It can be used for refresh counter view for student button.
 	 */
 	public List<Pair<String, Integer>> getCounterStudents() throws IOException {
-		if (this.tempStudent.isBlank() && !this.student.isBlank()) {
-			tempStudent = this.student;
-			tempMoment = this.moment;
+	    if (this.tempStudent.isBlank() && !this.student.isBlank()) {
+	        tempStudent = this.student;
+		tempMoment = this.moment;
+	    }
+	    final List<Pair<String, Integer>> list = new ArrayList<>();
+	    for (final String element : this.getObservedStudents()) {
+	        this.chooseStudent(element);
+		final List<Pair<String, Integer>> tempList = this.getCounterMoments();
+		int sum = 0;
+		for (final Pair<String, Integer> pair : tempList) {
+		    sum += pair.getY();
 		}
-		final List<Pair<String, Integer>> list = new ArrayList<>();
-		for (final String element : this.getObservedStudents()) {
-			this.chooseStudent(element);
-			final List<Pair<String, Integer>> tempList = this.getCounterMoments();
-			int sum = 0;
-			for (final Pair<String, Integer> pair : tempList) {
-				sum += pair.getY();
-			}
-			list.add(new Pair<>(element, sum));
-		}
-		this.refreshStudent(this.tempStudent, this.tempMoment);
-		this.resetStudent();
-		return list;
+		list.add(new Pair<>(element, sum));
+	    }
+	    this.refreshStudent(this.tempStudent, this.tempMoment);
+	    this.resetStudent();
+	    return list;
 	}
 
 	/**
 	 * Return list of all observation for all date observed for the student and moment choose. 
 	 */
 	private List<String> momentObservations() throws IOException {
-		final List<String> list = new ArrayList<>();
-		for (final String e : this.getObservedDates()) {
-			this.chooseDate(e);
-			list.addAll(this.getDataDayChoose());
-		}
-		list.sort((a,b)->a.compareTo(b));
-		return list;
+	    final List<String> list = new ArrayList<>();
+	    for (final String e : this.getObservedDates()) {
+	        this.chooseDate(e);
+		list.addAll(this.getDataDayChoose());
+	    }
+	    list.sort((a,b)->a.compareTo(b));
+	    return list;
 	}
 	
 	/**
 	 * Return list of all observation for all dates and all moments observed for the student choose. 
 	 */
 	private List<String> studentObservations() throws IOException {
-		this.tempMoment = this.moment;
-		final List<String> list = new ArrayList<>();
-		for (final String e : this.getObservedMoments()) {
-			this.chooseMoment(e);
-			list.addAll(this.momentObservations());
-		}
-		list.sort((a,b)->a.compareTo(b));
-		this.refreshMoment(this.tempMoment);
-		resetMoment();
-		return list;
+	    this.tempMoment = this.moment;
+	    final List<String> list = new ArrayList<>();
+	    for (final String e : this.getObservedMoments()) {
+	        this.chooseMoment(e);
+	        list.addAll(this.momentObservations());
+	    }
+	    list.sort((a,b)->a.compareTo(b));
+	    this.refreshMoment(this.tempMoment);
+	    this.resetMoment();
+	    return list;
 	}
 	
 	/**
 	 * Return list of all student observed. 
 	 */
 	private List<String> getObservedStudents() {
-		return new ArrayList<>(List.copyOf(this.updater.getObservedStudents()));
+	    return new ArrayList<>(List.copyOf(this.updater.getObservedStudents()));
 	}
 
 	/**
 	 * Return list of all moments observed. 
 	 */
 	private List<String> getObservedMoments() {
-		return new ArrayList<>(List.copyOf(this.updater.getObservedMoments()));
+	    return new ArrayList<>(List.copyOf(this.updater.getObservedMoments()));
 	}
 
 	/**
 	 * Return list of all dates observed. 
 	 */
 	private List<String> getObservedDates() {
-		final List<String> list = new ArrayList<>();
-		for (String string : List.copyOf(this.updater.getObservedDates())) {
-			string = string.substring(0, string.length()-4);
-			list.add(string);
-		}
-		return list;
+	    final List<String> list = new ArrayList<>();
+	    for (final String string : List.copyOf(this.updater.getObservedDates())) {
+	        final String s;
+	        s = string.substring(0, string.length()-4);
+		list.add(s);
+	    }
+	    return list;
 	}
 	
 	/**
 	 * simple refresher for choose student and refresh moment.
 	 * @param stud, mom
-	 * 					stud: student choose
-	 * 					mom: moment choose 
+	 *             student choose
+	 *             moment choose 
 	 */
 	private void refreshStudent(final String stud, final String mom) throws IOException {
-		this.student = stud;
-		this.chooseStudent(this.student);
-		this.refreshMoment(mom);
+	    this.student = stud;
+	    this.chooseStudent(this.student);
+	    this.refreshMoment(mom);
 	}
+	
 	/**
 	 * simple refresher for choose moment.
 	 * @param mom
-	 * 				mom: moment choose 
+	 *             moment choose 
 	 */
 	private void refreshMoment(final String mom) throws IOException {
-		this.moment = mom;
-		this.chooseMoment(this.moment);
+	    this.moment = mom;
+	    this.chooseMoment(this.moment);
 	}
 	
 	/**
 	 * simple reset for student for access control
 	 */
 	private void resetStudent() {
-		this.tempStudent = "";
-		this.resetMoment();
+	    this.tempStudent = "";
+	    this.resetMoment();
 	}
 	
 	/**
 	 * simple reset for moment for access control
 	 */
 	private void resetMoment() {
-		this.tempMoment = "";
+	    this.tempMoment = "";
 	}
 	
 }
