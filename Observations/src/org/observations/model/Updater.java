@@ -13,60 +13,65 @@ public interface Updater {
   /**
    * choose or create the student pass.
 
-   * @param student save
+   * @param student save loader
    *      student pass: if present is selected else is create with save
    *      save: reference to class for create new folder
+   *      loader: reference to class for load file
    */
-  void chooseStudent(String student, Saved save) throws IOException;
+  void chooseStudent(String student, Saved save, Loader loader) throws IOException;
 
   /**
    * choose or create the moment pass for last student selected, if moment present select this root.
    * list pass is the list of all moment list file, if new moment is missed add to list e sort.
 
-   * @param moment updateList save
+   * @param moment updateList save loader
    *      moment pass: if present is selected else is create with save
    *      updateList: if moment create is missed in the list add and sort all list
    *      save: reference to class for create new folder
+   *      loader: reference to class for load file
    */
-  void chooseMoment(String moment, List<String> updateList, Saved save) throws IOException;
+  void chooseMoment(String moment, List<String> updateList, Saved save, Loader loader)
+      throws IOException;
 
   /**
    * choose or create the date pass for last moment and student selected.
 
-   * @param date save
+   * @param date save loader
    *      date pass: if present is selected else is create with save
    *      save: reference to class for create new file
+   *      loader: reference to class for load file
    */
-  void chooseDate(String date, Saved save) throws IOException;
+  void chooseDate(String date, Saved save, Loader loader) throws IOException;
 
   /**
    * return a list of all student observed or empty list.
    */
-  List<String> getObservedStudents();
+  List<String> getObservedStudents(Loader loader);
 
   /**
    * return a list of all moment observed for last student selected or empty list.
    */
-  List<String> getObservedMoments();
+  List<String> getObservedMoments(Loader loader);
 
   /**
    * return a list of all dates observed for last moment and student selected or empty list.
    */
-  List<String> getObservedDates();
+  List<String> getObservedDates(Loader loader);
 
   /**
    * return a list of all observations observed for last date/moment/student selected or empty list.
    */
-  List<String> getObservedDay() throws IOException;
+  List<String> getObservedDay(Loader loader) throws IOException;
 
   /**
    * add element pass for last date, moment and student selected.
 
-   * @param element save
+   * @param element save loader
    *      element pass: if present is selected else is create with save
    *      save: reference to class for create new file
+   *      loader: reference to class for load file
    */
-  void updateObservations(String element, Saved save) throws IOException;
+  void updateObservations(String element, Saved save, Loader loader) throws IOException;
 
   /**
    * add element pass at path passed, use class save for update file.
@@ -76,6 +81,7 @@ public interface Updater {
    *      element: element to add at file
    *      save: reference to class for create new file
    */
-  void updateObservations(String path, String element, Saved save) throws IOException;
+  void updateObservations(String path, String element, Saved save, Loader loader)
+      throws IOException;
 
 }

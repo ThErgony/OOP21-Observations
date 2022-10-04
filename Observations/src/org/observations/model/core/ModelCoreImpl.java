@@ -57,7 +57,7 @@ public class ModelCoreImpl implements ModelCore {
     this.loader = new LoaderImpl();
     this.counter = new CounterImpl();
     new FirstLoaderImpl().firstLoad(DIR, STUDENT_DIR, MOMENTS_LIST, TYPE_OBSERVED_LIST, this.save);
-    this.updater = new UpdaterImpl(DIR + MOMENTS_LIST, SEP, DIR + STUDENT_DIR + SEP, this.loader);
+    this.updater = new UpdaterImpl(DIR + MOMENTS_LIST, SEP, DIR + STUDENT_DIR + SEP);
   }
 
   /**
@@ -82,7 +82,7 @@ public class ModelCoreImpl implements ModelCore {
    */
   public void chooseStudent(final String student) throws IOException {
     this.student = student;
-    this.updater.chooseStudent(student, this.save);
+    this.updater.chooseStudent(student, this.save, this.loader);
   }
 
   /**
@@ -93,7 +93,7 @@ public class ModelCoreImpl implements ModelCore {
    */
   public void chooseMoment(final String moment) throws IOException {
     this.moment = moment;
-    this.updater.chooseMoment(moment, this.getMomentsList(), this.save);
+    this.updater.chooseMoment(moment, this.getMomentsList(), this.save, this.loader);
   }
 
   /**
@@ -103,7 +103,7 @@ public class ModelCoreImpl implements ModelCore {
    *      date choose/selected for selected student and moment 
    */
   public void chooseDate(final String date) throws IOException {
-    this.updater.chooseDate(date + EXTENSION, this.save);
+    this.updater.chooseDate(date + EXTENSION, this.save, this.loader);
   }
 
   /**
@@ -114,7 +114,7 @@ public class ModelCoreImpl implements ModelCore {
    *      type is a string for name of type observation
    */
   public void updateObservations(final String time, final String type) throws IOException {
-    this.updater.updateObservations(type + " - " + time, this.save);
+    this.updater.updateObservations(type + " - " + time, this.save, this.loader);
   }
 
   /**
@@ -125,7 +125,7 @@ public class ModelCoreImpl implements ModelCore {
    */
   public void addObservationType(final String type) throws IOException {
     if (!this.getTypeList().contains(type)) {
-      this.updater.updateObservations(DIR + TYPE_OBSERVED_LIST, type, this.save);
+      this.updater.updateObservations(DIR + TYPE_OBSERVED_LIST, type, this.save, this.loader);
     }
   }
 
@@ -133,7 +133,7 @@ public class ModelCoreImpl implements ModelCore {
    * return a copy of list of all observation for current student, moment and date choose.
    */
   public List<String> getDataDayChoose() throws IOException {
-    return new ArrayList<>(List.copyOf(this.updater.getObservedDay()));
+    return new ArrayList<>(List.copyOf(this.updater.getObservedDay(this.loader)));
   }
 
   /**
@@ -272,14 +272,14 @@ public class ModelCoreImpl implements ModelCore {
    * Return list of all students observed. 
    */
   private List<String> getObservedStudents() {
-    return new ArrayList<>(List.copyOf(this.updater.getObservedStudents()));
+    return new ArrayList<>(List.copyOf(this.updater.getObservedStudents(this.loader)));
   }
 
   /**
    * Return list of all moments observed for the current student. 
    */
   private List<String> getObservedMoments() {
-    return new ArrayList<>(List.copyOf(this.updater.getObservedMoments()));
+    return new ArrayList<>(List.copyOf(this.updater.getObservedMoments(this.loader)));
   }
 
   /**
@@ -287,7 +287,7 @@ public class ModelCoreImpl implements ModelCore {
    */
   private List<String> getObservedDates() {
     final List<String> list = new ArrayList<>();
-    for (final String string : List.copyOf(this.updater.getObservedDates())) {
+    for (final String string : List.copyOf(this.updater.getObservedDates(this.loader))) {
       final String s;
       s = string.substring(0, string.length() - 4);
       list.add(s);

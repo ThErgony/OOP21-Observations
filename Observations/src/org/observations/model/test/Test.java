@@ -70,13 +70,13 @@ public class Test extends TestCore {
     System.out.println("\ntest 4");
     final Loader loader = new LoaderImpl();
     final Saved save = new SavedImpl();
-    final Updater upd = new UpdaterImpl(SAVE_DIR + SEP + PIPPO_TXT, SEP, SAVE_DIR + SEP, loader);
+    final Updater upd = new UpdaterImpl(SAVE_DIR + SEP + PIPPO_TXT, SEP, SAVE_DIR + SEP);
     String time = new SimpleDateFormat("HH:mm:ss", Locale.ITALIAN)
         .format(Date.from(Instant.now(Clock.systemDefaultZone())));
     System.out.println("time " + time);
-    upd.updateObservations(SAVE_DIR + SEP + PIPPO_TXT, "prova" + " - " + time, save);
+    upd.updateObservations(SAVE_DIR + SEP + PIPPO_TXT, "prova" + " - " + time, save, loader);
     time = LocalDate.now().toString();
-    upd.updateObservations(SAVE_DIR + SEP + PIPPO_TXT, "4prova4" + " - " + time, save);
+    upd.updateObservations(SAVE_DIR + SEP + PIPPO_TXT, "4prova4" + " - " + time, save, loader);
     final List<String> list = loader.fillList(SAVE_DIR + SEP + PIPPO_TXT);
     System.out.println(list);
   }
