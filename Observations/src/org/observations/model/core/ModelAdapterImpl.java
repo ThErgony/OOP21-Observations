@@ -1,9 +1,14 @@
 package org.observations.model.core;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.time.Clock;
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import org.observations.model.ModelCore;
 import org.observations.model.utility.Pair;
@@ -18,6 +23,75 @@ public class ModelAdapterImpl {
   public ModelAdapterImpl() throws IOException {
     super();
     this.mc = new ModelCoreImpl();
+  }
+
+  /**
+   * Return the moment list user can choose to observe. 
+   */
+  public List<String> getMomentsListFromFile() throws IOException {
+    return this.mc.getMomentsList();
+  }
+
+  /**
+   * Return the type list of observations user can choose to observe. 
+   */
+  public List<String> getTypesListFromFile() throws IOException {
+    return this.mc.getTypeList();
+  }
+  
+  /**
+   * Create new student folder if missed.
+
+   * @param student
+   *        string of new student 
+   */
+  public void createStudent(final String student) throws IOException {
+    this.mc.chooseStudent(student);
+  }
+
+  /**
+   * Create new moment folder if missed.
+
+   * @param moment
+   *        string of new moment 
+   */
+  public void createMoment(final String moment) throws IOException {
+    this.mc.chooseMoment(moment);
+  }
+
+  /**
+   * Create new date file if missed.
+
+   * @param date
+   *        string of new date 
+   */
+  public void createDate(final String date) throws IOException {
+    this.mc.chooseDate(date);
+  }
+
+  /**
+   * Add new type of observation at list created at start.
+
+   * @param type
+   *        string of new type of observation 
+   */
+  public void createObservationsType(final String type) throws IOException {
+    this.mc.addObservationType(type);
+  }
+  
+  /**
+   * When user click on type of observation send the type,
+   * the model update observation list for current date/moment/student.
+   * Time is the hour, minutes, second when click is do,
+   * use SimpleDateFormat class and Date for format needed.
+
+   * @param type
+   *        string of type of observation clicked
+   */
+  public void clickObservation(final String type) throws IOException {
+    final String time = new SimpleDateFormat("HH:mm:ss", Locale.ITALIAN)
+        .format(Date.from(Instant.now(Clock.systemDefaultZone())));
+    this.mc.updateObservations(time, type);
   }
 
   /**
