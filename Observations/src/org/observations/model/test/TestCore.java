@@ -12,11 +12,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import org.observations.model.Loader;
 import org.observations.model.ModelCore;
 import org.observations.model.core.ModelAdapter;
 import org.observations.model.core.ModelCoreImpl;
-import org.observations.model.utility.LoaderImpl;
 
 /** Simple class for test model core e model adapter. */
 public class TestCore {
@@ -31,15 +29,6 @@ public class TestCore {
   public static final String SEP = File.separator;
   public static final String ROOT = System.getProperty("user.home");
   public static final String SAVE_DIR = ROOT + SEP + "Observations" + SEP + "save";
-
-  /** test for new core model class. */
-  @org.junit.Test
-  public void test5UseCore() throws IOException {
-    System.out.println("\ntest 5");
-    final Loader loadTest = new LoaderImpl();
-    final List<String> list = loadTest.fillList(SAVE_DIR + SEP + "pippo.txt");
-    System.out.println(list);
-  }
 
   /** test for check file/folder in selected folder with model core. */
   @org.junit.Test

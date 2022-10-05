@@ -53,7 +53,7 @@ public class Test extends TestCore {
     }
   }
 
-  /* test make file with name choose in selected folder */
+  /** test make file with name choose in selected folder. */
   @org.junit.Test
   public void test3CreateFile() throws IOException {
     System.out.println("\ntest 3");
@@ -64,9 +64,9 @@ public class Test extends TestCore {
     assertTrue(test.exists());
   }
 
-  /* test from add string to file and read is content*/
+  /** test from add string to file and read is content. */
   @org.junit.Test
-  public void test4WriteReadOnFile() throws IOException {
+  public void test4() throws IOException {
     System.out.println("\ntest 4");
     final Loader loader = new LoaderImpl();
     final Saved save = new SavedImpl();
@@ -81,4 +81,12 @@ public class Test extends TestCore {
     System.out.println(list);
   }
 
+  /** test for new core model class. */
+  @org.junit.Test
+  public void test5() throws IOException {
+    System.out.println("\ntest 5");
+    final Loader loadTest = new LoaderImpl();
+    final List<String> list = loadTest.fillList(SAVE_DIR + SEP + "pippo.txt");
+    System.out.println(list);
+  }
 }
