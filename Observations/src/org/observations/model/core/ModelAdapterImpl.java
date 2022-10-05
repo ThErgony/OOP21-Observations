@@ -14,7 +14,12 @@ import org.observations.model.ModelCore;
 import org.observations.model.utility.Pair;
 
 /**
- * Class for adapt data send from view to model and return map and list request from view. 
+ * Class for adapt data send from view to model.
+ * Adapter return map and list request from view for student and moment choose (clicked);
+ * create the new folder for student and moment, update file of list of moment if moment is missed;
+ * create date file if missed in the folder moment and student choose; update this file with
+ * type and time (HH:mm:ss) of click;
+ * update file of list of type of observation if user need more item. 
  */
 public class ModelAdapterImpl {
 
