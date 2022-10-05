@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import org.observations.model.ModelCore;
-import org.observations.model.core.ModelAdapter;
+import org.observations.model.core.ModelAdapterImpl;
 import org.observations.model.core.ModelCoreImpl;
 
 /** Simple class for test model core e model adapter. */
@@ -90,7 +90,7 @@ public class TestCore {
   @org.junit.Test
   public void test7UseAdapter() throws IOException {
     System.out.println("\ntest 7");
-    final ModelAdapter ma = new ModelAdapter();
+    final ModelAdapterImpl ma = new ModelAdapterImpl();
     assertEquals(2, ma.getStudentsList().size());
     System.out.println(ma.getStudentsList());
     Map<String, List<String>> map = ma.getMomentsList(PIPPO);

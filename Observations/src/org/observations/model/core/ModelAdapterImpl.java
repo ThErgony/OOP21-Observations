@@ -11,11 +11,11 @@ import org.observations.model.utility.Pair;
 /**
  * Class for adapt data send from view to model and return map and list request from view. 
  */
-public class ModelAdapter {
+public class ModelAdapterImpl {
 
   private final ModelCore mc;
 
-  public ModelAdapter() throws IOException {
+  public ModelAdapterImpl() throws IOException {
     super();
     this.mc = new ModelCoreImpl();
   }
