@@ -1,8 +1,7 @@
 package org.observations.model.test;
 
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,6 +13,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import org.junit.jupiter.api.Test;
 import org.observations.model.Loader;
 import org.observations.model.ModelAdapter;
 import org.observations.model.ModelCore;
@@ -25,9 +25,8 @@ import org.observations.model.utility.LoaderImpl;
 import org.observations.model.utility.SavedImpl;
 import org.observations.model.utility.UpdaterImpl;
 
-
-/** class test JUnit 4.*/
-public class Test {
+/** class test JUnit 5 - Jupiter.*/
+class TestJupiter {
 
   private static final String PIPPO_TXT = "pippo.txt";
   private static final String TIME_STAMP = "HH:mm:ss";
@@ -42,8 +41,8 @@ public class Test {
   public static final String SAVE_DIR = ROOT + SEP + "Observations" + SEP + "save";
 
   /** test make dir in user folder. */
-  @org.junit.Test
-  public void test1Save() {
+  @Test
+  void test() {
     System.out.println("\ntest 1");
     final Saved newTest = new SavedImpl();
     newTest.makeDir(SAVE_DIR);
@@ -53,8 +52,8 @@ public class Test {
   }
 
   /** test print all element read in selected directory. */
-  @org.junit.Test
-  public void test2Load() {
+  @Test
+  void test2() {
     System.out.println("\ntest 2");
     final Loader newTest = new LoaderImpl();
     for (final String e : newTest.loadFileFolder(new File(SAVE_DIR).getParent())) {
@@ -66,8 +65,8 @@ public class Test {
   }
 
   /** test make file with name choose in selected folder. */
-  @org.junit.Test
-  public void test3CreateFile() throws IOException {
+  @Test
+  void test3() throws IOException {
     System.out.println("\ntest 3");
     final Saved newTest = new SavedImpl();
     newTest.makeFile(SAVE_DIR + SEP + PIPPO_TXT);
@@ -77,8 +76,8 @@ public class Test {
   }
 
   /** test from add string to file and read is content. */
-  @org.junit.Test
-  public void test4() throws IOException {
+  @Test
+  void test4() throws IOException {
     System.out.println("\ntest 4");
     final Loader loader = new LoaderImpl();
     final Saved save = new SavedImpl();
@@ -94,8 +93,8 @@ public class Test {
   }
 
   /** test for new core model class. */
-  @org.junit.Test
-  public void test5() throws IOException {
+  @Test
+  void test5() throws IOException {
     System.out.println("\ntest 5");
     final Loader loadTest = new LoaderImpl();
     final List<String> list = loadTest.fillList(SAVE_DIR + SEP + "pippo.txt");
@@ -103,8 +102,8 @@ public class Test {
   }
 
   /** test for check file/folder in selected folder with model core. */
-  @org.junit.Test
-  public void test6() throws IOException {
+  @Test
+  void test6() throws IOException {
     System.out.println("\ntest 6");
     final ModelCore mci = new ModelCoreImpl();
     System.out.println("moments list " + mci.getMomentsList() + "\n"
@@ -159,8 +158,8 @@ public class Test {
   }
 
   /** test for test class model adapter. */
-  @org.junit.Test
-  public void test7UseAdapter() throws IOException {
+  @Test
+  void test7() throws IOException {
     System.out.println("\ntest 7");
     final ModelAdapter ma = new ModelAdapterImpl();
     assertEquals(2, ma.getStudentsList().size());
