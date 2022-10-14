@@ -12,7 +12,6 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.observations.model.Loader;
 import org.observations.model.ModelAdapter;
@@ -146,12 +145,21 @@ class TestJupiter {
         + mci.getCounterMoments().size());
     System.out.println("counter observed student " + mci.getCounterStudents() + " "
         + mci.getCounterStudents().size());
-    assertEquals(2, mci.getCounterStudents().size());
     System.out.println("counter observed moment " + mci.getCounterMoments() + " "
         + mci.getCounterMoments().size());
     System.out.println("counter observed date " + mci.getCounterDates() + " "
         + mci.getCounterDates().size());
+    System.out.println(mci.getCounterDates());
+    System.out.println(mci.getCounterDates());
+    System.out.println(mci.getCounterDayChoose());
+    System.out.println(mci.getCounterMoments());
+    System.out.println(mci.getCounterStudents());
+    System.out.println(mci.getCounterDates());
+    System.out.println(mci.getCounterDates());
+    mci.chooseStudent(PIPPO);
     assertEquals(3, mci.getCounterMoments().size());
+    mci.chooseStudent(PIPPO);
+    mci.chooseMoment(PROVA);
     assertEquals(2, mci.getCounterDates().size());
     mci.chooseMoment(COMPRAMI);
     assertEquals(0, mci.getCounterDates().size());
@@ -162,15 +170,25 @@ class TestJupiter {
   void test7() throws IOException {
     System.out.println("\ntest 7");
     final ModelAdapter ma = new ModelAdapterImpl();
-    assertEquals(2, ma.getStudentsList().size());
-    System.out.println(ma.getStudentsList());
-    Map<String, List<String>> map = ma.getMomentsList(PIPPO);
-    assertEquals(3, map.get(PIPPO).size());
-    map = ma.getMomentsList(PLUTO);
-    assertEquals(0, map.get(PLUTO).size());
-    map = ma.getMomentsList(PIPPO);
-    System.out.println(ma.getDatesAndObservations(PROVA));
-    assertEquals(3, map.get(PIPPO).size());
+    ma.createStudent(PIPPO + "1");
+    ma.createStudent(PLUTO + "1");
+    ma.createStudent(PIPPO + "1");
+    ma.createMoment(TROVAMI);
+    ma.createStudent(PLUTO + "1");
+    assertEquals(1, ma.getMomentsList(PIPPO + "1").size());
+    assertEquals(0, ma.getMomentsList(PLUTO + "1").size());
+    assertEquals(1, ma.getMomentsList(PIPPO + "1").size());
+    assertEquals(0, ma.getMomentsList(PLUTO + "1").size());
+    System.out.println(ma.getMomentsList(PIPPO + "1"));
+    System.out.println(ma.getMomentsList(PLUTO + "1"));
+    System.out.println(ma.getMomentsList(PIPPO + "1"));
+    ma.createStudent(PIPPO + "1");
+    ma.createMoment(TROVAMI);
+    ma.createDate("oggi");
+    ma.createDate("oggi");
+    ma.clickObservation("ciaociao");
+    ma.clickObservation("ciaociao");
+    System.out.println("date " + ma.getDatesAndObservations(TROVAMI));
   }
   
 }

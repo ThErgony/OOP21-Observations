@@ -115,5 +115,20 @@ public interface ModelCore {
    * It can be used for refresh counter view for student button.
    */
   List<Pair<String, Integer>> getCounterStudents() throws IOException;
+  
+  /**
+   * Return list of all students observed. 
+   */
+  List<String> getObservedStudents();
+  
+  /**
+   * Return list of all moments observed for the current student. 
+   */
+  List<String> getObservedMoments();
+  
+  /**
+   * Return list of all dates observed for the current student and moment. 
+   */
+  List<String> getObservedDates();
 
 }

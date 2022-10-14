@@ -133,7 +133,7 @@ public class ModelCoreImpl implements ModelCore {
    * return a copy of list of all observation for current student, moment and date choose.
    */
   public List<String> getDataDayChoose() throws IOException {
-    return new ArrayList<>(List.copyOf(this.updater.getObservedDay(this.loader)));
+    return this.updater.getObservedDay(this.loader);
   }
 
   /**
@@ -234,8 +234,37 @@ public class ModelCoreImpl implements ModelCore {
       }
       list.add(new Pair<>(element, sum));
     }
-    this.refreshStudent(this.tempStudent, this.tempMoment); //reset temporary variable
-    this.resetStudent();
+    if (!this.tempStudent.isBlank()) {
+      this.refreshStudent(this.tempStudent, this.tempMoment); //reset temporary variable
+      this.resetStudent();
+    }
+    return list;
+  }
+
+  /**
+   * Return list of all students observed. 
+   */
+  public List<String> getObservedStudents() {
+    return this.updater.getObservedStudents(this.loader);
+  }
+
+  /**
+   * Return list of all moments observed for the current student. 
+   */
+  public List<String> getObservedMoments() {
+    return this.updater.getObservedMoments(this.loader);
+  }
+
+  /**
+   * Return list of all dates observed for the current student and moment. 
+   */
+  public List<String> getObservedDates() {
+    final List<String> list = new ArrayList<>();
+    for (final String string : this.updater.getObservedDates(this.loader)) {
+      final String s;
+      s = string.substring(0, string.length() - 4);
+      list.add(s);
+    }
     return list;
   }
 
@@ -267,34 +296,7 @@ public class ModelCoreImpl implements ModelCore {
     this.resetMoment();
     return list;
   }
-
-  /**
-   * Return list of all students observed. 
-   */
-  private List<String> getObservedStudents() {
-    return new ArrayList<>(List.copyOf(this.updater.getObservedStudents(this.loader)));
-  }
-
-  /**
-   * Return list of all moments observed for the current student. 
-   */
-  private List<String> getObservedMoments() {
-    return new ArrayList<>(List.copyOf(this.updater.getObservedMoments(this.loader)));
-  }
-
-  /**
-   * Return list of all dates observed for the current student and moment. 
-   */
-  private List<String> getObservedDates() {
-    final List<String> list = new ArrayList<>();
-    for (final String string : List.copyOf(this.updater.getObservedDates(this.loader))) {
-      final String s;
-      s = string.substring(0, string.length() - 4);
-      list.add(s);
-    }
-    return list;
-  }
-
+  
   /**
    * simple refresher for choose student and refresh moment.
 

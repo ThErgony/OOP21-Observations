@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.Clock;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -34,7 +33,6 @@ public class ModelAdapterImpl implements ModelAdapter {
   /**
    * Return the moment list user can choose to observe. 
    */
-  @Override
   public List<String> getMomentsListFromFile() throws IOException {
     return this.mc.getMomentsList();
   }
@@ -42,7 +40,6 @@ public class ModelAdapterImpl implements ModelAdapter {
   /**
    * Return the type list of observations user can choose to observe. 
    */
-  @Override
   public List<String> getTypesListFromFile() throws IOException {
     return this.mc.getTypeList();
   }
@@ -53,7 +50,6 @@ public class ModelAdapterImpl implements ModelAdapter {
    * @param student
    *        string of new student 
    */
-  @Override
   public void createStudent(final String student) throws IOException {
     this.mc.chooseStudent(student);
   }
@@ -64,7 +60,6 @@ public class ModelAdapterImpl implements ModelAdapter {
    * @param moment
    *        string of new moment 
    */
-  @Override
   public void createMoment(final String moment) throws IOException {
     this.mc.chooseMoment(moment);
   }
@@ -75,7 +70,6 @@ public class ModelAdapterImpl implements ModelAdapter {
    * @param date
    *        string of new date 
    */
-  @Override
   public void createDate(final String date) throws IOException {
     this.mc.chooseDate(date);
   }
@@ -86,7 +80,6 @@ public class ModelAdapterImpl implements ModelAdapter {
    * @param type
    *        string of new type of observation 
    */
-  @Override
   public void createObservationsType(final String type) throws IOException {
     this.mc.addObservationType(type);
   }
@@ -100,7 +93,6 @@ public class ModelAdapterImpl implements ModelAdapter {
    * @param type
    *        string of type of observation clicked
    */
-  @Override
   public void clickObservation(final String type) throws IOException {
     final String time = new SimpleDateFormat("HH:mm:ss", Locale.ITALIAN)
         .format(Date.from(Instant.now(Clock.systemDefaultZone())));
@@ -110,23 +102,19 @@ public class ModelAdapterImpl implements ModelAdapter {
   /**
    * return list of all student observed or empty list.
    */
-  @Override
   public List<String> getStudentsList() throws IOException {
-    return this.listMaker(this.mc.getCounterStudents());
+    return this.mc.getObservedStudents();
   }
 
   /**
-   * return map: key is the student choose, value is list of moment observed for the student.
+   * return list of moment observed for the student.
 
    * @param student
    *      name of student choose
    */
-  @Override
-  public Map<String, List<String>> getMomentsList(final String student) throws IOException {
-    final Map<String, List<String>> map = new HashMap<>();
+  public List<String> getMomentsList(final String student) throws IOException {
     this.mc.chooseStudent(student);
-    map.put(student, this.listMaker(this.mc.getCounterMoments()));
-    return map;
+    return this.mc.getObservedMoments();
   }
 
   /**
@@ -135,12 +123,11 @@ public class ModelAdapterImpl implements ModelAdapter {
    * @param moment
    *      moment choose 
    */
-  @Override
   public Map<String, Map<String, Integer>> getDatesAndObservations(final String moment)
       throws IOException {
     final Map<String, Map<String, Integer>> map = new HashMap<>();
     this.mc.chooseMoment(moment);
-    final List<String> list = List.copyOf(this.listMaker(this.mc.getCounterDates()));
+    final List<String> list = this.mc.getObservedDates();
     for (final String element : list) {
       this.mc.chooseDate(element);
       final Map<String, Integer> mapValue = new HashMap<>();
@@ -150,20 +137,6 @@ public class ModelAdapterImpl implements ModelAdapter {
       map.put(element, mapValue);
     }
     return map;
-  }
-
-  /**
-   * make list of all string from List of Pair, use only getX() for the string attribute.
-
-   * @param list
-   *      need the list of pair to convert
-   */
-  private List<String> listMaker(final List<Pair<String, Integer>> list) {
-    final List<String> fList = new ArrayList<>();
-    for (final Pair<String, Integer> pair : list) {
-      fList.add(pair.getX());
-    }
-    return fList;
   }
 
 }

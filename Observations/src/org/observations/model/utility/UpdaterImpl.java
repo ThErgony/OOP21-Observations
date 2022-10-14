@@ -39,17 +39,6 @@ public class UpdaterImpl implements Updater {
   }
 
   /**
-   * Return list of String for the selected path.
-
-   * @param path loader
-   *     path selected for load all file
-   *     loader: reference to class for load file
-   */
-  private List<String> check(final String path, final Loader loader) {
-    return loader.loadFileFolder(path);
-  }
-
-  /**
    * Choose or create the student pass.
 
    * @param student save loader
@@ -172,6 +161,17 @@ public class UpdaterImpl implements Updater {
     save.writeList(path, list);
   }
 
+  /**
+   * Return list of String for the selected path.
+
+   * @param path loader
+   *     path selected for load all file
+   *     loader: reference to class for load file
+   */
+  private List<String> check(final String path, final Loader loader) {
+    return loader.loadFileFolder(path);
+  }
+  
   /**
    * Private method for control for item present, return empty list or list.
    */
